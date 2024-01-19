@@ -1,10 +1,13 @@
 package config;
 
+import util.ConversionUtility;
+
 import java.awt.*;
 
 public class Config {
 
-    public static Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+    public static Dimension SCREEN_DIMENSION = ConversionUtility.convertToGameDimension(Toolkit.getDefaultToolkit().getScreenSize());
+//    public static Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
 
     public static final int BLOCK_SIZE = (int) ((SCREEN_DIMENSION.getHeight() * 40) / 1080);
 
@@ -25,6 +28,7 @@ public class Config {
     public static final Dimension WINDOW_DIMENSION = new Dimension((int) (SCREEN_DIMENSION.getWidth() * 0.841), (int) (SCREEN_DIMENSION.getHeight() * 0.778));
 
     public static final Color BACKGROUND_COLOR = new Color(30, 30, 30);
+    public static String RESSOURCES_PATH = "src/resources/";
 
 
 }

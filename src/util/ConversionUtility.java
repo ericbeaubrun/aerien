@@ -3,6 +3,8 @@ package util;
 import config.Config;
 import data.Position;
 
+import java.awt.*;
+
 public class ConversionUtility {
 
     private static final String[] DIRECTIONS = {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
@@ -50,7 +52,9 @@ public class ConversionUtility {
         return "Unknown";
     }
 
-
+    public static Dimension convertToGameDimension(Dimension dim) {
+        return new Dimension((int) Math.round(dim.getHeight() * (16.0 / 9.0)), (int) dim.getHeight());
+    }
 
     public static int blockToMeter(int amountBlocks){
         return 170 * amountBlocks;

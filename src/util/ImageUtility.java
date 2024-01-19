@@ -1,5 +1,6 @@
 package util;
 
+import config.Config;
 import data.Airplane;
 
 import javax.imageio.ImageIO;
@@ -37,7 +38,7 @@ public class ImageUtility {
 
             String ref = airplane.getReference().strip();
             String color = "_green";
-            String path = "src/main/resources/planes/";
+            String path = Config.RESSOURCES_PATH + "planes/";
 
             if (ref.startsWith("Airbus A320".strip())) {
                 image = readImage(path + "plane1" + color + ".png");

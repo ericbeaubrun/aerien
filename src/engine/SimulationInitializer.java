@@ -18,7 +18,7 @@ import static util.ConversionUtility.blockToPixel;
 
 public class SimulationInitializer {
 
-    private static final String CONFIG_FILE_PATH = "src/main/java/config/config.xml";
+    private static final String CONFIG_FILE_PATH = "src/config/config.xml";
 
     private static InputStream getConfigFileInputStream(String path) throws FileNotFoundException {
         return new FileInputStream(path);

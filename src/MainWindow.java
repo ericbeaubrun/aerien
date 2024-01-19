@@ -1,8 +1,10 @@
 import config.Config;
 import engine.Simulation;
 import ihm.SimulationPanel;
+import util.ConversionUtility;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
@@ -16,7 +18,9 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super();
+
         setSize(Config.WINDOW_DIMENSION);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Simulation simulation = new Simulation();

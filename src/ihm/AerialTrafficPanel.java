@@ -15,7 +15,7 @@ import static util.ImageUtility.*;
 
 public class AerialTrafficPanel extends JPanel {
 
-    private final String BACKGROUND_IMAGE_PATH = "src/main/resources/map.png";
+    private final String BACKGROUND_IMAGE_PATH = Config.RESSOURCES_PATH + "map.png";
 
     private final float[] DASH_PATTERN = {5.0f, 5.0f};
 
