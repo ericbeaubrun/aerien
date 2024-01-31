@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class Simulation {
 
-    public FlightManager flightManager = new FlightManager();
 
     private MapField mapField;
+    public FlightManager flightManager;
 
     private final TimeCounter time;
 
@@ -25,10 +25,11 @@ public class Simulation {
     public Simulation() {
         time = new TimeCounter(0, 0);
         initMap();
+        flightManager = new FlightManager(mapField);
         SimulationInitializer.initSimulationObjects(mapField, airports, airplanes, flightManager);
 
-//        Thread thread = new Thread(flightManager);
-//        thread.start();
+        Thread thread = new Thread(flightManager);
+        thread.start();
     }
 
     public MapField getMapField() {

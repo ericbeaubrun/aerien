@@ -199,25 +199,29 @@ public class AerialTrafficPanel extends JPanel {
         }
     }
 
-    public void paintAirSectors(Graphics g) {
+    public void paintAirZones(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setComposite(AlphaComposite.SrcOver.derive(0.2f));
 
-        ArrayList<AirSector> airSectors = mapField.getAirSectors();
+        ArrayList<AirZone> airZones = mapField.getAirZones();
 
         boolean isColored = true;
 
-        for (int i = 0; i < airSectors.size(); i++) {
+        for (int i = 0; i < airZones.size(); i++) {
             if (!(i % 10 == 0)) {
                 isColored = !isColored;
             }
 
-            AirSector airSector = airSectors.get(i);
+            AirZone airZone = airZones.get(i);
 
-            g2d.setColor(isColored ? Color.PINK : Color.GREEN);
+            if (airZone.isOccupied()) {
+                g2d.setColor(Color.YELLOW);
+            } else {
+                g2d.setColor(isColored ? Color.PINK : Color.GREEN);
+            }
 
-            for (Position block : airSector.getPositions()) {
+            for (Position block : airZone.getPositions()) {
                 g.fillRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
             }
         }
@@ -235,7 +239,7 @@ public class AerialTrafficPanel extends JPanel {
         paintAirports(g);
         paintFlights(g);
         paintAirplanes(g);
-        paintAirSectors(g);
+        paintAirZones(g);
 
     }
 

@@ -1,6 +1,5 @@
 package data;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,13 +8,16 @@ import static config.Config.*;
 public class MapField {
 
     private final int columns;
+
     private final int rows;
+
     private final Position[][] blocks;
-    private final ArrayList<AirSector> airSectors;
+
+    private final ArrayList<AirZone> airZones;
 
     public MapField(int columns, int rows, int size) {
         blocks = new Position[columns][rows];
-        airSectors = new ArrayList<>();
+        airZones = new ArrayList<>();
 
         this.columns = columns;
         this.rows = rows;
@@ -27,19 +29,20 @@ public class MapField {
             }
         }
 
-        initAirSectors();
+        initAirZones();
     }
 
-    private void initAirSectors() {
-        for (int row = 0; row < 20; row += 2) {
-            for (int col = 0; col < 30; col += 3) {
-                AirSector airSector = new AirSector();
-                for (int r = row; r < row + 2; r++) {
-                    for (int c = col; c < col + 3; c++) {
-                        airSector.addPosition(blocks[c][r]);
+    private void initAirZones() {
+        for (int row = 0; row < ROWS; row += AIR_SECTOR_HEIGHT) {
+            for (int col = 0; col < COLUMNS; col += AIR_SECTOR_WIDTH) {
+
+                AirZone airZones = new AirZone();
+                for (int i = row; i < row + AIR_SECTOR_HEIGHT; i++) {
+                    for (int j = col; j < col + AIR_SECTOR_WIDTH; j++) {
+                        airZones.addPosition(blocks[j][i]);
                     }
                 }
-                airSectors.add(airSector);
+                this.airZones.add(airZones);
             }
         }
     }
@@ -51,6 +54,14 @@ public class MapField {
         return null;
     }
 
+    public AirZone findAirZone(Position position){
+        for (AirZone airZone : airZones) {
+            if (airZone.getPositions().contains(position)) {
+                return airZone;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<Position> getBlocks() {
         ArrayList<Position> result = new ArrayList<>();
@@ -60,7 +71,7 @@ public class MapField {
         return result;
     }
 
-    public ArrayList<AirSector> getAirSectors() {
-        return new ArrayList<>(airSectors);
+    public ArrayList<AirZone> getAirZones() {
+        return new ArrayList<>(airZones);
     }
 }

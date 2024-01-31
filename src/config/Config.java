@@ -15,9 +15,9 @@ public class Config {
 
     public static int ROWS = 20;
 
-    public static int AIR_SECTOR_WIDTH = 2;
+    public static int AIR_SECTOR_HEIGHT = 5;
 
-    public static int AIR_SECTOR_HEIGHT = 3;
+    public static int AIR_SECTOR_WIDTH = 3*2;
 
     public static final boolean ALLOW_GRID_DISPLAY = true;
 

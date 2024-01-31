@@ -1,10 +1,7 @@
 package engine;
 
 import config.Config;
-import data.Airplane;
-import data.Airport;
-import data.MapField;
-import data.Position;
+import data.*;
 import util.ConversionUtility;
 
 import java.util.ArrayList;
@@ -29,7 +26,13 @@ public class Flight implements Runnable {
 
     private Airport destinationAirport;
 
+    private final MapField mapField;
+
+    private AirZone currentAirZone;
+
+
     public Flight(MapField mapField, AirportManager airports, Position posAirportA, Position posAirportB) {
+        this.mapField = mapField;
         this.startAirport = airports.findAiport(posAirportA.getColumn(), posAirportA.getRow());
         this.destinationAirport = airports.findAiport(posAirportB.getColumn(), posAirportB.getRow());
 
@@ -89,6 +92,17 @@ public class Flight implements Runnable {
                     Thread.sleep(Config.SIMULATION_SPEED * 16);
                     airplane.setPosition(path.get(currentIndex));
 
+                    AirZone airZone = mapField.findAirZone(airplane.getPosition());
+
+                    if (airZone != null && currentAirZone == null) {
+                        currentAirZone = airZone;
+                        currentAirZone.enterSectorAirplane(airplane);
+                    } else if ((airZone != null && !airZone.equals(currentAirZone))) {
+                        currentAirZone.leaveSectorAirplane();
+                        currentAirZone = airZone;
+                        currentAirZone.enterSectorAirplane(airplane);
+                    }
+
                     Position posA = airplane.getPosition();
                     Position posB = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
 
@@ -140,7 +154,7 @@ public class Flight implements Runnable {
         }
     }
 
-    public boolean isReadyToLauch() {
+    public boolean isReadyToLaunch() {
         return countBeforeTakeoff <= 0;
     }
 
@@ -148,11 +162,11 @@ public class Flight implements Runnable {
         return isRunning;
     }
 
-    public int getAmountBlockPath(){
+    public int getAmountBlockPath() {
         return path.size();
     }
 
-    public int getAmountBlockRemainingPath(){
+    public int getAmountBlockRemainingPath() {
         return path.size() - currentIndex;
     }
 
