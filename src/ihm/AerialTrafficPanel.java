@@ -62,6 +62,7 @@ public class AerialTrafficPanel extends JPanel {
 
     private void paintGridCoords(Graphics g) {
         g.setFont(new Font("Arial", Font.PLAIN, 9));
+
         for (Position block : mapField.getBlocks()) {
             if (showGrid) {
                 g.setColor(Color.GREEN);
@@ -142,14 +143,15 @@ public class AerialTrafficPanel extends JPanel {
 
     public void paintFlights(Graphics g) {
         if (showTrajects) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(FLIGHT_STROKE);
             for (Flight flight : flights) {
-                if (flight.isRunning()) {
+                if (true) {
+//                if (flight.isRunning()) {
                     Airplane airplane = flight.getAirplane();
 
                     ArrayList<Position> path = flight.getPath();
 
-                    Graphics2D g2d = (Graphics2D) g;
-                    g2d.setStroke(FLIGHT_STROKE);
                     g2d.setColor(Color.WHITE);
 
                     boolean hasBeenCovered = true;
@@ -161,6 +163,7 @@ public class AerialTrafficPanel extends JPanel {
                         if (flight.getCurrentIndex() - 1 == i || flight.getCurrentIndex() == 0) {
                             hasBeenCovered = false;
                             g2d.setColor(new Color(110, 110, 110));
+                            g2d.setColor(Color.YELLOW);
                         }
 
                         int x1 = p1.getX() + BLOCK_SIZE / 2;
@@ -170,6 +173,25 @@ public class AerialTrafficPanel extends JPanel {
 
                         g.drawLine(x1, y1, x2, y2);
                     }
+
+                    // Ligne Aéroport de départ
+                    {
+                        int x1 = flight.getStartAirport().getX() + BLOCK_SIZE / 2;
+                        int y1 = flight.getStartAirport().getY() + BLOCK_SIZE / 2;
+                        int x2 = path.get(0).getX() + BLOCK_SIZE / 2;
+                        int y2 = path.get(0).getY() + BLOCK_SIZE / 2;
+                        g.drawLine(x1, y1, x2, y2);
+                    }
+                    // Ligne Aéroport d'arrivé
+                    {
+                        int x1 = path.get(path.size() - 1).getX() + BLOCK_SIZE / 2;
+                        int y1 = path.get(path.size() - 1).getY() + BLOCK_SIZE / 2;
+                        int x2 = flight.getDestinationAirport().getX() + BLOCK_SIZE / 2;
+                        int y2 = flight.getDestinationAirport().getY() + BLOCK_SIZE / 2;
+                        g.drawLine(x1, y1, x2, y2);
+                    }
+
+
                 } else {
 //                    g.drawString(flight.getCountBeforeTakeoff() + "", flight.getStartAirport().getX(), flight.getStartAirport().getY());
                 }
@@ -177,19 +199,44 @@ public class AerialTrafficPanel extends JPanel {
         }
     }
 
+    public void paintAirSectors(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setComposite(AlphaComposite.SrcOver.derive(0.2f));
+
+        ArrayList<AirSector> airSectors = mapField.getAirSectors();
+
+        boolean isColored = true;
+
+        for (int i = 0; i < airSectors.size(); i++) {
+            if (!(i % 10 == 0)) {
+                isColored = !isColored;
+            }
+
+            AirSector airSector = airSectors.get(i);
+
+            g2d.setColor(isColored ? Color.PINK : Color.GREEN);
+
+            for (Position block : airSector.getPositions()) {
+                g.fillRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
+            }
+        }
+
+        g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
+    }
+
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
         paintBackground(g);
-
         paintGridCoords(g);
-
         paintAirports(g);
-
         paintFlights(g);
-
         paintAirplanes(g);
+        paintAirSectors(g);
+
     }
 
     public void toggleShowCoords() {

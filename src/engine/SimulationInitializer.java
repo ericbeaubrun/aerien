@@ -51,29 +51,32 @@ public class SimulationInitializer {
         for (int i = 0; i < flightNodes.getLength(); i++) {
             Element flightElement = (Element) flightNodes.item(i);
 
-            // Extraction dans le fichier xml
-            String startAirportX = flightElement.getAttribute("StartAirportX");
-            String startAirportY = flightElement.getAttribute("StartAirportY");
-            Position startAirportPos = new Position(blockToPixel(startAirportX), blockToPixel(startAirportY));
+            String enabled = flightElement.getAttribute("Enabled");
+            if (!enabled.equals("false")) {
+                // Extraction dans le fichier xml
+                String startAirportX = flightElement.getAttribute("StartAirportX");
+                String startAirportY = flightElement.getAttribute("StartAirportY");
+                Position startAirportPos = new Position(blockToPixel(startAirportX), blockToPixel(startAirportY));
 
-            String destinationAirportX = flightElement.getAttribute("DestinationAirportX");
-            String destinationAirportY = flightElement.getAttribute("DestinationAirportY");
-            Position destinationAirportPos = new Position(blockToPixel(destinationAirportX), blockToPixel(destinationAirportY));
+                String destinationAirportX = flightElement.getAttribute("DestinationAirportX");
+                String destinationAirportY = flightElement.getAttribute("DestinationAirportY");
+                Position destinationAirportPos = new Position(blockToPixel(destinationAirportX), blockToPixel(destinationAirportY));
 
-            // Creation de l'objet Flight
-            Flight flight = new Flight(mapField, airports, startAirportPos, destinationAirportPos);
+                // Creation de l'objet Flight
+                Flight flight = new Flight(mapField, airports, startAirportPos, destinationAirportPos);
 
-            // Ajout de chaque Block dans l'objet Flight
-            NodeList posNodes = flightElement.getElementsByTagName("pos");
-            for (int j = 0; j < posNodes.getLength(); j++) {
-                Element posElement = (Element) posNodes.item(j);
-                int x = blockToPixel(posElement.getAttribute("X"));
-                int y = blockToPixel(posElement.getAttribute("Y"));
-                Position block = new Position(x, y);
-                flight.addNextBlock(block);
+                // Ajout de chaque Block dans l'objet Flight
+                NodeList posNodes = flightElement.getElementsByTagName("pos");
+                for (int j = 0; j < posNodes.getLength(); j++) {
+                    Element posElement = (Element) posNodes.item(j);
+                    int x = blockToPixel(posElement.getAttribute("X"));
+                    int y = blockToPixel(posElement.getAttribute("Y"));
+                    Position block = new Position(x, y);
+                    flight.addNextBlock(block);
+                }
+
+                flights.addFlight(flight);
             }
-
-            flights.addFlight(flight);
         }
     }
 

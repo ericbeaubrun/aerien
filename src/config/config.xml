@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Airplanes>
-        <!-- 10*2 Airplanes -->
+        <!-- 18/18 Airplanes -->
         <Airplane Reference="Airbus A320-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
                   ImagePath="src/main/ressources/plane1.png"/>
 
@@ -55,7 +55,6 @@
 
         <Airplane Reference="Global 7500-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
                   ImagePath="src/main/ressources/plane9.png"/>
-
     </Airplanes>
 
     <!-- 8/8 Airports-->
@@ -71,10 +70,9 @@
     </Airports>
 
     <Flights>
-        <!-- 28 / 28 Flights -->
+        <!-- 20 / 28 Flights Enabled -->
         <!-- Paris <=> Vienna -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="17" DestinationAirportY="9">
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="9" Y="9"/>
             <pos X="10" Y="9"/>
             <pos X="11" Y="9"/>
@@ -85,7 +83,7 @@
             <pos X="16" Y="9"/>
         </Flight>
         <!-- Dublin <=> Madrid -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="3" DestinationAirportY="15">
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="3" DestinationAirportY="15" Enabled="true">
             <pos X="3" Y="5"/>
             <pos X="3" Y="6"/>
             <pos X="3" Y="7"/>
@@ -98,8 +96,7 @@
             <pos X="3" Y="14"/>
         </Flight>
         <!-- Paris <=> Alger -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="8" DestinationAirportY="19">
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="8" DestinationAirportY="19" Enabled="true">
             <pos X="8" Y="10"/>
             <pos X="8" Y="11"/>
             <pos X="8" Y="12"/>
@@ -111,8 +108,7 @@
             <pos X="8" Y="18"/>
         </Flight>
         <!-- Stockholm <=> Moscow -->
-        <!-- OK -->
-        <Flight StartAirportX="14" StartAirportY="1" DestinationAirportX="28" DestinationAirportY="1">
+        <Flight StartAirportX="14" StartAirportY="1" DestinationAirportX="28" DestinationAirportY="1" Enabled="true">
             <pos X="15" Y="1"/>
             <pos X="16" Y="1"/>
             <pos X="17" Y="1"/>
@@ -128,16 +124,14 @@
             <pos X="27" Y="1"/>
         </Flight>
         <!-- Madrid <=> Alger -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="8" DestinationAirportY="19">
+        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="8" DestinationAirportY="19" Enabled="true">
             <pos X="4" Y="16"/>
             <pos X="5" Y="17"/>
             <pos X="6" Y="18"/>
             <pos X="7" Y="19"/>
         </Flight>
         <!-- Paris <=> Madrid -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="3" DestinationAirportY="15">
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="3" DestinationAirportY="15" Enabled="true">
             <pos X="7" Y="10"/>
             <pos X="6" Y="11"/>
             <pos X="5" Y="12"/>
@@ -145,56 +139,52 @@
             <pos X="3" Y="14"/>
         </Flight>
         <!-- Vienna <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="17" StartAirportY="9" DestinationAirportX="24" DestinationAirportY="14">
-            <pos X="18" Y="9"/>
-            <pos X="19" Y="10"/>
-            <pos X="20" Y="11"/>
-            <pos X="21" Y="12"/>
-            <pos X="22" Y="13"/>
-            <pos X="23" Y="14"/>
-        </Flight>
-        <!-- Alger <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="24" DestinationAirportY="14">
-            <pos X="9" Y="18"/>
-            <pos X="10" Y="17"/>
-            <pos X="11" Y="16"/>
-            <pos X="12" Y="15"/>
-            <pos X="13" Y="14"/>
-            <pos X="14" Y="14"/>
-            <pos X="15" Y="14"/>
-            <pos X="16" Y="14"/>
-            <pos X="17" Y="14"/>
-            <pos X="18" Y="14"/>
-            <pos X="19" Y="14"/>
-            <pos X="20" Y="14"/>
-            <pos X="21" Y="14"/>
+        <Flight StartAirportX="17" StartAirportY="9" DestinationAirportX="24" DestinationAirportY="14" Enabled="true">
+            <pos X="18" Y="10"/>
+            <pos X="19" Y="11"/>
+            <pos X="20" Y="12"/>
+            <pos X="21" Y="13"/>
             <pos X="22" Y="14"/>
             <pos X="23" Y="14"/>
         </Flight>
+        <!-- Alger <=> Istanbul -->
+        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="24" DestinationAirportY="14" Enabled="true">
+            <pos X="9" Y="19"/>
+            <pos X="10" Y="19"/>
+            <pos X="11" Y="19"/>
+            <pos X="12" Y="19"/>
+            <pos X="13" Y="19"/>
+            <pos X="14" Y="19"/>
+            <pos X="15" Y="19"/>
+            <pos X="16" Y="19"/>
+            <pos X="17" Y="19"/>
+            <pos X="18" Y="19"/>
+            <pos X="19" Y="19"/>
+            <pos X="20" Y="18"/>
+            <pos X="21" Y="17"/>
+            <pos X="22" Y="16"/>
+            <pos X="23" Y="15"/>
+        </Flight>
         <!-- Paris <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="24" DestinationAirportY="14">
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="24" DestinationAirportY="14" Enabled="true">
             <pos X="9" Y="10"/>
             <pos X="10" Y="11"/>
             <pos X="11" Y="12"/>
             <pos X="12" Y="13"/>
-            <pos X="13" Y="14"/>
-            <pos X="14" Y="14"/>
-            <pos X="15" Y="14"/>
-            <pos X="16" Y="14"/>
-            <pos X="17" Y="14"/>
-            <pos X="18" Y="14"/>
-            <pos X="19" Y="14"/>
-            <pos X="20" Y="14"/>
-            <pos X="21" Y="14"/>
-            <pos X="22" Y="14"/>
-            <pos X="23" Y="14"/>
+            <pos X="13" Y="13"/>
+            <pos X="14" Y="13"/>
+            <pos X="15" Y="13"/>
+            <pos X="16" Y="13"/>
+            <pos X="17" Y="13"/>
+            <pos X="18" Y="13"/>
+            <pos X="19" Y="13"/>
+            <pos X="20" Y="13"/>
+            <pos X="21" Y="13"/>
+            <pos X="22" Y="13"/>
+            <pos X="23" Y="13"/>
         </Flight>
         <!-- Alger <=> Dublin -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="3" DestinationAirportY="4">
+        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="3" DestinationAirportY="4" Enabled="false">
             <pos X="8" Y="18"/>
             <pos X="8" Y="17"/>
             <pos X="8" Y="16"/>
@@ -211,8 +201,7 @@
             <pos X="3" Y="5"/>
         </Flight>
         <!-- Madrid <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="24" DestinationAirportY="14">
+        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="24" DestinationAirportY="14" Enabled="true">
             <pos X="4" Y="15"/>
             <pos X="5" Y="15"/>
             <pos X="6" Y="15"/>
@@ -235,8 +224,7 @@
             <pos X="23" Y="15"/>
         </Flight>
         <!-- Moscow <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="24" DestinationAirportY="14">
+        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="24" DestinationAirportY="14" Enabled="true">
             <pos X="28" Y="2"/>
             <pos X="28" Y="3"/>
             <pos X="28" Y="4"/>
@@ -251,16 +239,14 @@
             <pos X="25" Y="13"/>
         </Flight>
         <!-- Dublin <=> Paris -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="8" DestinationAirportY="9">
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="8" DestinationAirportY="9" Enabled="true">
             <pos X="4" Y="5"/>
             <pos X="5" Y="6"/>
             <pos X="6" Y="7"/>
             <pos X="7" Y="8"/>
         </Flight>
         <!-- Alger <=> Vienna -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="17" DestinationAirportY="9">
+        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="9" Y="18"/>
             <pos X="10" Y="17"/>
             <pos X="11" Y="16"/>
@@ -272,24 +258,23 @@
             <pos X="17" Y="10"/>
         </Flight>
         <!-- Istanbul <=> Stockholm -->
-        <!-- OK -->
-        <Flight StartAirportX="24" StartAirportY="14" DestinationAirportX="14" DestinationAirportY="1">
+        <Flight StartAirportX="24" StartAirportY="14" DestinationAirportX="14" DestinationAirportY="1" Enabled="true">
             <pos X="24" Y="13"/>
             <pos X="24" Y="12"/>
             <pos X="24" Y="11"/>
-            <pos X="23" Y="10"/>
-            <pos X="22" Y="9"/>
-            <pos X="21" Y="8"/>
-            <pos X="20" Y="7"/>
-            <pos X="19" Y="6"/>
-            <pos X="18" Y="5"/>
-            <pos X="17" Y="4"/>
-            <pos X="16" Y="3"/>
-            <pos X="15" Y="2"/>
+            <pos X="24" Y="10"/>
+            <pos X="23" Y="9"/>
+            <pos X="22" Y="8"/>
+            <pos X="21" Y="7"/>
+            <pos X="20" Y="6"/>
+            <pos X="19" Y="5"/>
+            <pos X="18" Y="4"/>
+            <pos X="17" Y="3"/>
+            <pos X="16" Y="2"/>
+            <pos X="15" Y="1"/>
         </Flight>
         <!-- Dublin <=> Stockholm -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="14" DestinationAirportY="1">
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="14" DestinationAirportY="1" Enabled="true">
             <pos X="4" Y="3"/>
             <pos X="5" Y="2"/>
             <pos X="6" Y="1"/>
@@ -302,19 +287,17 @@
             <pos X="13" Y="1"/>
         </Flight>
         <!-- Paris <=> Stockholm -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="14" DestinationAirportY="1">
-            <pos X="9" Y="8"/>
-            <pos X="10" Y="7"/>
-            <pos X="11" Y="6"/>
-            <pos X="12" Y="5"/>
-            <pos X="13" Y="4"/>
-            <pos X="14" Y="3"/>
-            <pos X="14" Y="2"/>
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="14" DestinationAirportY="1" Enabled="true">
+            <pos X="8" Y="8"/>
+            <pos X="8" Y="7"/>
+            <pos X="9" Y="6"/>
+            <pos X="10" Y="5"/>
+            <pos X="11" Y="4"/>
+            <pos X="12" Y="3"/>
+            <pos X="13" Y="2"/>
         </Flight>
         <!-- Moscow <=> Vienna -->
-        µ<!-- OK -->
-        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="17" DestinationAirportY="9">
+        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="27" Y="2"/>
             <pos X="26" Y="3"/>
             <pos X="25" Y="4"/>
@@ -327,8 +310,7 @@
             <pos X="18" Y="9"/>
         </Flight>
         <!-- Dublin <=> Moscow -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="28" DestinationAirportY="1">
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="28" DestinationAirportY="1" Enabled="false">
             <pos X="4" Y="4"/>
             <pos X="5" Y="4"/>
             <pos X="6" Y="4"/>
@@ -355,8 +337,7 @@
             <pos X="27" Y="2"/>
         </Flight>
         <!-- Stockholm <=> Vienna -->
-        <!-- OK -->
-        <Flight StartAirportX="14" StartAirportY="1" DestinationAirportX="17" DestinationAirportY="9">
+        <Flight StartAirportX="14" StartAirportY="1" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="15" Y="2"/>
             <pos X="16" Y="3"/>
             <pos X="17" Y="4"/>
@@ -366,8 +347,7 @@
             <pos X="17" Y="8"/>
         </Flight>
         <!-- Vienna <=> Dublin -->
-        <!-- OK -->
-        <Flight StartAirportX="17" StartAirportY="9" DestinationAirportX="3" DestinationAirportY="4">
+        <Flight StartAirportX="17" StartAirportY="9" DestinationAirportX="3" DestinationAirportY="4" Enabled="true">
             <pos X="16" Y="8"/>
             <pos X="15" Y="7"/>
             <pos X="14" Y="6"/>
@@ -384,13 +364,14 @@
 
         </Flight>
         <!-- Alger <=> Stockholm -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="14" DestinationAirportY="1">
-            <pos X="9" Y="18"/>
-            <pos X="10" Y="17"/>
-            <pos X="11" Y="16"/>
-            <pos X="12" Y="15"/>
-            <pos X="13" Y="14"/>
+        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="14" DestinationAirportY="1" Enabled="true">
+            <pos X="9" Y="19"/>
+            <pos X="10" Y="19"/>
+            <pos X="11" Y="18"/>
+            <pos X="12" Y="17"/>
+            <pos X="13" Y="16"/>
+            <pos X="14" Y="15"/>
+            <pos X="14" Y="14"/>
             <pos X="14" Y="13"/>
             <pos X="14" Y="12"/>
             <pos X="14" Y="11"/>
@@ -405,8 +386,7 @@
             <pos X="14" Y="2"/>
         </Flight>
         <!-- Moscow <=> Madrid -->
-        <!-- OK -->
-        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="3" DestinationAirportY="15">
+        <Flight StartAirportX="28" StartAirportY="1" DestinationAirportX="3" DestinationAirportY="15" Enabled="false">
             <pos X="28" Y="2"/>
             <pos X="27" Y="3"/>
             <pos X="26" Y="4"/>
@@ -434,8 +414,7 @@
             <pos X="4" Y="15"/>
         </Flight>
         <!-- Paris <=> Moscow -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="28" DestinationAirportY="1">
+        <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="28" DestinationAirportY="1" Enabled="false">
             <pos X="9" Y="9"/>
             <pos X="10" Y="9"/>
             <pos X="11" Y="9"/>
@@ -457,8 +436,7 @@
             <pos X="27" Y="1"/>
         </Flight>
         <!-- Alger <=> Moscow -->
-        <!-- OK -->
-        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="28" DestinationAirportY="1">
+        <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="28" DestinationAirportY="1" Enabled="false">
             <pos X="9" Y="19"/>
             <pos X="10" Y="19"/>
             <pos X="11" Y="18"/>
@@ -480,8 +458,7 @@
             <pos X="27" Y="2"/>
         </Flight>
         <!-- Dublin <=> Istanbul -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="24" DestinationAirportY="14">
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="24" DestinationAirportY="14" Enabled="false">
             <pos X="4" Y="4"/>
             <pos X="5" Y="4"/>
             <pos X="6" Y="4"/>
@@ -504,8 +481,7 @@
             <pos X="23" Y="14"/>
         </Flight>
         <!-- Madrid <=> Vienna -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="17" DestinationAirportY="9">
+        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="17" DestinationAirportY="9" Enabled="false">
             <pos X="4" Y="15"/>
             <pos X="5" Y="15"/>
             <pos X="6" Y="15"/>
@@ -521,8 +497,7 @@
             <pos X="16" Y="10"/>
         </Flight>
         <!-- Madrid <=> Stockholm -->
-        <!-- OK -->
-        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="14" DestinationAirportY="1">
+        <Flight StartAirportX="3" StartAirportY="15" DestinationAirportX="14" DestinationAirportY="1" Enabled="false">
             <pos X="3" Y="14"/>
             <pos X="3" Y="13"/>
             <pos X="3" Y="12"/>

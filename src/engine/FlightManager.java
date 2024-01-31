@@ -49,7 +49,6 @@ public class FlightManager implements Runnable {
                         }
                     }
                     flight.decrementCountBeforeTakeoff();
-
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

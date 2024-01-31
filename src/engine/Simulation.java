@@ -27,8 +27,8 @@ public class Simulation {
         initMap();
         SimulationInitializer.initSimulationObjects(mapField, airports, airplanes, flightManager);
 
-        Thread thread = new Thread(flightManager);
-        thread.start();
+//        Thread thread = new Thread(flightManager);
+//        thread.start();
     }
 
     public MapField getMapField() {

@@ -1,21 +1,22 @@
 package data;
 
 
+import java.util.ArrayList;
+
 public class AirSector {
 
-    private final Position[] blocks = new Position[2];
+    private final ArrayList<Position> positions = new ArrayList<>();
 
     // Représente les deux points permettant de dessiner un rectangle
-    public AirSector(Position origin, Position top) {
-        blocks[0] = origin;
-        blocks[1] = top;
+    public AirSector() {
+
     }
 
-    public Position getOrigin() {
-        return blocks[0];
+    public void addPosition(Position position){
+        positions.add(position);
     }
 
-    public Position getTop() {
-        return blocks[1];
+    public ArrayList<Position> getPositions() {
+        return new ArrayList<>(positions);
     }
 }
