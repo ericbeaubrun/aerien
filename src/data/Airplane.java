@@ -1,6 +1,6 @@
 package data;
 
-public class Airplane extends SimulationEntity {
+public class Airplane extends Entity {
 
 
     public Airplane(int x, int y) {

@@ -3,7 +3,7 @@ package data;
 
 import java.util.ArrayList;
 
-public class Airport extends SimulationEntity {
+public class Airport extends Entity {
 
     private final int maxAirplanes;
 

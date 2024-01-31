@@ -9,11 +9,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static config.Config.*;
+
 public class ButtonsPanel extends JPanel {
 
     private ArrayList<JButton> buttons;
 
-    private String buttonsName[] = {"Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed", "Decrease speed", "...", "...", "..."
+    private String buttonsName[] = {"Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed", "Decrease speed", "Show flights", "...", "..."
             , "..."};
 
     private TimeCounter time;
@@ -23,7 +25,7 @@ public class ButtonsPanel extends JPanel {
 
         initTimeLabel(time);
 
-        setPreferredSize(new Dimension((int) (Config.SCREEN_DIMENSION.getWidth() / 15), (int) (Config.SCREEN_DIMENSION.getHeight())));
+        setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight())));
         setBackground(new Color(30, 30, 30));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -37,6 +39,7 @@ public class ButtonsPanel extends JPanel {
                 case "...":
                     button.setEnabled(false);
                     break;
+
                 case "Show grid":
                     button.addActionListener(new ShowGridButtonAction(button, aerialTrafficPanel));
 //                    button.doClick();
@@ -44,7 +47,7 @@ public class ButtonsPanel extends JPanel {
 
                 case "Show coords":
                     button.addActionListener(new ShowCoordsButtonAction(button, aerialTrafficPanel));
-//                    button.doClick();
+//                    if (ALLOW_COORD_DISPLAY) button.doClick();
                     break;
 
                 case "Show background":
@@ -68,6 +71,10 @@ public class ButtonsPanel extends JPanel {
 
                 case "Decrease speed":
 //                    button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
+                    break;
+
+                case "Show flights":
+                    //add action listenner
                     break;
             }
             buttons.add(button);

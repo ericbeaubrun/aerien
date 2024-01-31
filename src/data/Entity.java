@@ -2,23 +2,23 @@ package data;
 
 import util.ConversionUtility;
 
-public class SimulationEntity {
+public class Entity {
 
-    public SimulationEntity(int x, int y) {
+    public Entity(int x, int y) {
         this.position = new Position(x, y);
     }
 
-    public SimulationEntity(Position position) {
+    public Entity(Position position) {
         this.position = position;
     }
 
-    public SimulationEntity(int x, int y, int z) {
+    public Entity(int x, int y, int z) {
         this.position = new Position(x, y, z);
     }
 
     private Position position;
 
-    public void setPosition(SimulationEntity obj) {
+    public void setPosition(Entity obj) {
         this.setPosition(obj.getPosition());
     }
 
@@ -62,7 +62,7 @@ public class SimulationEntity {
         return ConversionUtility.pixelToBlock(position.getY());
     }
 
-    public Boolean hasSamePosition(SimulationEntity obj) {
+    public Boolean hasSamePosition(Entity obj) {
         return getX() == obj.getX() && getY() == obj.getY() && getZ() == obj.getZ();
     }
 

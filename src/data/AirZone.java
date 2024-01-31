@@ -2,8 +2,6 @@ package data;
 
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.Semaphore;
 
 
@@ -33,7 +31,7 @@ public class AirZone {
         return airplane != null;
     }
 
-    public void enterSectorAirplane(Airplane airplane) {
+    public void enterInAirZone(Airplane airplane) {
         if (airplane != null) {
             try {
                 semaphore.acquire();
@@ -44,7 +42,7 @@ public class AirZone {
         }
     }
 
-    public void leaveSectorAirplane() {
+    public void leaveAirzone() {
         this.airplane = null;
         semaphore.release();
     }

@@ -75,7 +75,7 @@ public class AerialTrafficPanel extends JPanel {
         }
     }
 
-    private void highlightEntity(Graphics g, SimulationEntity entity) {
+    private void highlightEntity(Graphics g, Entity entity) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.WHITE);
         g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
@@ -87,8 +87,8 @@ public class AerialTrafficPanel extends JPanel {
 
         if (getMouseListeners().length == 1) {
             SelectionListener selectionListener = (SelectionListener) (getMouseListeners()[0]);
-            SimulationEntity airplane = selectionListener.getSelectedAirplane();
-            SimulationEntity airport = selectionListener.getSelectedAirport();
+            Entity airplane = selectionListener.getSelectedAirplane();
+            Entity airport = selectionListener.getSelectedAirport();
 
             if (airplane != null) {
                 highlightEntity(g, airplane);
@@ -202,7 +202,7 @@ public class AerialTrafficPanel extends JPanel {
     public void paintAirZones(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setComposite(AlphaComposite.SrcOver.derive(0.2f));
+        g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
 
         ArrayList<AirZone> airZones = mapField.getAirZones();
 
@@ -216,9 +216,9 @@ public class AerialTrafficPanel extends JPanel {
             AirZone airZone = airZones.get(i);
 
             if (airZone.isOccupied()) {
-                g2d.setColor(Color.YELLOW);
+                g2d.setColor(Color.RED);
             } else {
-                g2d.setColor(isColored ? Color.PINK : Color.GREEN);
+                g2d.setColor(isColored ? Color.BLUE : Color.WHITE);
             }
 
             for (Position block : airZone.getPositions()) {

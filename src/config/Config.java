@@ -11,13 +11,16 @@ public class Config {
 
     public static final int BLOCK_SIZE = (int) ((SCREEN_DIMENSION.getHeight() * 40) / 1080);
 
+    //    public static int AIR_SECTOR_HEIGHT = 5;
+    //    public static int AIR_SECTOR_WIDTH = 3*2;
+
     public static int COLUMNS = 30;
 
     public static int ROWS = 20;
 
-    public static int AIR_SECTOR_HEIGHT = 5;
+    public static int AIR_SECTOR_HEIGHT = 2;
 
-    public static int AIR_SECTOR_WIDTH = 3*2;
+    public static int AIR_SECTOR_WIDTH = 3;
 
     public static final boolean ALLOW_GRID_DISPLAY = true;
 
@@ -32,6 +35,7 @@ public class Config {
     public static final Dimension WINDOW_DIMENSION = new Dimension((int) (SCREEN_DIMENSION.getWidth() * 0.841), (int) (SCREEN_DIMENSION.getHeight() * 0.778));
 
     public static final Color BACKGROUND_COLOR = new Color(30, 30, 30);
+
     public static String RESSOURCES_PATH = "src/resources/";
 
 

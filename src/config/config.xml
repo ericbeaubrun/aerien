@@ -70,7 +70,7 @@
     </Airports>
 
     <Flights>
-        <!-- 20 / 28 Flights Enabled -->
+        <!-- 21 / 28 Flights Enabled -->
         <!-- Paris <=> Vienna -->
         <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="9" Y="9"/>
@@ -310,29 +310,29 @@
             <pos X="18" Y="9"/>
         </Flight>
         <!-- Dublin <=> Moscow -->
-        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="28" DestinationAirportY="1" Enabled="false">
-            <pos X="4" Y="4"/>
-            <pos X="5" Y="4"/>
-            <pos X="6" Y="4"/>
-            <pos X="7" Y="4"/>
-            <pos X="8" Y="4"/>
-            <pos X="9" Y="4"/>
-            <pos X="10" Y="4"/>
-            <pos X="11" Y="4"/>
-            <pos X="12" Y="4"/>
-            <pos X="13" Y="4"/>
-            <pos X="14" Y="4"/>
-            <pos X="15" Y="4"/>
-            <pos X="16" Y="4"/>
-            <pos X="17" Y="4"/>
-            <pos X="18" Y="4"/>
-            <pos X="19" Y="4"/>
-            <pos X="20" Y="4"/>
-            <pos X="21" Y="4"/>
-            <pos X="22" Y="4"/>
-            <pos X="23" Y="4"/>
-            <pos X="24" Y="4"/>
-            <pos X="25" Y="4"/>
+        <Flight StartAirportX="3" StartAirportY="4" DestinationAirportX="28" DestinationAirportY="1" Enabled="true">
+            <pos X="4" Y="3"/>
+            <pos X="5" Y="3"/>
+            <pos X="6" Y="3"/>
+            <pos X="7" Y="3"/>
+            <pos X="8" Y="3"/>
+            <pos X="9" Y="3"/>
+            <pos X="10" Y="3"/>
+            <pos X="11" Y="3"/>
+            <pos X="12" Y="3"/>
+            <pos X="13" Y="3"/>
+            <pos X="14" Y="3"/>
+            <pos X="15" Y="3"/>
+            <pos X="16" Y="3"/>
+            <pos X="17" Y="3"/>
+            <pos X="18" Y="3"/>
+            <pos X="19" Y="3"/>
+            <pos X="20" Y="3"/>
+            <pos X="21" Y="3"/>
+            <pos X="22" Y="3"/>
+            <pos X="23" Y="3"/>
+            <pos X="24" Y="3"/>
+            <pos X="25" Y="3"/>
             <pos X="26" Y="3"/>
             <pos X="27" Y="2"/>
         </Flight>

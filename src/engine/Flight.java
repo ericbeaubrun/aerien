@@ -64,6 +64,11 @@ public class Flight implements Runnable {
     }
 
     public void takeoffAirplane() {
+        AirZone airZone = mapField.findAirZone(airplane.getPosition());
+        if (airZone != null) {
+            currentAirZone = airZone;
+            currentAirZone.enterInAirZone(airplane);
+        }
         airplane.setAngle(ConversionUtility.calculateAngle(startAirport.getPosition(), path.get(1)));
         airplane.setPosition(startAirport);
         startAirport.removeAirplane(airplane);
@@ -71,6 +76,7 @@ public class Flight implements Runnable {
     }
 
     public void landingAirplane() {
+        currentAirZone.leaveAirzone();
         airplane.setPosition(destinationAirport);
         destinationAirport.addAirplane(airplane);
         airplane.setOnTrail(true);
@@ -90,23 +96,32 @@ public class Flight implements Runnable {
                 currentIndex = 0;
                 while (currentIndex < path.size()) {
                     Thread.sleep(Config.SIMULATION_SPEED * 16);
-                    airplane.setPosition(path.get(currentIndex));
 
-                    AirZone airZone = mapField.findAirZone(airplane.getPosition());
+                    Position currentPosition = path.get(currentIndex);
+                    Position nextPosition = currentIndex + 1 < path.size() ? path.get(currentIndex + 1) : currentPosition;
+
+
+
+                    AirZone airZone = mapField.findAirZone(currentPosition);
+
+//                    AirZone airZone = mapField.findAirZone(airplane.getPosition());
 
                     if (airZone != null && currentAirZone == null) {
                         currentAirZone = airZone;
-                        currentAirZone.enterSectorAirplane(airplane);
+                        currentAirZone.enterInAirZone(airplane);
+
                     } else if ((airZone != null && !airZone.equals(currentAirZone))) {
-                        currentAirZone.leaveSectorAirplane();
+                        currentAirZone.leaveAirzone();
                         currentAirZone = airZone;
-                        currentAirZone.enterSectorAirplane(airplane);
+                        currentAirZone.enterInAirZone(airplane);
                     }
 
-                    Position posA = airplane.getPosition();
-                    Position posB = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
+                    airplane.setPosition(currentPosition);
 
-                    double angle = ConversionUtility.calculateAngle(posA, posB);
+                    // Calculer l'angle de l'avion
+                    Position otherPosition = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
+
+                    double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
                     airplane.setAngle(angle);
                     currentIndex++;
                 }
@@ -114,6 +129,7 @@ public class Flight implements Runnable {
                 Thread.sleep(Config.SIMULATION_SPEED * 16);
 
                 landingAirplane();
+                reverseDirection();
 
             } catch (InterruptedException e) {
             }
