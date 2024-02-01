@@ -10,6 +10,8 @@ public class FlightManager implements Runnable {
 
     private boolean isRunning = false;
 
+    private int speed = 1000;
+
     private final ArrayList<Flight> flights = new ArrayList<>();
 
     private final MapField map;
@@ -56,7 +58,7 @@ public class FlightManager implements Runnable {
 //            }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(speed);
                 for (Flight flight : flights) {
                     if (!flight.isRunning() && flight.isReadyToLaunch() && !flight.getDestinationAirport().isFilled()) {
                         Airplane airplane = flight.getStartAirport().getAvailableAirplane();
@@ -94,6 +96,16 @@ public class FlightManager implements Runnable {
 
     public ArrayList<Flight> getFlights() {
         return new ArrayList<>(flights);
+    }
+
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        System.out.println("Speed set to :"+speed);
     }
 }
 

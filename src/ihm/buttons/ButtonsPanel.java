@@ -1,8 +1,10 @@
 package ihm.buttons;
 
 import config.Config;
+import engine.Simulation;
 import engine.TimeCounter;
 import ihm.AerialTrafficPanel;
+import ihm.SimulationPanel;
 import ihm.buttons.listeners.*;
 
 import javax.swing.*;
@@ -15,13 +17,13 @@ public class ButtonsPanel extends JPanel {
 
     private ArrayList<JButton> buttons;
 
-    private String buttonsName[] = {"Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed", "Decrease speed", "Show flights", "...", "..."
+    private String buttonsName[] = {"Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed", "Decrease speed", "Show flights", "Show AirZones", "..."
             , "..."};
 
     private TimeCounter time;
     private JLabel timeLabel;
 
-    public ButtonsPanel(int width, AerialTrafficPanel aerialTrafficPanel, TimeCounter time) {
+    public ButtonsPanel(int width, Simulation simulation, AerialTrafficPanel aerialTrafficPanel, TimeCounter time) {
 
         initTimeLabel(time);
 
@@ -66,15 +68,19 @@ public class ButtonsPanel extends JPanel {
                     break;
 
                 case "Increase speed":
-//                    button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
+                    button.addActionListener(new IncreaseSpeedButtonAction(button, simulation));
                     break;
 
                 case "Decrease speed":
-//                    button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
+                    button.addActionListener(new DecreaseSpeedButtonAction(button, simulation));
                     break;
 
                 case "Show flights":
                     //add action listenner
+                    break;
+
+                case "Show AirZones":
+                    button.addActionListener(new ShowAirZonesButtonAction(button, aerialTrafficPanel));
                     break;
             }
             buttons.add(button);

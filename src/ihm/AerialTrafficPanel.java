@@ -29,6 +29,10 @@ public class AerialTrafficPanel extends JPanel {
 
     private final ArrayList<Airport> airports;
 
+    private boolean showAirZones = false;
+
+    private boolean showFlights = false;
+
     private boolean showGrid = false;
 
     private boolean showCoords = false;
@@ -104,7 +108,7 @@ public class AerialTrafficPanel extends JPanel {
                     if (image != null) {
                         image = rotateImage(image, airplane.getAngle());
                         g.drawImage(image, airplane.getX(), airplane.getY(), null);
-//                        g.drawImage(image, airplane.getX(), airplane.getY(), (int) ((48*Config.SCREEN_DIMENSION.getHeight())/1220),
+//                      o  g.drawImage(image, airplane.getX(), airplane.getY(), (int) ((48*Config.SCREEN_DIMENSION.getHeight())/1220),
 //                                (int) ((50*Config.SCREEN_DIMENSION.getHeight())/1220), null);
 
                     } else {
@@ -146,8 +150,7 @@ public class AerialTrafficPanel extends JPanel {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setStroke(FLIGHT_STROKE);
             for (Flight flight : flights) {
-                if (true) {
-//                if (flight.isRunning()) {
+                if (flight.isRunning() || showFlights) {
                     Airplane airplane = flight.getAirplane();
 
                     ArrayList<Position> path = flight.getPath();
@@ -182,6 +185,7 @@ public class AerialTrafficPanel extends JPanel {
                         int y2 = path.get(0).getY() + BLOCK_SIZE / 2;
                         g.drawLine(x1, y1, x2, y2);
                     }
+
                     // Ligne Aéroport d'arrivé
                     {
                         int x1 = path.get(path.size() - 1).getX() + BLOCK_SIZE / 2;
@@ -200,33 +204,35 @@ public class AerialTrafficPanel extends JPanel {
     }
 
     public void paintAirZones(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        if (showAirZones) {
+            Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+            g2d.setComposite(AlphaComposite.SrcOver.derive(0.2f));
 
-        ArrayList<AirZone> airZones = mapField.getAirZones();
+            ArrayList<AirZone> airZones = mapField.getAirZones();
 
-        boolean isColored = true;
+            boolean isColored = true;
 
-        for (int i = 0; i < airZones.size(); i++) {
-            if (!(i % 10 == 0)) {
-                isColored = !isColored;
+            for (int i = 0; i < airZones.size(); i++) {
+                if (!(i % 10 == 0)) {
+                    isColored = !isColored;
+                }
+
+                AirZone airZone = airZones.get(i);
+
+                if (airZone.isOccupied()) {
+                    g2d.setColor(Color.RED);
+                } else {
+                    g2d.setColor(isColored ? Color.BLUE : Color.WHITE);
+                }
+
+                for (Position block : airZone.getPositions()) {
+                    g.fillRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
+                }
             }
 
-            AirZone airZone = airZones.get(i);
-
-            if (airZone.isOccupied()) {
-                g2d.setColor(Color.RED);
-            } else {
-                g2d.setColor(isColored ? Color.BLUE : Color.WHITE);
-            }
-
-            for (Position block : airZone.getPositions()) {
-                g.fillRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
-            }
+            g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
         }
-
-        g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
     }
 
 
@@ -261,5 +267,9 @@ public class AerialTrafficPanel extends JPanel {
 
     public void toggleShowTrajects() {
         showTrajects = !showTrajects;
+    }
+
+    public void toggleShowAirZones() {
+        showAirZones = !showAirZones;
     }
 }

@@ -14,6 +14,11 @@ public class ButtonAction {
         this.aerialTrafficPanel = aerialTrafficPanel;
     }
 
+    public ButtonAction(JButton button) {
+        this.button = button;
+        this.aerialTrafficPanel = null;
+    }
+
     public JButton getButton() {
         return button;
     }

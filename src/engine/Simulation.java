@@ -51,4 +51,23 @@ public class Simulation {
     public TimeCounter getTime() {
         return time;
     }
+
+    public void decreaseSimulationSpeed() {
+        int currentSpeed = flightManager.getSpeed();
+
+        if (currentSpeed < 1900) {
+            flightManager.setSpeed(currentSpeed + 300);
+        }
+    }
+
+    public void increaseSimulationSpeed() {
+        int currentSpeed = flightManager.getSpeed();
+
+        if (currentSpeed > 100) {
+            flightManager.setSpeed(currentSpeed - 300);
+        }
+    }
+
+
 }
+

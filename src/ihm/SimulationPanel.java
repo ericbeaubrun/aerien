@@ -30,7 +30,7 @@ public class SimulationPanel extends JPanel implements Runnable {
         aerialTrafficPanel = new AerialTrafficPanel(simulation.getMapField(), simulation.getAirplanes(), simulation.getAirports(), simulation.getFlights());
         displayInfoPanel = new DisplayInfoPanel(width);
         selectionListener = new SelectionListener(displayInfoPanel, simulation.getFlights(), simulation.getAirports());
-        buttonsPanel = new ButtonsPanel(width, aerialTrafficPanel, simulation.getTime());
+        buttonsPanel = new ButtonsPanel(width, simulation, aerialTrafficPanel, simulation.getTime());
 
         aerialTrafficPanel.addMouseListener(selectionListener);
 
