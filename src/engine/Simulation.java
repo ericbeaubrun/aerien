@@ -55,16 +55,16 @@ public class Simulation {
     public void decreaseSimulationSpeed() {
         int currentSpeed = flightManager.getSpeed();
 
-        if (currentSpeed < 1900) {
-            flightManager.setSpeed(currentSpeed + 300);
+        if (currentSpeed < 2000) {
+            flightManager.setSpeed(currentSpeed + 200);
         }
     }
 
     public void increaseSimulationSpeed() {
         int currentSpeed = flightManager.getSpeed();
 
-        if (currentSpeed > 100) {
-            flightManager.setSpeed(currentSpeed - 300);
+        if (currentSpeed > 200) {
+            flightManager.setSpeed(currentSpeed - 200);
         }
     }
 

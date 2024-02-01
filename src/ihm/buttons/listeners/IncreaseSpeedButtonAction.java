@@ -21,6 +21,4 @@ public class IncreaseSpeedButtonAction extends ButtonAction implements ActionLis
     public void actionPerformed(ActionEvent e) {
      simulation.increaseSimulationSpeed();
     }
-
-
 }

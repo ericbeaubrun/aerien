@@ -11,16 +11,16 @@ public class Config {
 
     public static final int BLOCK_SIZE = (int) ((SCREEN_DIMENSION.getHeight() * 40) / 1080);
 
-    //    public static int AIR_SECTOR_HEIGHT = 5;
-    //    public static int AIR_SECTOR_WIDTH = 3*2;
 
     public static int COLUMNS = 30;
 
     public static int ROWS = 20;
 
-    public static int AIR_SECTOR_HEIGHT = 2;
+    public static int AIR_SECTOR_HEIGHT = 5; // default=2
 
-    public static int AIR_SECTOR_WIDTH = 3;
+    public static int AIR_SECTOR_WIDTH = 5; // default=3
+
+    public static int GAP = COLUMNS / AIR_SECTOR_HEIGHT;
 
     public static final boolean ALLOW_GRID_DISPLAY = true;
 

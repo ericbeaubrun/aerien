@@ -28,7 +28,6 @@ public class SimulationInitializer {
         return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream).getDocumentElement();
     }
 
-
     private static void initAirports(Element element, AirportManager airports) {
         NodeList airportsNodes = element.getElementsByTagName("Airport");
 
@@ -89,11 +88,11 @@ public class SimulationInitializer {
             int y = blockToPixel(airplaneElement.getAttribute("Y"));
             int maxSpeed = Integer.parseInt(airplaneElement.getAttribute("MaxSpeed"));
             int maxFuel = Integer.parseInt(airplaneElement.getAttribute("MaxFuel"));
-            int comFrequency = Integer.parseInt(airplaneElement.getAttribute("ComFrequency"));
+            int comFrequency = Integer.parseInt(airplaneElement.getAttribute("ComFreq"));
             String imagePath = airplaneElement.getAttribute("ImagePath");
 
             String reference = airplaneElement.getAttribute("Reference");
-            Airplane airplane = new Airplane(x, y, reference, maxFuel, maxSpeed, comFrequency, imagePath);
+            Airplane airplane = new Airplane(x, y, reference, maxFuel, maxSpeed, comFrequency);
 
             Airport unfilledAirport = airports.getRandomSpawnAirport();
             if (unfilledAirport != null) {

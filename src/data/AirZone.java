@@ -13,8 +13,8 @@ public class AirZone {
     private Airplane airplane;
 
     private final ArrayList<Position> positions = new ArrayList<>();
+    public boolean tryToAcquire = false;
 
-    // Représente les deux points permettant de dessiner un rectangle
     public AirZone() {
 
     }
@@ -34,12 +34,16 @@ public class AirZone {
     public void enterInAirZone(Airplane airplane) {
         if (airplane != null) {
             try {
+                airplane.setWaiting(true);
+//                tryToAcquire = true;
                 semaphore.acquire();
                 this.airplane = airplane;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            airplane.setWaiting(false);
         }
+//        tryToAcquire = false;
     }
 
     public void leaveAirzone() {
@@ -47,4 +51,11 @@ public class AirZone {
         semaphore.release();
     }
 
+    public boolean tryAcquire() {
+        return semaphore.tryAcquire();
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
 }

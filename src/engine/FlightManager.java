@@ -10,7 +10,7 @@ public class FlightManager implements Runnable {
 
     private boolean isRunning = false;
 
-    private int speed = 1000;
+    private int speed = 800;
 
     private final ArrayList<Flight> flights = new ArrayList<>();
 
@@ -105,6 +105,11 @@ public class FlightManager implements Runnable {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+
+        for (Flight flight : flights) {
+            flight.setSpeed(speed);
+        }
+
         System.out.println("Speed set to :"+speed);
     }
 }

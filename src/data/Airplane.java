@@ -2,13 +2,37 @@ package data;
 
 public class Airplane extends Entity {
 
+    private int fuel;
+
+    private int speed;
+
+    private int maxFuel;
+
+    private int maxSpeed;
+
+    private double angle;
+
+    private int altitude;
+
+    private int inclinaison;
+
+    private String reference;
+
+    private String direction;
+
+
+    private boolean isOnTrail;
+
+    private boolean isWaiting = false;
+
+    private float communicationFrequency;
 
     public Airplane(int x, int y) {
         super(x, y);
         this.isOnTrail = false;
     }
 
-    public Airplane(int x, int y, String reference, int maxFuel, int maxSpeed, int comFrequency, String imagePath) {
+    public Airplane(int x, int y, String reference, int maxFuel, int maxSpeed, int comFrequency) {
         super(x, y);
         this.altitude = 0;
         this.angle = 0;
@@ -16,7 +40,6 @@ public class Airplane extends Entity {
 
         this.reference = reference;
 
-        this.imagePath = imagePath;
         this.communicationFrequency = comFrequency;
 
         this.fuel = maxFuel;
@@ -27,29 +50,6 @@ public class Airplane extends Entity {
 
         this.isOnTrail = false;
     }
-
-
-    private boolean isOnTrail;
-
-    private String imagePath;
-
-    private int altitude;
-
-    private double angle;
-
-    private int inclinaison;
-
-    private int fuel;
-    private int maxFuel;
-
-    private int speed;
-    private int maxSpeed;
-
-    private String reference;
-
-    private String direction;
-
-    private float communicationFrequency;
 
     public void setOnTrail(boolean onTrail) {
         isOnTrail = onTrail;
@@ -83,11 +83,16 @@ public class Airplane extends Entity {
         return speed;
     }
 
-    public float getCommunicationFrequency() {
-        return communicationFrequency;
-    }
 
     public void setAngle(double angle) {
         this.angle = angle;
+    }
+
+    public boolean isWaiting() {
+        return isWaiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        isWaiting = waiting;
     }
 }

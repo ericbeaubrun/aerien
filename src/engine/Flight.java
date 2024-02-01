@@ -10,6 +10,8 @@ import java.util.Random;
 
 public class Flight implements Runnable {
 
+    private int speed = 800;
+
     private Thread thread = null;
 
     private int countBeforeTakeoff;
@@ -87,7 +89,9 @@ public class Flight implements Runnable {
     @Override
     public void run() {
         if (airplane != null) {
+
             isRunning = true;
+
             try {
                 countBeforeTakeoff = 10;
 
@@ -95,16 +99,11 @@ public class Flight implements Runnable {
 
                 currentIndex = 0;
                 while (currentIndex < path.size()) {
-                    Thread.sleep(Config.SIMULATION_SPEED * 16);
 
                     Position currentPosition = path.get(currentIndex);
-                    Position nextPosition = currentIndex + 1 < path.size() ? path.get(currentIndex + 1) : currentPosition;
-
-
-
                     AirZone airZone = mapField.findAirZone(currentPosition);
 
-//                    AirZone airZone = mapField.findAirZone(airplane.getPosition());
+                    Thread.sleep(speed);
 
                     if (airZone != null && currentAirZone == null) {
                         currentAirZone = airZone;
@@ -123,15 +122,18 @@ public class Flight implements Runnable {
 
                     double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
                     airplane.setAngle(angle);
+
                     currentIndex++;
                 }
 
-                Thread.sleep(Config.SIMULATION_SPEED * 16);
+                Thread.sleep(speed);
 
                 landingAirplane();
+
                 reverseDirection();
 
             } catch (InterruptedException e) {
+                System.err.println("Interruption");
             }
             isRunning = false;
         }
@@ -149,10 +151,11 @@ public class Flight implements Runnable {
         s.append(destinationAirport.getName());
         s.append("\n");
 
-        for (Position position : path) {
-            s.append(position.toString());
-            s.append("\n");
-        }
+//        for (Position position : path) {
+//            s.append(position.toString());
+//            s.append("\n");
+//        }
+
         return s.toString();
     }
 
@@ -204,5 +207,13 @@ public class Flight implements Runnable {
 
     public Airport getStartAirport() {
         return startAirport;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

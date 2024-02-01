@@ -37,7 +37,9 @@ public class ImageUtility {
         if (airplane != null) {
 
             String ref = airplane.getReference().strip();
-            String color = "_green";
+
+            String color = airplane.isWaiting() ? "_yellow" : "_green";
+
             String path = Config.RESSOURCES_PATH + "planes/";
 
             if (ref.startsWith("Airbus A320".strip())) {

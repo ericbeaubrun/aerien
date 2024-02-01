@@ -2,59 +2,41 @@
 <Configuration>
     <Airplanes>
         <!-- 18/18 Airplanes -->
-        <Airplane Reference="Airbus A320-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane1.png"/>
+        <Airplane Reference="Airbus A320-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Airbus A320-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane1.png"/>
+        <Airplane Reference="Airbus A320-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Tecnam FHCSK-1" MaxFuel="700" MaxSpeed="500" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane2.png"/>
+        <Airplane Reference="Tecnam FHCSK-1" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Tecnam FHCSK-2" MaxFuel="700" MaxSpeed="500" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane2.png"/>
+        <Airplane Reference="Tecnam FHCSK-2" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper J3-1" MaxFuel="700" MaxSpeed="500" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane3.png"/>
+        <Airplane Reference="Piper J3-1" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper J3-2" MaxFuel="700" MaxSpeed="500" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane3.png"/>
+        <Airplane Reference="Piper J3-2" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Boeing 737-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane4.png"/>
+        <Airplane Reference="Boeing 737-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Boeing 737-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane4.png"/>
+        <Airplane Reference="Boeing 737-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Antonov AN225-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane5.png"/>
+        <Airplane Reference="Antonov AN225-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Antonov AN225-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane5.png"/>
+        <Airplane Reference="Antonov AN225-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Aero L39 Albatros-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane6.png"/>
+        <Airplane Reference="Aero L39 Albatros-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Aero L39 Albatros-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane6.png"/>
+        <Airplane Reference="Aero L39 Albatros-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper PA28-1" MaxFuel="1000" MaxSpeed="600" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane7.png"/>
+        <Airplane Reference="Piper PA28-1" MaxFuel="1000" MaxSpeed="600" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper PA28-2" MaxFuel="1000" MaxSpeed="600" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane7.png"/>
+        <Airplane Reference="Piper PA28-2" MaxFuel="1000" MaxSpeed="600" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="American XB68-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane8.png"/>
+        <Airplane Reference="American XB68-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="American XB68-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane8.png"/>
+        <Airplane Reference="American XB68-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Global 7500-1" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane9.png"/>
+        <Airplane Reference="Global 7500-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
 
-        <Airplane Reference="Global 7500-2" MaxFuel="1000" MaxSpeed="20000" ComFrequency="0" X="0" Y="0"
-                  ImagePath="src/main/ressources/plane9.png"/>
+        <Airplane Reference="Global 7500-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
     </Airplanes>
 
     <!-- 8/8 Airports-->
