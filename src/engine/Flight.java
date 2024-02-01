@@ -1,6 +1,5 @@
 package engine;
 
-import config.Config;
 import data.*;
 import util.ConversionUtility;
 
@@ -18,20 +17,19 @@ public class Flight implements Runnable {
 
     private boolean isRunning = false;
 
+    private int currentIndex;
+
+    private final MapField mapField;
+
     private Airplane airplane = null;
 
-    private final ArrayList<Position> path = new ArrayList<>();
-
-    private int currentIndex;
+    private AirZone currentAirZone;
 
     private Airport startAirport;
 
     private Airport destinationAirport;
 
-    private final MapField mapField;
-
-    private AirZone currentAirZone;
-
+    private final ArrayList<Position> path = new ArrayList<>();
 
     public Flight(MapField mapField, AirportManager airports, Position posAirportA, Position posAirportB) {
         this.mapField = mapField;
@@ -39,7 +37,7 @@ public class Flight implements Runnable {
         this.destinationAirport = airports.findAiport(posAirportB.getColumn(), posAirportB.getRow());
 
         Random random = new Random();
-        countBeforeTakeoff = 10 + random.nextInt(50);
+        countBeforeTakeoff = 5 + random.nextInt(40);
     }
 
     public int getCountBeforeTakeoff() {
@@ -74,14 +72,14 @@ public class Flight implements Runnable {
         airplane.setAngle(ConversionUtility.calculateAngle(startAirport.getPosition(), path.get(1)));
         airplane.setPosition(startAirport);
         startAirport.removeAirplane(airplane);
-        airplane.setOnTrail(false);
+        airplane.putOnRunway(false);
     }
 
     public void landingAirplane() {
         currentAirZone.leaveAirzone();
         airplane.setPosition(destinationAirport);
         destinationAirport.addAirplane(airplane);
-        airplane.setOnTrail(true);
+        airplane.putOnRunway(true);
         airplane = null;
         thread = null;
     }
@@ -93,7 +91,6 @@ public class Flight implements Runnable {
             isRunning = true;
 
             try {
-                countBeforeTakeoff = 10;
 
                 takeoffAirplane();
 
@@ -130,6 +127,9 @@ public class Flight implements Runnable {
 
                 landingAirplane();
 
+                Random random = new Random();
+                countBeforeTakeoff = 5 + random.nextInt(20);
+
                 reverseDirection();
 
             } catch (InterruptedException e) {
@@ -162,6 +162,8 @@ public class Flight implements Runnable {
     public void startThread(Airplane airplane) {
         if (!isRunning || thread == null) {
             this.airplane = airplane;
+            startAirport.incrementAvailableRunwayCount();
+            destinationAirport.decrementAvailableRunwayCount();
             thread = new Thread(this);
             thread.start();
         }

@@ -93,7 +93,7 @@ public class ButtonsPanel extends JPanel {
         this.time = time;
         timeLabel = new JLabel("     " + time.toString());
         timeLabel.setForeground(Color.WHITE);
-        timeLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        timeLabel.setFont(new Font("Verdana", Font.PLAIN, (int) (BLOCK_SIZE * 0.4)));
         add(timeLabel);
     }
 
@@ -114,6 +114,7 @@ public class ButtonsPanel extends JPanel {
 
     public void refreshTime() {
         time.incrementMinuts();
-        timeLabel.setText("     " + time.toString());
+//        timeLabel.setText("     " + time.toString());
+        timeLabel.setText(time.toString() + " UTC+1");
     }
 }

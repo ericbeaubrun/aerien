@@ -1,5 +1,6 @@
 package engine;
 
+import data.AirZone;
 import data.Airplane;
 import data.Airport;
 import data.MapField;
@@ -24,6 +25,32 @@ public class FlightManager implements Runnable {
     public void run() {
         isRunning = true;
         while (isRunning) {
+            try {
+                Thread.sleep(speed);
+                for (Flight flight : flights) {
+                    if (!flight.isRunning() && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()) {
+
+                        Airport airport = flight.getStartAirport();
+                        AirZone airZone = map.findAirZone(airport.getPosition());
+
+                        if (airZone != null && !airZone.isOccupied()) {
+                            Airplane airplane = flight.getStartAirport().getFirstAvailableAirplane();
+                            flight.getStartAirport().removeAirplane(airplane);
+                            flight.removeAirplane(airplane);
+
+                            if (airplane != null) {
+                                flight.startThread(airplane);
+                            }
+                        }
+                    }
+                    flight.decrementCountBeforeTakeoff();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 //            try {
 //                Thread.sleep(2000);
 //
@@ -56,27 +83,7 @@ public class FlightManager implements Runnable {
 //            } catch (InterruptedException e) {
 //                throw new RuntimeException(e);
 //            }
-
-            try {
-                Thread.sleep(speed);
-                for (Flight flight : flights) {
-                    if (!flight.isRunning() && flight.isReadyToLaunch() && !flight.getDestinationAirport().isFilled()) {
-                        Airplane airplane = flight.getStartAirport().getAvailableAirplane();
-                        flight.getStartAirport().removeAirplane(airplane);
-                        flight.removeAirplane(airplane);
-
-                        if (airplane != null) {
-                            flight.startThread(airplane);
-                        }
-                    }
-                    flight.decrementCountBeforeTakeoff();
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
+//            ==================================================================================================================================
 //    public Flight findFlight(Airport startAirport, Airport destinationAirport) {
 //        for (Flight flight : flights) {
 //            if (flight.getStartAirport().equals(startAirport) && flight.getDestinationAirport().equals(destinationAirport)) {
@@ -98,19 +105,15 @@ public class FlightManager implements Runnable {
         return new ArrayList<>(flights);
     }
 
-
     public int getSpeed() {
         return speed;
     }
 
     public void setSpeed(int speed) {
         this.speed = speed;
-
         for (Flight flight : flights) {
             flight.setSpeed(speed);
         }
-
-        System.out.println("Speed set to :"+speed);
     }
 }
 

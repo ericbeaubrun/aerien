@@ -7,6 +7,8 @@ public class Airport extends Entity {
 
     private final int maxAirplanes;
 
+    private int availableRunwayCount;
+
     private final ArrayList<Airplane> airplanes;
 
     private String name;
@@ -15,12 +17,13 @@ public class Airport extends Entity {
         super(x, y);
         airplanes = new ArrayList<>();
         this.maxAirplanes = maxAirplanes;
+        availableRunwayCount = maxAirplanes;
         this.name = name;
     }
 
     public boolean addAirplane(Airplane airplane) {
         if (airplane != null && airplanes.size() <= maxAirplanes) {
-            airplane.setOnTrail(true);
+            airplane.putOnRunway(true);
             airplane.setX(this.getX());
             airplane.setY(this.getY());
             return airplanes.add(airplane);
@@ -35,7 +38,7 @@ public class Airport extends Entity {
         return false;
     }
 
-    public int getAmountAirplanes() {
+    public int getAmountAirplanesOnRunway() {
         return airplanes.size();
     }
 
@@ -55,14 +58,14 @@ public class Airport extends Entity {
         return "pixel=(" + getX() + ":" + getY() + ") block=(" + getColumn() + ":" + getRow() + ")";
     }
 
-    public Airplane getAvailableAirplane() {
+    public Airplane getFirstAvailableAirplane() {
         if (!airplanes.isEmpty()) {
             return airplanes.get(0);
         }
         return null;
     }
 
-    public Airplane getAvailableAirplaneExcept(ArrayList<Airplane> exceptAirplanes) {
+    public Airplane getFirstAvailableAirplaneExcept(ArrayList<Airplane> exceptAirplanes) {
         for (int i = 0; i < airplanes.size(); i++) {
             Airplane airplane = airplanes.get(i);
             if (!exceptAirplanes.contains(airplane)) {
@@ -72,11 +75,27 @@ public class Airport extends Entity {
         return null;
     }
 
+    public boolean hasAvailableRunway() {
+        return availableRunwayCount > 0;
+    }
+
+    public void incrementAvailableRunwayCount() {
+        availableRunwayCount++;
+    }
+
+    public void decrementAvailableRunwayCount() {
+        availableRunwayCount--;
+    }
+
     public ArrayList<Airplane> getAirplanes() {
         return new ArrayList<>(airplanes);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getAvailableRunwayCount() {
+        return availableRunwayCount;
     }
 }

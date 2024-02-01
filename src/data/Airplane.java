@@ -20,8 +20,7 @@ public class Airplane extends Entity {
 
     private String direction;
 
-
-    private boolean isOnTrail;
+    private boolean isOnRunway;
 
     private boolean isWaiting = false;
 
@@ -29,7 +28,7 @@ public class Airplane extends Entity {
 
     public Airplane(int x, int y) {
         super(x, y);
-        this.isOnTrail = false;
+        this.isOnRunway = false;
     }
 
     public Airplane(int x, int y, String reference, int maxFuel, int maxSpeed, int comFrequency) {
@@ -48,15 +47,15 @@ public class Airplane extends Entity {
         this.speed = 0;
         this.maxSpeed = maxSpeed;
 
-        this.isOnTrail = false;
+        this.isOnRunway = false;
     }
 
-    public void setOnTrail(boolean onTrail) {
-        isOnTrail = onTrail;
+    public void putOnRunway(boolean isOnRunway) {
+        this.isOnRunway = isOnRunway;
     }
 
-    public boolean isOnTrail() {
-        return isOnTrail;
+    public boolean isOnRunway() {
+        return isOnRunway;
     }
 
     public double getAngle() {
@@ -82,7 +81,6 @@ public class Airplane extends Entity {
     public int getSpeed() {
         return speed;
     }
-
 
     public void setAngle(double angle) {
         this.angle = angle;

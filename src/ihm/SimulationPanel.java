@@ -59,7 +59,7 @@ public class SimulationPanel extends JPanel implements Runnable {
                     selectionListener.setSelectedFlight(null);
                     selectionListener.setSelectedAirport(selectedFlight.getDestinationAirport());
                     displayInfoPanel.setDisplayOnlyAirportInfo();
-                } else if (selectedAirplane != null && !selectedAirplane.isOnTrail() && selectedFlight == null && selectedAirport != null) {
+                } else if (selectedAirplane != null && !selectedAirplane.isOnRunway() && selectedFlight == null && selectedAirport != null) {
                     // Cas de décolage
                     selectionListener.associateSelectedAirplaneToFlight();
                     selectionListener.setSelectedAirport(null);

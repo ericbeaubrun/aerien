@@ -17,6 +17,10 @@ public class AerialTrafficPanel extends JPanel {
 
     private final String BACKGROUND_IMAGE_PATH = Config.RESSOURCES_PATH + "map.png";
 
+    private final Font BASIC_FONT = new Font("Arial", Font.PLAIN, 9);
+
+    private final Color FLIGHT_STROKE_COLOR = new Color(110, 110, 110);
+
     private final float[] DASH_PATTERN = {5.0f, 5.0f};
 
     private final Stroke FLIGHT_STROKE = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1.0f, DASH_PATTERN, 0.0f);
@@ -65,7 +69,7 @@ public class AerialTrafficPanel extends JPanel {
     }
 
     private void paintGridCoords(Graphics g) {
-        g.setFont(new Font("Arial", Font.PLAIN, 9));
+        g.setFont(BASIC_FONT);
 
         for (Position block : mapField.getBlocks()) {
             if (showGrid) {
@@ -102,7 +106,7 @@ public class AerialTrafficPanel extends JPanel {
         }
 
         for (Airplane airplane : airplanes) {
-            if (!airplane.isOnTrail()) {
+            if (!airplane.isOnRunway()) {
                 if (showStyle) {
                     BufferedImage image = getAirplaneImage(airplane);
                     if (image != null) {
@@ -140,10 +144,9 @@ public class AerialTrafficPanel extends JPanel {
             g.fillOval(x, y, width, height);
 
             g.setColor(Color.WHITE);
-            g.drawString(airport.getAmountAirplanes() + "/" + airport.getMaxAirplanes(), x, y);
+            g.drawString(airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes(), x, y);
         }
     }
-
 
     public void paintFlights(Graphics g) {
         if (showTrajects) {
@@ -151,23 +154,22 @@ public class AerialTrafficPanel extends JPanel {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setStroke(FLIGHT_STROKE);
 
+            int x1, x2, y1, y2;
+
             for (Flight flight : flights) {
+//                if (true) {
                 if (flight.isRunning() || showFlights) {
-                    Airplane airplane = flight.getAirplane();
+//                    Airplane airplane = flight.getAirplane();
 
                     ArrayList<Position> path = flight.getPath();
-
-                    int x1;
-                    int x2;
-                    int y1;
-                    int y2;
 
                     g2d.setColor(Color.WHITE);
 
                     for (int i = -1; i < path.size(); i++) {
 
                         if (flight.getCurrentIndex() - 1 == i || flight.getCurrentIndex() == 0) {
-                            g2d.setColor(new Color(110, 110, 110));
+                            g2d.setColor(FLIGHT_STROKE_COLOR);
+//                            g2d.setColor(Color.YELLOW);
                         }
                         if (i == -1) {
                             x1 = flight.getStartAirport().getX() + BLOCK_SIZE / 2;

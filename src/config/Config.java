@@ -16,11 +16,14 @@ public class Config {
 
     public static int ROWS = 20;
 
-    public static int AIR_SECTOR_HEIGHT = 5; // default=2
+//    public static int AIR_SECTOR_HEIGHT = 5;
+//    public static int AIR_SECTOR_WIDTH = 5;
 
-    public static int AIR_SECTOR_WIDTH = 5; // default=3
+    public static int AIR_SECTOR_HEIGHT = 2;
+    public static int AIR_SECTOR_WIDTH = 3;
 
-    public static int GAP = COLUMNS / AIR_SECTOR_HEIGHT;
+
+    public static int GAP = COLUMNS / AIR_SECTOR_WIDTH;
 
     public static final boolean ALLOW_GRID_DISPLAY = true;
 

@@ -43,11 +43,11 @@
     <Airports>
         <Airport Name="Dublin" AirplaneMax="3" X="3" Y="4"/>
         <Airport Name="Stockholm" AirplaneMax="3" X="14" Y="1"/>
-        <Airport Name="Moscow" AirplaneMax="3" X="28" Y="1"/>
+        <Airport Name="Moscow" AirplaneMax="2" X="28" Y="1"/>
         <Airport Name="Vienna" AirplaneMax="3" X="17" Y="9"/>
         <Airport Name="Paris" AirplaneMax="3" X="8" Y="9"/>
         <Airport Name="Istanbul" AirplaneMax="3" X="24" Y="14"/>
-        <Airport Name="Madrid" AirplaneMax="4" X="3" Y="15"/>
+        <Airport Name="Madrid" AirplaneMax="3" X="3" Y="15"/>
         <Airport Name="Alger" AirplaneMax="3" X="8" Y="19"/>
     </Airports>
 

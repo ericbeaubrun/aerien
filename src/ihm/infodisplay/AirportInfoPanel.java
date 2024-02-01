@@ -33,7 +33,7 @@ public class AirportInfoPanel extends JPanel {
 
             for (Flight flight : flights) {
                 if (flight.getStartAirport().equals(airport)) {
-                    Airplane airplane = airport.getAvailableAirplaneExcept(exceptedAirplanes);
+                    Airplane airplane = airport.getFirstAvailableAirplaneExcept(exceptedAirplanes);
                     if (airplane != null) {
                         exceptedAirplanes.add(airplane);
                         JButton button = buttons.get(currentButtonIndex);

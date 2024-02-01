@@ -97,6 +97,7 @@ public class SimulationInitializer {
             Airport unfilledAirport = airports.getRandomSpawnAirport();
             if (unfilledAirport != null) {
                 unfilledAirport.addAirplane(airplane);
+                unfilledAirport.decrementAvailableRunwayCount();
                 airplanes.add(airplane);
             }
         }
