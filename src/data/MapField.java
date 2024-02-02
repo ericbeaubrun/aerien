@@ -33,12 +33,12 @@ public class MapField {
     }
 
     private void initAirZones() {
-        for (int row = 0; row < ROWS; row += AIR_SECTOR_HEIGHT) {
-            for (int col = 0; col < COLUMNS; col += AIR_SECTOR_WIDTH) {
+        for (int row = 0; row < ROWS; row += AIR_ZONE_HEIGHT) {
+            for (int col = 0; col < COLUMNS; col += AIR_ZONE_WIDTH) {
 
                 AirZone airZones = new AirZone();
-                for (int i = row; i < row + AIR_SECTOR_HEIGHT; i++) {
-                    for (int j = col; j < col + AIR_SECTOR_WIDTH; j++) {
+                for (int i = row; i < row + AIR_ZONE_HEIGHT; i++) {
+                    for (int j = col; j < col + AIR_ZONE_WIDTH; j++) {
                         airZones.addPosition(blocks[j][i]);
                     }
                 }

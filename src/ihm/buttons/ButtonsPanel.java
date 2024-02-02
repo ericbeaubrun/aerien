@@ -1,10 +1,8 @@
 package ihm.buttons;
 
-import config.Config;
 import engine.Simulation;
 import engine.TimeCounter;
 import ihm.AerialTrafficPanel;
-import ihm.SimulationPanel;
 import ihm.buttons.listeners.*;
 
 import javax.swing.*;
@@ -15,26 +13,33 @@ import static config.Config.*;
 
 public class ButtonsPanel extends JPanel {
 
-    private ArrayList<JButton> buttons;
-
-    private String buttonsName[] = {"Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed", "Decrease speed", "Show flights", "Show AirZones", "..."
-            , "..."};
+    private final String[] BUTTONS_NAMES = {
+            "Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed",
+            "Decrease speed", "Show flights", "Show AirZones", "Show airports", "...", "...", "...", "...", "...", "..."
+    };
 
     private TimeCounter time;
+
     private JLabel timeLabel;
+
+    private final ArrayList<JButton> buttons;
+
+    private ArrayList<JButton> presetButtons;
+
+    private final int VERTICAL_STRUT_SIZE = (int) (BLOCK_SIZE * 0.6);
 
     public ButtonsPanel(int width, Simulation simulation, AerialTrafficPanel aerialTrafficPanel, TimeCounter time) {
 
         initTimeLabel(time);
 
         setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight())));
-        setBackground(new Color(30, 30, 30));
+        setBackground(BACKGROUND_COLOR);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         buttons = new ArrayList<>();
 
-        add(Box.createVerticalStrut(18));
-        for (String name : buttonsName) {
+        add(Box.createVerticalStrut(VERTICAL_STRUT_SIZE));
+        for (String name : BUTTONS_NAMES) {
             JButton button = new JButton(name);
             initButtonStyle(button);
             switch (name) {
@@ -85,7 +90,11 @@ public class ButtonsPanel extends JPanel {
             }
             buttons.add(button);
             add(button);
-            add(Box.createVerticalStrut(18));
+            add(Box.createVerticalStrut(VERTICAL_STRUT_SIZE));
+
+//            for (JButton button1 : buttons) {
+//                button.setVisible(false);
+//            }
         }
     }
 
@@ -106,7 +115,7 @@ public class ButtonsPanel extends JPanel {
             button.setFocusPainted(false);
             button.setBackground(new Color(50, 50, 50));
             button.setForeground(Color.WHITE);
-            button.setFont(new Font("Arial", Font.BOLD, 12));
+            button.setFont(new Font("Arial", Font.BOLD, (int) (BLOCK_SIZE*0.3)));
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             button.addMouseListener(new ButtonHoverEffect(button));
         }

@@ -10,14 +10,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static config.Config.BLOCK_SIZE;
+import static config.Config.*;
 import static util.ImageUtility.*;
 
 public class AerialTrafficPanel extends JPanel {
 
     private final String BACKGROUND_IMAGE_PATH = Config.RESSOURCES_PATH + "map.png";
 
-    private final Font BASIC_FONT = new Font("Arial", Font.PLAIN, 9);
+    private final Font BASIC_FONT = new Font("Arial", Font.PLAIN, BLOCK_SIZE / 4);
 
     private final Color FLIGHT_STROKE_COLOR = new Color(110, 110, 110);
 
@@ -32,6 +32,8 @@ public class AerialTrafficPanel extends JPanel {
     private final ArrayList<Airport> airports;
 
     private final ArrayList<Airplane> airplanes;
+
+//    private final HashMap<Airplane, BufferedImage> airplaneImageHashMap = new HashMap<>();
 
     private boolean showGrid = false;
 
@@ -54,6 +56,10 @@ public class AerialTrafficPanel extends JPanel {
         this.mapField = mapField;
         this.airports = airports;
         this.airplanes = airplanes;
+
+//        for (Airplane airplane : airplanes) {
+//            airplaneImageHashMap.put(airplane, getAirplaneImage(airplane));
+//        }
 
         backgroundImage = readImage(BACKGROUND_IMAGE_PATH);
         setBackground(Config.BACKGROUND_COLOR);
@@ -78,7 +84,7 @@ public class AerialTrafficPanel extends JPanel {
             }
             if (showCoords) {
                 g.setColor(Color.WHITE);
-                g.drawString(block.getColumn() + ":" + block.getRow(), block.getX() + 5, block.getY() + 15);
+                g.drawString(block.getColumn() + ":" + block.getRow(), block.getX() + BLOCK_SIZE / 6, block.getY() + BLOCK_SIZE / 2);
             }
         }
     }
@@ -111,9 +117,9 @@ public class AerialTrafficPanel extends JPanel {
                     BufferedImage image = getAirplaneImage(airplane);
                     if (image != null) {
                         image = rotateImage(image, airplane.getAngle());
-                        g.drawImage(image, airplane.getX(), airplane.getY(), null);
-//                      o  g.drawImage(image, airplane.getX(), airplane.getY(), (int) ((48*Config.SCREEN_DIMENSION.getHeight())/1220),
-//                                (int) ((50*Config.SCREEN_DIMENSION.getHeight())/1220), null);
+//                        g.drawImage(image, airplane.getX(), airplane.getY(), null);
+                        g.drawImage(image, airplane.getX() + BLOCK_SIZE / 12, airplane.getY() + BLOCK_SIZE / 12,
+                                (int) (38 * SCALING_WIDTH_RATIO), (int) (40 * SCALING_HEIGHT_RATIO), null);
 
                     } else {
                         //traitement
@@ -125,8 +131,10 @@ public class AerialTrafficPanel extends JPanel {
                     int width = (BLOCK_SIZE - 5) / 2;
                     int height = (BLOCK_SIZE - 5) / 2;
 
-                    g.setColor(Color.GREEN);
+                    g.setColor(airplane.isWaiting() ? Color.YELLOW : Color.GREEN);
                     g.fillOval(x, y, width, height);
+                    g.drawString(airplane.getReference(), x - (BLOCK_SIZE / 2) - (BLOCK_SIZE / 6), y - (BLOCK_SIZE / 6));
+
                 }
             }
         }
@@ -213,7 +221,7 @@ public class AerialTrafficPanel extends JPanel {
             for (int i = 0; i < airZones.size(); i++) {
                 AirZone airZone = airZones.get(i);
 
-                if (!(i % Config.GAP == 0)) {
+                if (!(i % Config.AIR_ZONE_GAP == 0)) {
                     isColored = !isColored;
                 }
 

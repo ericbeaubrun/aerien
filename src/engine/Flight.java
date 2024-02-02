@@ -91,7 +91,6 @@ public class Flight implements Runnable {
             isRunning = true;
 
             try {
-
                 takeoffAirplane();
 
                 currentIndex = 0;

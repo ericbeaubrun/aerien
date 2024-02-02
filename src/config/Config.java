@@ -16,14 +16,17 @@ public class Config {
 
     public static int ROWS = 20;
 
-//    public static int AIR_SECTOR_HEIGHT = 5;
-//    public static int AIR_SECTOR_WIDTH = 5;
+    public static int AIR_ZONE_HEIGHT = 5;
+    public static int AIR_ZONE_WIDTH = 5;
+//
+//    public static int AIR_ZONE_HEIGHT = 2;
+//    public static int AIR_ZONE_WIDTH = 3;
 
-    public static int AIR_SECTOR_HEIGHT = 2;
-    public static int AIR_SECTOR_WIDTH = 3;
+    public static int AIR_ZONE_GAP = COLUMNS / AIR_ZONE_WIDTH;
 
+    public static double SCALING_WIDTH_RATIO =  SCREEN_DIMENSION.getWidth() / 1920;
 
-    public static int GAP = COLUMNS / AIR_SECTOR_WIDTH;
+    public static double SCALING_HEIGHT_RATIO =  SCREEN_DIMENSION.getHeight() / 1080;
 
     public static final boolean ALLOW_GRID_DISPLAY = true;
 
