@@ -45,32 +45,36 @@ public class ImageUtility {
             String path = Config.RESSOURCES_PATH + "planes/";
 
             if (ref.startsWith("Airbus A320".strip())) {
-                path += "plane1" + color + ".png";
+                path += "plane1";
 
             } else if (ref.startsWith("Tecnam FHCSK".strip())) {
-                path += "plane2" + color + ".png";
+                path += "plane2";
 
             } else if (ref.startsWith("Piper J3".strip())) {
-                path += "plane3" + color + ".png";
+                path += "plane3";
 
             } else if (ref.startsWith("Boeing 737".strip())) {
-                path += "plane4" + color + ".png";
+                path += "plane4";
 
             } else if (ref.startsWith("Antonov AN225".strip())) {
-                path += "plane5" + color + ".png";
+                path += "plane5";
 
             } else if (ref.startsWith("Aero L39 Albatros".strip())) {
-                path += "plane6" + color + ".png";
+                path += "plane6";
 
             } else if (ref.startsWith("Piper PA28".strip())) {
-                path += "plane7" + color + ".png";
+                path += "plane7";
 
             } else if (ref.startsWith("American XB68".strip())) {
-                path += "plane8" + color + ".png";
+                path += "plane8";
 
             } else if (ref.startsWith("Global 7500".strip())) {
-                path += "plane9" + color + ".png";
+                path += "plane9";
             }
+
+            path += color + ".png";
+
+//            image = readImage(Config.RESSOURCES_PATH + "pingouin.png");
             image = readImage(path);
         }
         return image;

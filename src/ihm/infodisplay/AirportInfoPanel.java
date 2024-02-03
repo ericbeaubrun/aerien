@@ -13,7 +13,6 @@ public class AirportInfoPanel extends JPanel {
 
     private final ArrayList<JButton> buttons = new ArrayList<>();
 
-
     public void initButtons(int amount) {
         for (int i = 0; i <= amount; i++) {
             JButton button = new JButton();

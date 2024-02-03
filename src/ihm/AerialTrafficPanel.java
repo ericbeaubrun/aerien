@@ -49,6 +49,8 @@ public class AerialTrafficPanel extends JPanel {
 
     private boolean showBackground = false;
 
+    private boolean showStylePause = false;
+
     private final BufferedImage backgroundImage;
 
     public AerialTrafficPanel(MapField mapField, ArrayList<Airplane> airplanes, ArrayList<Airport> airports, ArrayList<Flight> flights) {
@@ -152,7 +154,8 @@ public class AerialTrafficPanel extends JPanel {
             g.fillOval(x, y, width, height);
 
             g.setColor(Color.WHITE);
-            g.drawString(airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes(), x, y);
+//            g.drawString(airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes(), x, y);
+            g.drawString(airport.getName(), x, y);
         }
     }
 
@@ -245,6 +248,22 @@ public class AerialTrafficPanel extends JPanel {
         }
     }
 
+    private void paintPause(Graphics g) {
+        if (flights.get(0).isPaused()) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(Color.BLACK);
+            g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+
+            g2d.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), getWidth() / 3 + getWidth() / 11, getHeight() / 3 + getWidth() / 18, null);
+//            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), BLOCK_SIZE, BLOCK_SIZE, null);
+
+            g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
+        }
+    }
+
 
     @Override
     public void paint(Graphics g) {
@@ -256,21 +275,8 @@ public class AerialTrafficPanel extends JPanel {
         paintFlights(g);
         paintAirZones(g);
         paintAirplanes(g);
+        paintPause(g);
 
-
-        if (flights.get(0).isPaused()) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(Color.BLACK);
-            g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
-
-            g2d.fillRect(0, 0, getWidth(), getHeight());
-
-            g2d.setComposite(AlphaComposite.SrcOver.derive(0.8f));
-            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), getWidth() / 3 + getWidth() / 11, getHeight() / 3+ getWidth() / 18, null);
-//            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), BLOCK_SIZE, BLOCK_SIZE, null);
-
-            g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
-        }
     }
 
     public void toggleShowCoords() {

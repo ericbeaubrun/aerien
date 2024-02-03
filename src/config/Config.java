@@ -16,10 +16,10 @@ public class Config {
 
     public static int ROWS = 20;
 
-    public static int AIR_ZONE_HEIGHT = 5;
-    public static int AIR_ZONE_WIDTH = 5;
-//    public static int AIR_ZONE_HEIGHT = 2;
-//    public static int AIR_ZONE_WIDTH = 3;
+//    public static int AIR_ZONE_HEIGHT = 5;
+//    public static int AIR_ZONE_WIDTH = 5;
+    public static int AIR_ZONE_HEIGHT = 2;
+    public static int AIR_ZONE_WIDTH = 3;
 
     public static int AIR_ZONE_GAP = COLUMNS / AIR_ZONE_WIDTH;
 
