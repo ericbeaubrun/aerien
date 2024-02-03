@@ -68,6 +68,17 @@ public class Simulation {
         }
     }
 
+    public void togglePause() {
+
+        for (Flight flight : flightManager.getFlights()) {
+            flight.togglePause();
+        }
+
+
+        flightManager.togglePause();
+
+    }
+
 
 }
 

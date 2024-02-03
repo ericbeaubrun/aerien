@@ -4,12 +4,15 @@ import data.AirZone;
 import data.Airplane;
 import data.Airport;
 import data.MapField;
+import util.ThreadUtility;
 
 import java.util.ArrayList;
 
 public class FlightManager implements Runnable {
 
-    private boolean isRunning = false;
+    private volatile boolean isRunning = false;
+
+    private volatile boolean isPaused = false;
 
     private int speed = 800;
 
@@ -23,30 +26,32 @@ public class FlightManager implements Runnable {
 
     @Override
     public void run() {
+
         isRunning = true;
+        isPaused = false;
+
         while (isRunning) {
-            try {
-                Thread.sleep(speed);
-                for (Flight flight : flights) {
-                    if (!flight.isRunning() && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()) {
 
-                        Airport airport = flight.getStartAirport();
-                        AirZone airZone = map.findAirZone(airport.getPosition());
+            ThreadUtility.sleep(speed);
+            ThreadUtility.wait(this);
 
-                        if (airZone != null && !airZone.isOccupied()) {
-                            Airplane airplane = flight.getStartAirport().getFirstAvailableAirplane();
-                            flight.getStartAirport().removeAirplane(airplane);
-                            flight.removeAirplane(airplane);
+            for (Flight flight : flights) {
+                if (!flight.isRunning() && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()) {
 
-                            if (airplane != null) {
-                                flight.startThread(airplane);
-                            }
+                    Airport airport = flight.getStartAirport();
+                    AirZone airZone = map.findAirZone(airport.getPosition());
+
+                    if (airZone != null && !airZone.isOccupied()) {
+                        Airplane airplane = flight.getStartAirport().getFirstAvailableAirplane();
+                        flight.getStartAirport().removeAirplane(airplane);
+                        flight.removeAirplane(airplane);
+
+                        if (airplane != null) {
+                            flight.startThread(airplane);
                         }
                     }
-                    flight.decrementCountBeforeTakeoff();
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                flight.decrementCountBeforeTakeoff();
             }
         }
     }
@@ -107,6 +112,23 @@ public class FlightManager implements Runnable {
 
     public int getSpeed() {
         return speed;
+    }
+
+//    public void togglePause() {
+//        isPaused = !isPaused;
+//    }
+
+    public void togglePause() {
+        synchronized (this) {
+            isPaused = !isPaused;
+            if (!isPaused) {
+                this.notifyAll();
+            }
+        }
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     public void setSpeed(int speed) {

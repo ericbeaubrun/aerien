@@ -3,6 +3,7 @@ package ihm.buttons;
 import engine.Simulation;
 import engine.TimeCounter;
 import ihm.AerialTrafficPanel;
+import ihm.SimulationPanel;
 import ihm.buttons.listeners.*;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class ButtonsPanel extends JPanel {
 
     private final String[] BUTTONS_NAMES = {
             "Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed",
-            "Decrease speed", "Show flights", "Show AirZones", "Show airports", "...", "...", "...", "...", "...", "..."
+            "Decrease speed", "Show flights", "Show AirZones", "Show airports", "Pause", "...", "...", "...", "...", "..."
     };
 
     private TimeCounter time;
@@ -87,8 +88,14 @@ public class ButtonsPanel extends JPanel {
                 case "Show AirZones":
                     button.addActionListener(new ShowAirZonesButtonAction(button, aerialTrafficPanel));
                     break;
+
+                case "Pause":
+                    button.addActionListener(new TogglePauseButtonAction(button, simulation, time));
+                    break;
             }
+
             buttons.add(button);
+
             add(button);
             add(Box.createVerticalStrut(VERTICAL_STRUT_SIZE));
 
@@ -108,22 +115,22 @@ public class ButtonsPanel extends JPanel {
 
     public void initButtonStyle(JButton button) {
         if (button != null) {
-            Dimension buttonSize = new Dimension(120, 30);
-            button.setPreferredSize(buttonSize);
-            button.setMinimumSize(buttonSize);
-            button.setMaximumSize(buttonSize);
+            Dimension buttonSize = new Dimension(120, ((BLOCK_SIZE * 3) / 4) - 3);
             button.setFocusPainted(false);
-            button.setBackground(new Color(50, 50, 50));
+            button.setMaximumSize(buttonSize);
             button.setForeground(Color.WHITE);
-            button.setFont(new Font("Arial", Font.BOLD, (int) (BLOCK_SIZE*0.3)));
-            button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            button.setMinimumSize(buttonSize);
+            button.setPreferredSize(buttonSize);
+            button.setBackground(new Color(50, 50, 50));
             button.addMouseListener(new ButtonHoverEffect(button));
+            button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            button.setFont(new Font("Arial", Font.BOLD, (int) (BLOCK_SIZE * 0.3)));
         }
     }
 
     public void refreshTime() {
         time.incrementMinuts();
-//        timeLabel.setText("     " + time.toString());
         timeLabel.setText(time.toString() + " UTC+1");
+        timeLabel.setToolTipText("Current Day : " + time.getDaysCount());
     }
 }

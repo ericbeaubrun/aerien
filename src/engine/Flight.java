@@ -2,6 +2,7 @@ package engine;
 
 import data.*;
 import util.ConversionUtility;
+import util.ThreadUtility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,9 @@ public class Flight implements Runnable {
 
     private int countBeforeTakeoff;
 
-    private boolean isRunning = false;
+    private volatile boolean isRunning = false;
+
+    private volatile boolean isPaused = false;
 
     private int currentIndex;
 
@@ -89,51 +92,51 @@ public class Flight implements Runnable {
         if (airplane != null) {
 
             isRunning = true;
+            isPaused = false;
 
-            try {
-                takeoffAirplane();
 
-                currentIndex = 0;
-                while (currentIndex < path.size()) {
+            takeoffAirplane();
 
-                    Position currentPosition = path.get(currentIndex);
-                    AirZone airZone = mapField.findAirZone(currentPosition);
+            currentIndex = 0;
+            while (currentIndex < path.size()) {
 
-                    Thread.sleep(speed);
+                Position currentPosition = path.get(currentIndex);
+                AirZone airZone = mapField.findAirZone(currentPosition);
 
-                    if (airZone != null && currentAirZone == null) {
-                        currentAirZone = airZone;
-                        currentAirZone.enterInAirZone(airplane);
+                ThreadUtility.sleep(speed);
+                ThreadUtility.wait(this);
 
-                    } else if ((airZone != null && !airZone.equals(currentAirZone))) {
-                        currentAirZone.leaveAirzone();
-                        currentAirZone = airZone;
-                        currentAirZone.enterInAirZone(airplane);
-                    }
+                if (airZone != null && currentAirZone == null) {
+                    currentAirZone = airZone;
+                    currentAirZone.enterInAirZone(airplane);
 
-                    airplane.setPosition(currentPosition);
-
-                    // Calculer l'angle de l'avion
-                    Position otherPosition = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
-
-                    double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
-                    airplane.setAngle(angle);
-
-                    currentIndex++;
+                } else if ((airZone != null && !airZone.equals(currentAirZone))) {
+                    currentAirZone.leaveAirzone();
+                    currentAirZone = airZone;
+                    currentAirZone.enterInAirZone(airplane);
                 }
 
-                Thread.sleep(speed);
+                airplane.setPosition(currentPosition);
 
-                landingAirplane();
+                // Calculer l'angle de l'avion
+                Position otherPosition = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
 
-                Random random = new Random();
-                countBeforeTakeoff = 5 + random.nextInt(20);
+                double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
+                airplane.setAngle(angle);
 
-                reverseDirection();
-
-            } catch (InterruptedException e) {
-                System.err.println("Interruption");
+                currentIndex++;
             }
+
+            ThreadUtility.sleep(speed);
+            ThreadUtility.wait(this);
+
+            landingAirplane();
+
+            Random random = new Random();
+            countBeforeTakeoff = 5 + random.nextInt(20);
+
+            reverseDirection();
+
             isRunning = false;
         }
     }
@@ -208,6 +211,19 @@ public class Flight implements Runnable {
 
     public Airport getStartAirport() {
         return startAirport;
+    }
+
+    public void togglePause() {
+        synchronized (this) {
+            isPaused = !isPaused;
+            if (!isPaused) {
+                this.notifyAll();
+            }
+        }
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     public int getSpeed() {

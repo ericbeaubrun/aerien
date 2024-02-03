@@ -69,7 +69,7 @@ public class AerialTrafficPanel extends JPanel {
         if (showBackground) {
             g.drawImage(backgroundImage, 0, 0, (int) (getWidth() * 1.06), (int) (getHeight() * 1.0), null);
         } else {
-            g.setColor(showAirZones ? Color.GRAY : Color.BLACK);
+            g.setColor(showAirZones ? new Color(45, 45, 45) : Color.BLACK);
             g.fillRect(0, 0, BLOCK_SIZE * getWidth(), BLOCK_SIZE * getWidth());
         }
     }
@@ -119,7 +119,8 @@ public class AerialTrafficPanel extends JPanel {
                         image = rotateImage(image, airplane.getAngle());
 //                        g.drawImage(image, airplane.getX(), airplane.getY(), null);
                         g.drawImage(image, airplane.getX() + BLOCK_SIZE / 12, airplane.getY() + BLOCK_SIZE / 12,
-                                (int) (38 * SCALING_WIDTH_RATIO), (int) (40 * SCALING_HEIGHT_RATIO), null);
+                                (int) (38 * SCALING_WIDTH_RATIO),
+                                (int) (40 * SCALING_HEIGHT_RATIO), null);
 
                     } else {
                         //traitement
@@ -134,7 +135,6 @@ public class AerialTrafficPanel extends JPanel {
                     g.setColor(airplane.isWaiting() ? Color.YELLOW : Color.GREEN);
                     g.fillOval(x, y, width, height);
                     g.drawString(airplane.getReference(), x - (BLOCK_SIZE / 2) - (BLOCK_SIZE / 6), y - (BLOCK_SIZE / 6));
-
                 }
             }
         }
@@ -239,7 +239,6 @@ public class AerialTrafficPanel extends JPanel {
 //                        g.fillRect(airZone.getAirplane().getX(), airZone.getAirplane().getY(), BLOCK_SIZE, BLOCK_SIZE);
 //                    }
 //                }
-
             }
 
             g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
@@ -257,6 +256,21 @@ public class AerialTrafficPanel extends JPanel {
         paintFlights(g);
         paintAirZones(g);
         paintAirplanes(g);
+
+
+        if (flights.get(0).isPaused()) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(Color.BLACK);
+            g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+
+            g2d.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), getWidth() / 3 + getWidth() / 11, getHeight() / 3+ getWidth() / 18, null);
+//            g2d.drawImage(readImage(RESSOURCES_PATH + "pause.png"), BLOCK_SIZE, BLOCK_SIZE, null);
+
+            g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
+        }
     }
 
     public void toggleShowCoords() {
