@@ -4,6 +4,7 @@ import config.Config;
 import data.Airplane;
 import data.Airport;
 import engine.Flight;
+import engine.SelectionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,13 +32,18 @@ public class AirportInfoPanel extends JPanel {
             int currentButtonIndex = 0;
 
             for (Flight flight : flights) {
-                if (flight.getStartAirport().equals(airport)) {
+                if (flight.getStartAirport().equals(airport) && !flight.isRunning()) { //&& !flight.isRunning()
                     Airplane airplane = airport.getFirstAvailableAirplaneExcept(exceptedAirplanes);
                     if (airplane != null) {
                         exceptedAirplanes.add(airplane);
                         JButton button = buttons.get(currentButtonIndex);
                         button.setVisible(true);
-                        button.setText(airplane.getReference() + " " + flight.getCountBeforeTakeoff());
+
+//                        Permet de cliquer sur le bouton du panel info aeroport afin de suivre l'avion quand il décolerra
+                        AirportInfoButtonListener listener = (AirportInfoButtonListener) button.getActionListeners()[0];
+                        listener.setAirplane(airplane);
+
+                        button.setText(flight.toString() + " " + airplane.getReference() + " : " + flight.getCountBeforeTakeoff());
                         currentButtonIndex++;
                         //                        JButton button = new JButton(airplane.getReference() + " " + flight.getCountBeforeTakeoff());
                         //                        add(button);
@@ -50,8 +56,11 @@ public class AirportInfoPanel extends JPanel {
             for (Airplane airplane : airplanes) {
                 if (!exceptedAirplanes.contains(airplane)) {
                     JButton button = buttons.get(currentButtonIndex);
-                    button.setText(airplane.getReference() + " NULL");
+                    button.setText(airplane.getReference() + " U/D"); // UNPLANNED DEPARTURE
                     button.setVisible(true);
+                    AirportInfoButtonListener listener = (AirportInfoButtonListener) button.getActionListeners()[0];
+                    listener.setAirplane(airplane);
+
                     currentButtonIndex++;
                 }
             }
@@ -59,6 +68,12 @@ public class AirportInfoPanel extends JPanel {
             for (int i = currentButtonIndex; i < buttons.size(); i++) {
                 buttons.get(i).setVisible(false);
             }
+        }
+    }
+
+    public void setSelectionListener(SelectionListener selectionListener) {
+        for (JButton button : buttons) {
+            button.addActionListener(new AirportInfoButtonListener(selectionListener));
         }
     }
 

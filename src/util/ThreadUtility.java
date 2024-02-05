@@ -8,7 +8,7 @@ public class ThreadUtility {
         try {
             Thread.sleep(speed);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -17,8 +17,8 @@ public class ThreadUtility {
             while (f.isPaused()) {
                 try {
                     f.wait();
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -29,8 +29,8 @@ public class ThreadUtility {
             while (f.isPaused()) {
                 try {
                     f.wait();
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

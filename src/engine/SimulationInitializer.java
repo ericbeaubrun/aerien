@@ -80,6 +80,8 @@ public class SimulationInitializer {
     }
 
     private static void initAirplanes(Element element, AirportManager airports, ArrayList<Airplane> airplanes) {
+        int j = 0;
+
         NodeList airplaneNodes = element.getElementsByTagName("Airplane");
         for (int i = 0; i < airplaneNodes.getLength(); i++) {
             Element airplaneElement = (Element) airplaneNodes.item(i);
@@ -99,8 +101,11 @@ public class SimulationInitializer {
                 unfilledAirport.addAirplane(airplane);
                 unfilledAirport.decrementAvailableRunwayCount();
                 airplanes.add(airplane);
+            } else {
+                j++;
             }
         }
+        System.err.println(j + " avion(s) n'ont pas pu être initialisés.");
     }
 
     public static void initSimulationObjects(MapField mapField, AirportManager airports, ArrayList<Airplane> airplanes, FlightManager flights) {
@@ -114,8 +119,14 @@ public class SimulationInitializer {
 
             inputStream.close();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
         }
     }
 }

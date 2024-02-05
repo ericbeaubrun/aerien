@@ -4,19 +4,19 @@ public class TimeCounter {
 
     private int daysCount = 1;
     private int hours;
-    private int minuts;
+    private int minutes;
     private boolean isPaused = false;
 
     public TimeCounter(int hours, int minuts) {
         this.hours = hours < 24 && hours >= 0 ? hours : 0;
-        this.minuts = minuts < 60 && hours >= 0 ? hours : 0;
+        this.minutes = minuts < 60 && hours >= 0 ? hours : 0;
     }
 
-    public void incrementMinuts() {
+    public void incrementMinutes() {
         if (!isPaused) {
-            minuts++;
-            if (minuts >= 60) {
-                minuts = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
                 hours++;
                 if (hours >= 24) {
                     hours = 0;
@@ -34,15 +34,15 @@ public class TimeCounter {
         this.hours = hours;
     }
 
-    public int getMinuts() {
-        return minuts;
+    public int getMinutes() {
+        return minutes;
     }
 
-    public void setMinuts(int minuts) {
-        this.minuts = minuts;
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 
-    public void togglerPaused() {
+    public void togglePause() {
         isPaused = !isPaused;
     }
 
@@ -52,7 +52,7 @@ public class TimeCounter {
 
     @Override
     public String toString() {
-        return (hours < 10 ? "0" + hours : "" + hours) + " : " + (minuts < 10 ? "0" + minuts : "" + minuts);
+        return (hours < 10 ? "0" + hours : "" + hours) + " : " + (minutes < 10 ? "0" + minutes : "" + minutes);
     }
 
     public int getDaysCount() {

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class SimulationPanel extends JPanel implements Runnable {
 
+    private int speed = 80;
+
     private boolean isRunning = true;
 
     private final ButtonsPanel buttonsPanel;
@@ -30,7 +32,8 @@ public class SimulationPanel extends JPanel implements Runnable {
         aerialTrafficPanel = new AerialTrafficPanel(simulation.getMapField(), simulation.getAirplanes(), simulation.getAirports(), simulation.getFlights());
         displayInfoPanel = new DisplayInfoPanel(width);
         selectionListener = new SelectionListener(displayInfoPanel, simulation.getFlights(), simulation.getAirports());
-        buttonsPanel = new ButtonsPanel(width, simulation, aerialTrafficPanel, simulation.getTime());
+        displayInfoPanel.setSelectionListener(selectionListener);
+        buttonsPanel = new ButtonsPanel(width, simulation, aerialTrafficPanel, simulation.getTime(), this);
 
         aerialTrafficPanel.addMouseListener(selectionListener);
 
@@ -46,7 +49,8 @@ public class SimulationPanel extends JPanel implements Runnable {
     public void run() {
         while (isRunning) {
             try {
-                Thread.sleep(Config.SIMULATION_SPEED);
+
+                Thread.sleep(speed);
 
                 buttonsPanel.refreshTime();
 
@@ -54,7 +58,8 @@ public class SimulationPanel extends JPanel implements Runnable {
                 Airplane selectedAirplane = selectionListener.getSelectedAirplane();
                 Airport selectedAirport = selectionListener.getSelectedAirport();
 
-                if (selectedAirport == null && selectedFlight != null && selectedAirplane != null && selectedFlight.getAirplane() == null) {
+                //                if (selectedAirport == null && selectedFlight != null && selectedAirplane != null && selectedFlight.getAirplane() == null) {
+                if (selectedAirport == null && selectedFlight != null && selectedAirplane != null && !selectedFlight.isRunning()) {
                     // Cas d'atterissage
                     selectionListener.setSelectedFlight(null);
                     selectionListener.setSelectedAirport(selectedFlight.getDestinationAirport());
@@ -81,7 +86,21 @@ public class SimulationPanel extends JPanel implements Runnable {
                 displayInfoPanel.repaint();
                 repaint();
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
+
+    public void increaseSpeed() {
+        if (speed > 20) {
+            speed -= 20;
+        }
+    }
+
+    public void decreaseSpeed() {
+        if (speed < 200) {
+            speed += 20;
+        }
+    }
+
 }

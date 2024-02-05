@@ -1,7 +1,7 @@
 package ihm.buttons.listeners;
 
 import engine.Simulation;
-import ihm.AerialTrafficPanel;
+import ihm.SimulationPanel;
 import ihm.buttons.ButtonAction;
 
 import javax.swing.*;
@@ -11,14 +11,17 @@ import java.awt.event.ActionListener;
 public class IncreaseSpeedButtonAction extends ButtonAction implements ActionListener {
 
     private final Simulation simulation;
+    private final SimulationPanel simulationPanel;
 
-    public IncreaseSpeedButtonAction(JButton button, Simulation simulation) {
+    public IncreaseSpeedButtonAction(JButton button, Simulation simulation, SimulationPanel simulationPanel) {
         super(button);
         this.simulation = simulation;
+        this.simulationPanel = simulationPanel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-     simulation.increaseSimulationSpeed();
+        simulation.increaseSpeed();
+        simulationPanel.increaseSpeed();
     }
 }

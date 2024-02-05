@@ -9,7 +9,7 @@ public class AirportManager {
 
     private final ArrayList<Airport> airports = new ArrayList<>();
 
-    public Airport findAiport(int column, int row) {
+    public Airport findAirport(int column, int row) {
         for (Airport airport : airports) {
             if (airport.getColumn() == column && airport.getRow() == row) {
                 return airport;

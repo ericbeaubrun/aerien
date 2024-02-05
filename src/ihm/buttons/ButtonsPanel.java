@@ -16,7 +16,7 @@ public class ButtonsPanel extends JPanel {
 
     private final String[] BUTTONS_NAMES = {
             "Show grid", "Show trajects", "Show style", "Show coords", "Show background", "Increase speed",
-            "Decrease speed", "Show flights", "Show AirZones", "Show airports", "Pause", "...", "...", "...", "...", "..."
+            "Decrease speed", "Show flights", "Show AirZones", "Show airports", "Pause", "Show Pause", "...", "...", "...", "..."
     };
 
     private TimeCounter time;
@@ -29,70 +29,19 @@ public class ButtonsPanel extends JPanel {
 
     private final int VERTICAL_STRUT_SIZE = (int) (BLOCK_SIZE * 0.6);
 
-    public ButtonsPanel(int width, Simulation simulation, AerialTrafficPanel aerialTrafficPanel, TimeCounter time) {
+    public ButtonsPanel(int width, Simulation simulation, AerialTrafficPanel aerialTrafficPanel, TimeCounter time, SimulationPanel simulationPanel) {
 
         initTimeLabel(time);
-
-        setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight())));
-        setBackground(BACKGROUND_COLOR);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         buttons = new ArrayList<>();
 
         add(Box.createVerticalStrut(VERTICAL_STRUT_SIZE));
-        for (String name : BUTTONS_NAMES) {
-            JButton button = new JButton(name);
+        for (String buttonName : BUTTONS_NAMES) {
+            JButton button = new JButton(buttonName);
+
             initButtonStyle(button);
-            switch (name) {
-                case "...":
-                    button.setEnabled(false);
-                    break;
 
-                case "Show grid":
-                    button.addActionListener(new ShowGridButtonAction(button, aerialTrafficPanel));
-//                    button.doClick();
-                    break;
-
-                case "Show coords":
-                    button.addActionListener(new ShowCoordsButtonAction(button, aerialTrafficPanel));
-//                    if (ALLOW_COORD_DISPLAY) button.doClick();
-                    break;
-
-                case "Show background":
-                    button.addActionListener(new ShowBackgroundButtonAction(button, aerialTrafficPanel));
-                    button.doClick();
-                    break;
-
-                case "Show style":
-                    button.addActionListener(new ShowStyleButtonAction(button, aerialTrafficPanel));
-                    button.doClick();
-                    break;
-
-                case "Show trajects":
-                    button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
-                    button.doClick();
-                    break;
-
-                case "Increase speed":
-                    button.addActionListener(new IncreaseSpeedButtonAction(button, simulation));
-                    break;
-
-                case "Decrease speed":
-                    button.addActionListener(new DecreaseSpeedButtonAction(button, simulation));
-                    break;
-
-                case "Show flights":
-                    //add action listenner
-                    break;
-
-                case "Show AirZones":
-                    button.addActionListener(new ShowAirZonesButtonAction(button, aerialTrafficPanel));
-                    break;
-
-                case "Pause":
-                    button.addActionListener(new TogglePauseButtonAction(button, simulation, time));
-                    break;
-            }
+            addButtonActionListener(button, buttonName, aerialTrafficPanel, simulation, simulationPanel);
 
             buttons.add(button);
 
@@ -102,6 +51,74 @@ public class ButtonsPanel extends JPanel {
 //            for (JButton button1 : buttons) {
 //                button.setVisible(false);
 //            }
+        }
+
+        setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight())));
+        setBackground(BACKGROUND_COLOR);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+    }
+
+    private void addButtonActionListener(JButton button, String buttonName, AerialTrafficPanel aerialTrafficPanel,
+                                         Simulation simulation, SimulationPanel simulationPanel) {
+        switch (buttonName) {
+            case "...":
+                button.setEnabled(false);
+                break;
+
+            case "Show grid":
+                button.addActionListener(new ShowGridButtonAction(button, aerialTrafficPanel));
+                break;
+
+            case "Show coords":
+                button.addActionListener(new ShowCoordsButtonAction(button, aerialTrafficPanel));
+                break;
+
+            case "Show background":
+                button.addActionListener(new ShowBackgroundButtonAction(button, aerialTrafficPanel));
+                break;
+
+            case "Show style":
+                button.addActionListener(new ShowStyleButtonAction(button, aerialTrafficPanel));
+                button.doClick();
+                break;
+
+            case "Show trajects":
+                button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
+                button.doClick();
+                break;
+
+            case "Increase speed":
+                button.addActionListener(new IncreaseSpeedButtonAction(button, simulation, simulationPanel));
+                break;
+
+            case "Decrease speed":
+                button.addActionListener(new DecreaseSpeedButtonAction(button, simulation, simulationPanel));
+                break;
+
+            case "Show flights":
+                button.addActionListener(new ShowFlightsButtonAction(button, aerialTrafficPanel));
+                button.doClick();
+                break;
+
+            case "Show AirZones":
+                button.addActionListener(new ShowAirZonesButtonAction(button, aerialTrafficPanel));
+                button.doClick();
+                break;
+
+            case "Pause":
+                button.addActionListener(new PauseButtonAction(button, simulation, time));
+                break;
+
+            case "Show Pause":
+                button.addActionListener(new ShowStylePauseButtonAction(button, aerialTrafficPanel));
+                break;
+
+            case "Show airports":
+                button.addActionListener(new ShowAirportsButtonAction(button, aerialTrafficPanel));
+                button.doClick();
+                break;
+
         }
     }
 
@@ -129,7 +146,7 @@ public class ButtonsPanel extends JPanel {
     }
 
     public void refreshTime() {
-        time.incrementMinuts();
+        time.incrementMinutes();
         timeLabel.setText(time.toString() + " UTC+1");
         timeLabel.setToolTipText("Current Day : " + time.getDaysCount());
     }

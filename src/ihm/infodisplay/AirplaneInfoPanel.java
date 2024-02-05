@@ -3,6 +3,7 @@ package ihm.infodisplay;
 import config.Config;
 import data.Airplane;
 import engine.Flight;
+import util.ImageUtility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,6 +78,9 @@ public class AirplaneInfoPanel extends JPanel {
         if (flight != null) {
             Airplane airplane = flight.getAirplane();
             if (airplane != null) {
+                thumbnailLabel.setIcon(ImageUtility.getAirplaneImageIcon(airplane,
+                        (int) (512 * Config.SCALING_WIDTH_RATIO)/2,
+                        (int) (535 * Config.SCALING_WIDTH_RATIO)/2));
                 xLabel.updateText(airplane.getX());
                 yLabel.updateText(airplane.getY());
                 speedlabel.updateText(airplane.getSpeed());
@@ -87,7 +91,7 @@ public class AirplaneInfoPanel extends JPanel {
                 directionLabel.updateText(angleToCardinal(airplane.getAngle()));
                 destinationLabel.updateText(flight.getDestinationAirport().getName());
                 totalDistanceLabel.updateText(blockToMeter(flight.getAmountBlockPath()));
-                distanceFromStartLabel.updateText(blockToMeter(flight.getCurrentIndex()));
+                distanceFromStartLabel.updateText(blockToMeter(flight.getCurrentBlockIndex()));
                 distanceBeforeArrivalLabel.updateText(blockToMeter(flight.getAmountBlockRemainingPath()));
             } else {
                 resetLabelsText();

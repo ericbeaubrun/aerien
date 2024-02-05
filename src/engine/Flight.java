@@ -20,7 +20,7 @@ public class Flight implements Runnable {
 
     private volatile boolean isPaused = false;
 
-    private int currentIndex;
+    private int currentBlockIndex;
 
     private final MapField mapField;
 
@@ -36,11 +36,10 @@ public class Flight implements Runnable {
 
     public Flight(MapField mapField, AirportManager airports, Position posAirportA, Position posAirportB) {
         this.mapField = mapField;
-        this.startAirport = airports.findAiport(posAirportA.getColumn(), posAirportA.getRow());
-        this.destinationAirport = airports.findAiport(posAirportB.getColumn(), posAirportB.getRow());
+        this.startAirport = airports.findAirport(posAirportA.getColumn(), posAirportA.getRow());
+        this.destinationAirport = airports.findAirport(posAirportB.getColumn(), posAirportB.getRow());
 
-        Random random = new Random();
-        countBeforeTakeoff = 5 + random.nextInt(40);
+        resetCountBeforeTakeoff();
     }
 
     public int getCountBeforeTakeoff() {
@@ -66,7 +65,7 @@ public class Flight implements Runnable {
         startAirport.removeAirplane(airplane);
     }
 
-    public void takeoffAirplane() {
+    public void takeoff() {
         AirZone airZone = mapField.findAirZone(airplane.getPosition());
         if (airZone != null) {
             currentAirZone = airZone;
@@ -78,7 +77,7 @@ public class Flight implements Runnable {
         airplane.putOnRunway(false);
     }
 
-    public void landingAirplane() {
+    public void landing() {
         currentAirZone.leaveAirzone();
         airplane.setPosition(destinationAirport);
         destinationAirport.addAirplane(airplane);
@@ -87,20 +86,25 @@ public class Flight implements Runnable {
         thread = null;
     }
 
+    public void resetCountBeforeTakeoff() {
+        Random random = new Random();
+        countBeforeTakeoff = 5 + random.nextInt(40);
+    }
+
     @Override
     public void run() {
         if (airplane != null) {
 
             isRunning = true;
+
             isPaused = false;
 
+            takeoff();
 
-            takeoffAirplane();
+            currentBlockIndex = 0;
+            while (currentBlockIndex < path.size()) {
 
-            currentIndex = 0;
-            while (currentIndex < path.size()) {
-
-                Position currentPosition = path.get(currentIndex);
+                Position currentPosition = path.get(currentBlockIndex);
                 AirZone airZone = mapField.findAirZone(currentPosition);
 
                 ThreadUtility.sleep(speed);
@@ -119,21 +123,20 @@ public class Flight implements Runnable {
                 airplane.setPosition(currentPosition);
 
                 // Calculer l'angle de l'avion
-                Position otherPosition = currentIndex < path.size() - 4 ? path.get(currentIndex + 4) : destinationAirport.getPosition();
+                Position otherPosition = currentBlockIndex < path.size() - 4 ? path.get(currentBlockIndex + 4) : destinationAirport.getPosition();
 
                 double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
                 airplane.setAngle(angle);
 
-                currentIndex++;
+                currentBlockIndex++;
             }
 
             ThreadUtility.sleep(speed);
             ThreadUtility.wait(this);
 
-            landingAirplane();
+            landing();
 
-            Random random = new Random();
-            countBeforeTakeoff = 5 + random.nextInt(20);
+            resetCountBeforeTakeoff();
 
             reverseDirection();
 
@@ -147,18 +150,7 @@ public class Flight implements Runnable {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append(startAirport.getName());
-        s.append(" -> ");
-        s.append(destinationAirport.getName());
-        s.append("\n");
-
-//        for (Position position : path) {
-//            s.append(position.toString());
-//            s.append("\n");
-//        }
-
-        return s.toString();
+        return startAirport.getName() + " -> " + destinationAirport.getName() + "\n";
     }
 
     public void startThread(Airplane airplane) {
@@ -190,11 +182,11 @@ public class Flight implements Runnable {
     }
 
     public int getAmountBlockRemainingPath() {
-        return path.size() - currentIndex;
+        return path.size() - currentBlockIndex;
     }
 
-    public int getCurrentIndex() {
-        return currentIndex;
+    public int getCurrentBlockIndex() {
+        return currentBlockIndex;
     }
 
     public ArrayList<Position> getPath() {

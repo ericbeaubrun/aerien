@@ -4,6 +4,7 @@ import config.Config;
 import data.Airplane;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImageUtility {
-
 
     public static BufferedImage rotateImage(BufferedImage image, double angle) {
         AffineTransform rotation = AffineTransform.getRotateInstance(angle, image.getWidth() / 2, image.getHeight() / 2);
@@ -26,57 +26,82 @@ public class ImageUtility {
             image = ImageIO.read(new File(path));
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return image;
+    }
+
+    public static String getPlaneImageName(Airplane airplane) {
+        String imageName = null;
+        String ref = airplane.getReference();
+
+        if (ref.startsWith("Airbus A320".strip())) {
+            imageName = "plane1";
+
+        } else if (ref.startsWith("Tecnam FHCSK".strip())) {
+            imageName = "plane2";
+
+        } else if (ref.startsWith("Piper J3".strip())) {
+            imageName = "plane3";
+
+        } else if (ref.startsWith("Boeing 737".strip())) {
+            imageName = "plane4";
+
+        } else if (ref.startsWith("Antonov AN225".strip())) {
+            imageName = "plane5";
+
+        } else if (ref.startsWith("Aero L39 Albatros".strip())) {
+            imageName = "plane6";
+
+        } else if (ref.startsWith("Piper PA28".strip())) {
+            imageName = "plane7";
+
+        } else if (ref.startsWith("American XB68".strip())) {
+            imageName = "plane8";
+
+        } else if (ref.startsWith("Global 7500".strip())) {
+            imageName = "plane9";
+        }
+
+        return imageName;
     }
 
     public static BufferedImage getAirplaneImage(Airplane airplane) {
 
         BufferedImage image = null;
 
-
         if (airplane != null) {
-
-            String ref = airplane.getReference().strip();
-
-            String color = airplane.isWaiting() ? "_yellow" : "_green";
-
+            String color = airplane.isWaiting() ? "yellow" : "green";
             String path = Config.RESSOURCES_PATH + "planes/";
+            String imageName = getPlaneImageName(airplane);
 
-            if (ref.startsWith("Airbus A320".strip())) {
-                path += "plane1";
-
-            } else if (ref.startsWith("Tecnam FHCSK".strip())) {
-                path += "plane2";
-
-            } else if (ref.startsWith("Piper J3".strip())) {
-                path += "plane3";
-
-            } else if (ref.startsWith("Boeing 737".strip())) {
-                path += "plane4";
-
-            } else if (ref.startsWith("Antonov AN225".strip())) {
-                path += "plane5";
-
-            } else if (ref.startsWith("Aero L39 Albatros".strip())) {
-                path += "plane6";
-
-            } else if (ref.startsWith("Piper PA28".strip())) {
-                path += "plane7";
-
-            } else if (ref.startsWith("American XB68".strip())) {
-                path += "plane8";
-
-            } else if (ref.startsWith("Global 7500".strip())) {
-                path += "plane9";
+            if (imageName != null) {
+                path += imageName + "_" + color + ".png";
+                image = readImage(path);
             }
-
-            path += color + ".png";
-
-//            image = readImage(Config.RESSOURCES_PATH + "pingouin.png");
-            image = readImage(path);
         }
         return image;
     }
+
+    public static ImageIcon getAirplaneImageIcon(Airplane airplane, int width, int height) {
+
+        ImageIcon resizedIcon = null;
+        String path = Config.RESSOURCES_PATH + "planes/";
+        String imageName = getPlaneImageName(airplane);
+        path += imageName + ".png";
+
+        try {
+            File file = new File(path);
+            Image originalImage = ImageIO.read(file);
+            Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            resizedIcon = new ImageIcon(resizedImage);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return resizedIcon;
+    }
+
+
 }

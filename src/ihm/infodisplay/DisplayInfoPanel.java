@@ -3,6 +3,7 @@ package ihm.infodisplay;
 import config.Config;
 import data.Airport;
 import engine.Flight;
+import engine.SelectionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,4 +56,9 @@ public class DisplayInfoPanel extends JPanel {
         add(airplanePanel);
         add(airportPanel);
     }
+
+    public void setSelectionListener(SelectionListener selectionListener){
+        airportPanel.setSelectionListener(selectionListener);
+    }
+
 }

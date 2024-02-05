@@ -1,17 +1,14 @@
 import config.Config;
 import engine.Simulation;
 import ihm.SimulationPanel;
-import util.ConversionUtility;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
 
     private final SimulationPanel simulationPanel;
 
-    public void startSimulation() {
+    public void start() {
         Thread simulationThread = new Thread(simulationPanel);
         simulationThread.start();
     }
@@ -30,6 +27,6 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
         setResizable(false);
-        startSimulation();
+        start();
     }
 }

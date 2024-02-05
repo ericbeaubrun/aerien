@@ -52,7 +52,7 @@ public class Simulation {
         return time;
     }
 
-    public void decreaseSimulationSpeed() {
+    public void decreaseSpeed() {
         int currentSpeed = flightManager.getSpeed();
 
         if (currentSpeed < 2000) {
@@ -60,7 +60,11 @@ public class Simulation {
         }
     }
 
-    public void increaseSimulationSpeed() {
+    public int getSpeed() {
+        return flightManager.getSpeed();
+    }
+
+    public void increaseSpeed() {
         int currentSpeed = flightManager.getSpeed();
 
         if (currentSpeed > 200) {
@@ -69,14 +73,10 @@ public class Simulation {
     }
 
     public void togglePause() {
-
         for (Flight flight : flightManager.getFlights()) {
             flight.togglePause();
         }
-
-
         flightManager.togglePause();
-
     }
 
 

@@ -23,7 +23,9 @@ public class AerialTrafficPanel extends JPanel {
 
     private final float[] DASH_PATTERN = {5.0f, 5.0f};
 
-    private final Stroke FLIGHT_STROKE = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1.0f, DASH_PATTERN, 0.0f);
+    private final Stroke FLIGHT_STROKE_1 = new BasicStroke(2.0f);
+
+    private final Stroke FLIGHT_STROKE_2 = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1.0f, DASH_PATTERN, 0.0f);
 
     private final MapField mapField;
 
@@ -36,6 +38,8 @@ public class AerialTrafficPanel extends JPanel {
 //    private final HashMap<Airplane, BufferedImage> airplaneImageHashMap = new HashMap<>();
 
     private boolean showGrid = false;
+
+    private boolean showAirports = false;
 
     private boolean showStyle = false;
 
@@ -81,7 +85,8 @@ public class AerialTrafficPanel extends JPanel {
 
         for (Position block : mapField.getBlocks()) {
             if (showGrid) {
-                g.setColor(Color.GREEN);
+//                g.setColor(Color.GREEN);
+                g.setColor(new Color(145, 145, 145));
                 g.drawRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
             }
             if (showCoords) {
@@ -145,48 +150,88 @@ public class AerialTrafficPanel extends JPanel {
     private void paintAirports(Graphics g) {
         for (Airport airport : airports) {
 
-            int x = airport.getX() + BLOCK_SIZE / 4;
-            int y = airport.getY() + BLOCK_SIZE / 4;
+            int x = airport.getX() + BLOCK_SIZE / 6;
+            int y = airport.getY() + BLOCK_SIZE / 6;
             int width = BLOCK_SIZE / 2;
             int height = BLOCK_SIZE / 2;
 
-            g.setColor(Color.RED);
-            g.fillOval(x, y, width, height);
 
-            g.setColor(Color.WHITE);
-//            g.drawString(airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes(), x, y);
-            g.drawString(airport.getName(), x, y);
+            g.setColor(Color.RED);
+            if (showAirports) {
+                g.fillOval(x, y, width + BLOCK_SIZE / 4, height + BLOCK_SIZE / 4);
+
+                int maxAirplanes = airport.getMaxAirplanes();
+                int amountAirplanes = airport.getAmountAirplanesOnRunway();
+
+                g.setColor(maxAirplanes == amountAirplanes ? Color.RED : Color.WHITE);
+                if (maxAirplanes < amountAirplanes) {
+                    g.setColor(Color.MAGENTA);
+                }
+                g.drawString(airport.getName() + " (" + airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes() + ")",
+                        x - BLOCK_SIZE / 5, y - BLOCK_SIZE / 5);
+            } else {
+//                g.setColor(Color.WHITE);
+                g.fillOval(x + BLOCK_SIZE / 8, y + BLOCK_SIZE / 8, width, height);
+            }
         }
     }
 
     public void paintFlights(Graphics g) {
-        if (showTrajects) {
-
+        if (showTrajects || showFlights) {
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setStroke(FLIGHT_STROKE);
+            g2d.setStroke(showFlights ? FLIGHT_STROKE_1 : FLIGHT_STROKE_2);
 
             int x1, x2, y1, y2;
 
+//            SortUtility.sortFlights(flights);
+
             for (Flight flight : flights) {
-//                if (true) {
                 if (flight.isRunning() || showFlights) {
-//                    Airplane airplane = flight.getAirplane();
 
                     ArrayList<Position> path = flight.getPath();
 
-                    g2d.setColor(Color.WHITE);
+                    if (showFlights) {
+//                        if (showGrid) {
+//                            System.out.println(flight.toString() + " et " + flight.getAirplane().getReference() + ""); NPE !
+//                        }
+                        g2d.setColor(flight.isRunning() ? Color.GREEN : Color.WHITE);
+                        if (flight.isRunning() && flight.getAirplane().isWaiting()) {
+                            g2d.setColor(Color.YELLOW);
+                        } else if (flight.getCountBeforeTakeoff() < 0 && !flight.isRunning()) { // A REVOIR
+                            g2d.setColor(Color.MAGENTA);
+                        }
+                    } else if (flight.isRunning()) {
+                        g2d.setColor(Color.WHITE);
+                    }
 
                     for (int i = -1; i < path.size(); i++) {
+//                        if (showFlights) {
+//                            if (i != -1) {
+//                                g2d.drawRect(path.get(i).getX(), path.get(i).getY(), BLOCK_SIZE, BLOCK_SIZE);
+//                            }
+//                            continue;
+//                        }
 
-                        if (flight.getCurrentIndex() - 1 == i || flight.getCurrentIndex() == 0) {
+                        if ((flight.getCurrentBlockIndex() - 1 == i || flight.getCurrentBlockIndex() == 0) && !showFlights) {
                             g2d.setColor(FLIGHT_STROKE_COLOR);
-//                            g2d.setColor(Color.YELLOW);
                         }
+
                         if (i == -1) {
                             x1 = flight.getStartAirport().getX() + BLOCK_SIZE / 2;
                             y1 = flight.getStartAirport().getY() + BLOCK_SIZE / 2;
                             x2 = path.get(0).getX() + BLOCK_SIZE / 2;
                             y2 = path.get(0).getY() + BLOCK_SIZE / 2;
+                            if (showFlights) {
+                                double angle = Math.atan2(y2 - y1, x2 - x1);
+                                int arrowLength = BLOCK_SIZE / 2;
+                                int[] xPoints = {x2, (int) (x2 - arrowLength * Math.cos(angle - Math.PI / 6)),
+                                        (int) (x2 - arrowLength * Math.cos(angle + Math.PI / 6))
+                                };
+                                int[] yPoints = {y2, (int) (y2 - arrowLength * Math.sin(angle - Math.PI / 6)),
+                                        (int) (y2 - arrowLength * Math.sin(angle + Math.PI / 6))
+                                };
+                                g.fillPolygon(xPoints, yPoints, 3);
+                            }
 
                         } else if (i == path.size() - 1) {
                             x1 = path.get(path.size() - 1).getX() + BLOCK_SIZE / 2;
@@ -201,6 +246,7 @@ public class AerialTrafficPanel extends JPanel {
                             y1 = p1.getY() + BLOCK_SIZE / 2;
                             x2 = p2.getX() + BLOCK_SIZE / 2;
                             y2 = p2.getY() + BLOCK_SIZE / 2;
+
                         }
                         g.drawLine(x1, y1, x2, y2);
                     }
@@ -219,16 +265,16 @@ public class AerialTrafficPanel extends JPanel {
 
             ArrayList<AirZone> airZones = mapField.getAirZones();
 
-            boolean isColored = true;
+            boolean alternateColor = true;
 
             for (int i = 0; i < airZones.size(); i++) {
                 AirZone airZone = airZones.get(i);
 
                 if (!(i % Config.AIR_ZONE_GAP == 0)) {
-                    isColored = !isColored;
+                    alternateColor = !alternateColor;
                 }
 
-                g2d.setColor(airZone.isOccupied() ? Color.RED : isColored ? new Color(168, 168, 168) : Color.WHITE);
+                g2d.setColor(airZone.isOccupied() ? Color.RED : alternateColor ? new Color(168, 168, 168) : Color.WHITE);
 
                 for (Position block : airZone.getPositions()) {
                     g.fillRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
@@ -249,7 +295,7 @@ public class AerialTrafficPanel extends JPanel {
     }
 
     private void paintPause(Graphics g) {
-        if (flights.get(0).isPaused()) {
+        if (flights.get(0).isPaused() && showStylePause) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.BLACK);
             g2d.setComposite(AlphaComposite.SrcOver.derive(0.3f));
@@ -301,5 +347,17 @@ public class AerialTrafficPanel extends JPanel {
 
     public void toggleShowAirZones() {
         showAirZones = !showAirZones;
+    }
+
+    public void toggleShowAirports() {
+        showAirports = !showAirports;
+    }
+
+    public void toggleShowStylePause() {
+        showStylePause = !showStylePause;
+    }
+
+    public void toggleShowFlights() {
+        showFlights = !showFlights;
     }
 }

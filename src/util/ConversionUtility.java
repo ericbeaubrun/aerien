@@ -7,8 +7,10 @@ import java.awt.*;
 
 public class ConversionUtility {
 
-    private static final String[] DIRECTIONS = {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-            "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"};
+    private static final String[] DIRECTIONS = {
+            "N", "NNE", "NE", "ENE", "E", "ESE",
+            "SE", "SSE", "S", "SSW", "SW", "WSW",
+            "W", "WNW", "NW", "NNW", "N"};
 
     public static int blockToPixel(int coord) {
         return coord * Config.BLOCK_SIZE;
@@ -52,7 +54,7 @@ public class ConversionUtility {
         return "Unknown";
     }
 
-    public static Dimension convertToGameDimension(Dimension dim) {
+    public static Dimension convertToSimulationDimension(Dimension dim) {
         return new Dimension((int) Math.round(dim.getHeight() * (16.0 / 9.0)), (int) dim.getHeight());
     }
 

@@ -42,17 +42,23 @@
     <!-- 8/8 Airports-->
     <Airports>
         <Airport Name="Dublin" AirplaneMax="3" X="3" Y="4"/>
-        <Airport Name="Stockholm" AirplaneMax="3" X="14" Y="1"/>
+
+        <!--        <Airport Name="Stockholm" AirplaneMax="3" X="14" Y="1"/>-->
+        <Airport Name="Stklm" AirplaneMax="3" X="14" Y="1"/>
+
         <Airport Name="Moscow" AirplaneMax="2" X="28" Y="1"/>
-        <Airport Name="Vienna" AirplaneMax="3" X="17" Y="9"/>
-        <Airport Name="Paris" AirplaneMax="3" X="8" Y="9"/>
-        <Airport Name="Istanbul" AirplaneMax="3" X="24" Y="14"/>
+        <Airport Name="Vienna" AirplaneMax="2" X="17" Y="9"/>
+        <Airport Name="Paris" AirplaneMax="2" X="8" Y="9"/>
+
+        <!--        <Airport Name="Istanbul" AirplaneMax="3" X="24" Y="14"/>-->
+        <Airport Name="Istbl" AirplaneMax="3" X="24" Y="14"/>
+
         <Airport Name="Madrid" AirplaneMax="3" X="3" Y="15"/>
         <Airport Name="Alger" AirplaneMax="3" X="8" Y="19"/>
     </Airports>
 
     <Flights>
-        <!-- 21 / 28 Flights Enabled -->
+        <!-- 20 / 28 Flights Enabled -->
         <!-- Paris <=> Vienna -->
         <Flight StartAirportX="8" StartAirportY="9" DestinationAirportX="17" DestinationAirportY="9" Enabled="true">
             <pos X="9" Y="9"/>
@@ -348,11 +354,10 @@
         <!-- Alger <=> Stockholm -->
         <Flight StartAirportX="8" StartAirportY="19" DestinationAirportX="14" DestinationAirportY="1" Enabled="true">
             <pos X="9" Y="19"/>
-            <pos X="10" Y="19"/>
-            <pos X="11" Y="18"/>
-            <pos X="12" Y="17"/>
-            <pos X="13" Y="16"/>
-            <pos X="14" Y="15"/>
+            <pos X="10" Y="18"/>
+            <pos X="11" Y="17"/>
+            <pos X="12" Y="16"/>
+            <pos X="13" Y="15"/>
             <pos X="14" Y="14"/>
             <pos X="14" Y="13"/>
             <pos X="14" Y="12"/>

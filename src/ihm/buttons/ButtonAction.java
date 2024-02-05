@@ -7,7 +7,7 @@ import javax.swing.*;
 public class ButtonAction {
 
     private final JButton button;
-    private AerialTrafficPanel aerialTrafficPanel;
+    private final AerialTrafficPanel aerialTrafficPanel;
 
     public ButtonAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
         this.button = button;
