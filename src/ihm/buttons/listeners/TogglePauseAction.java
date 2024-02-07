@@ -8,12 +8,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TogglePauseButtonAction extends ButtonAction implements ActionListener {
+public class TogglePauseAction extends ButtonAction implements ActionListener {
 
     private final Simulation simulation;
     private final TimeCounter time;
 
-    public TogglePauseButtonAction(JButton button, Simulation simulation, TimeCounter time) {
+    public TogglePauseAction(JButton button, Simulation simulation, TimeCounter time) {
         super(button);
         this.simulation = simulation;
         this.time = time;

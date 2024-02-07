@@ -2,6 +2,9 @@ package data;
 
 import util.ConversionUtility;
 
+/**
+ * The type Entity represents all elements that hava a Position and can be put / move on the map.
+ */
 public class Entity {
 
     public Entity(int x, int y) {

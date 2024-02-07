@@ -1,5 +1,6 @@
 package engine;
 
+import config.Config;
 import data.*;
 import util.ConversionUtility;
 import util.ThreadUtility;
@@ -10,9 +11,9 @@ import java.util.Random;
 
 public class Flight implements Runnable {
 
-    private int speed = 800;
+    private int speed = Config.DEFAULT_SIMULATION_SPEED;
 
-    private Thread thread = null;
+    private Thread thread;
 
     private int countBeforeTakeoff;
 
@@ -42,7 +43,7 @@ public class Flight implements Runnable {
         resetCountBeforeTakeoff();
     }
 
-    public boolean willLeave(Airport airport){
+    public boolean willLeave(Airport airport) {
         return startAirport.equals(airport) && !isRunning;
     }
 
@@ -65,10 +66,6 @@ public class Flight implements Runnable {
         Collections.reverse(path);
     }
 
-    public void removeAirplane(Airplane airplane) {
-        startAirport.removeAirplane(airplane);
-    }
-
     public void takeoff() {
         AirZone airZone = mapField.findAirZone(airplane.getPosition());
         if (airZone != null) {
@@ -87,7 +84,6 @@ public class Flight implements Runnable {
         destinationAirport.addAirplane(airplane);
         airplane.putOnRunway(true);
         airplane = null;
-        thread = null;
     }
 
     public void resetCountBeforeTakeoff() {
@@ -112,16 +108,18 @@ public class Flight implements Runnable {
                 AirZone airZone = mapField.findAirZone(currentPosition);
 
                 ThreadUtility.sleep(speed);
-                ThreadUtility.wait(this);
+                ThreadUtility.waitWhilePaused(this);
 
-                if (airZone != null && currentAirZone == null) {
-                    currentAirZone = airZone;
-                    currentAirZone.enterInAirZone(airplane);
+                if (airZone != null) {
+                    if (currentAirZone == null) {
+                        currentAirZone = airZone;
+                        currentAirZone.enterInAirZone(airplane);
 
-                } else if ((airZone != null && !airZone.equals(currentAirZone))) {
-                    currentAirZone.leaveAirzone();
-                    currentAirZone = airZone;
-                    currentAirZone.enterInAirZone(airplane);
+                    } else if (!airZone.equals(currentAirZone)) {
+                        currentAirZone.leaveAirzone();
+                        currentAirZone = airZone;
+                        currentAirZone.enterInAirZone(airplane);
+                    }
                 }
 
                 airplane.setPosition(currentPosition);
@@ -136,7 +134,7 @@ public class Flight implements Runnable {
             }
 
             ThreadUtility.sleep(speed);
-            ThreadUtility.wait(this);
+            ThreadUtility.waitWhilePaused(this);
 
             landing();
 
@@ -157,8 +155,8 @@ public class Flight implements Runnable {
         return startAirport.getName() + " -> " + destinationAirport.getName() + "\n";
     }
 
-    public void startThread(Airplane airplane) {
-        if (!isRunning || thread == null) {
+    public void start(Airplane airplane) {
+        if ((!isRunning || thread == null) && airplane != null) {
             this.airplane = airplane;
             startAirport.incrementAvailableRunwayCount();
             destinationAirport.decrementAvailableRunwayCount();
@@ -167,10 +165,8 @@ public class Flight implements Runnable {
         }
     }
 
-    public void removeLastBlock() {
-        if (!path.isEmpty()) {
-            path.remove(path.size() - 1);
-        }
+    public void removeAirplane(Airplane airplane) {
+        startAirport.removeAirplane(airplane);
     }
 
     public boolean isReadyToLaunch() {

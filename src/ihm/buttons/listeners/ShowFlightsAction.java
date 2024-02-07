@@ -7,15 +7,15 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowBackgroundButtonAction extends ButtonAction implements ActionListener {
+public class ShowFlightsAction extends ButtonAction implements ActionListener {
 
-    public ShowBackgroundButtonAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
+    public ShowFlightsAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
         super(button, aerialTrafficPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getAerialTrafficPanel().toggleShowBackground();
+        getAerialTrafficPanel().toggleShowFlights();
         replaceToggleButtonText(getButton());
     }
 }

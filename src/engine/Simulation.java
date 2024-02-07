@@ -7,33 +7,58 @@ import data.MapField;
 
 import java.util.ArrayList;
 
+/**
+ * This class allows to do all processes in the Simulation.
+ * It contains the Map, Airplanes, Flights, and Airports.
+ */
 public class Simulation {
-
-
-    private MapField mapField;
-    public FlightManager flightManager;
 
     private final TimeCounter time;
 
-    private final ArrayList<Airplane> airplanes = new ArrayList<>();
-    private final AirportManager airports = new AirportManager();
+    private final MapField map;
 
-    public void initMap() {
-        mapField = new MapField(Config.COLUMNS, Config.ROWS, Config.BLOCK_SIZE);
-    }
+    public FlightManager flightManager;
+
+    private final AirportManager airportManager;
+
+    private final ArrayList<Airplane> airplanes;
 
     public Simulation() {
-        time = new TimeCounter(0, 0);
-        initMap();
-        flightManager = new FlightManager(mapField);
-        SimulationInitializer.initSimulationObjects(mapField, airports, airplanes, flightManager);
+        SimulationInitializer initializer = new SimulationInitializer();
 
+        time = new TimeCounter(0, 0, 1);
+
+        map = initializer.initMap();
+
+        airportManager = initializer.initAirports();
+
+        flightManager = initializer.initFlights(map, airportManager);
+
+        airplanes = initializer.initAirplanes(airportManager);
+
+        initializer.terminateInitialisation();
+    }
+
+    /**
+     * Start the Thread of the Simulation.
+     */
+    public void start() {
         Thread thread = new Thread(flightManager);
         thread.start();
     }
 
-    public MapField getMapField() {
-        return mapField;
+    public void decreaseSpeed() {
+        int currentSpeed = flightManager.getSpeed();
+        if (currentSpeed < Config.MAX_SIMULATION_SPEED) {
+            flightManager.setSpeed(currentSpeed + Config.STEP_SIMULATION_SPEED);
+        }
+    }
+
+    public void increaseSpeed() {
+        int currentSpeed = flightManager.getSpeed();
+        if (currentSpeed > Config.MIN_SIMULATION_SPEED) {
+            flightManager.setSpeed(currentSpeed - Config.STEP_SIMULATION_SPEED);
+        }
     }
 
     public ArrayList<Airplane> getAirplanes() {
@@ -41,7 +66,7 @@ public class Simulation {
     }
 
     public ArrayList<Airport> getAirports() {
-        return airports.getAirports();
+        return airportManager.getAirports();
     }
 
     public ArrayList<Flight> getFlights() {
@@ -52,33 +77,22 @@ public class Simulation {
         return time;
     }
 
-    public void decreaseSpeed() {
-        int currentSpeed = flightManager.getSpeed();
-
-        if (currentSpeed < 2000) {
-            flightManager.setSpeed(currentSpeed + 200);
-        }
+    public MapField getMap() {
+        return map;
     }
 
     public int getSpeed() {
         return flightManager.getSpeed();
     }
 
-    public void increaseSpeed() {
-        int currentSpeed = flightManager.getSpeed();
-
-        if (currentSpeed > 200) {
-            flightManager.setSpeed(currentSpeed - 200);
-        }
-    }
-
+    /**
+     * Toggle pause for all thread in the engine side of simulation (FlightManager and all Flights).
+     */
     public void togglePause() {
         for (Flight flight : flightManager.getFlights()) {
             flight.togglePause();
         }
         flightManager.togglePause();
     }
-
-
 }
 

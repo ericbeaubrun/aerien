@@ -1,6 +1,5 @@
 package ihm;
 
-import config.Config;
 import data.Airplane;
 import data.Airport;
 import engine.Flight;
@@ -29,7 +28,7 @@ public class SimulationPanel extends JPanel implements Runnable {
 
     public SimulationPanel(Simulation simulation, int width, int height) {
 
-        aerialTrafficPanel = new AerialTrafficPanel(simulation.getMapField(), simulation.getAirplanes(), simulation.getAirports(), simulation.getFlights());
+        aerialTrafficPanel = new AerialTrafficPanel(simulation.getMap(), simulation.getAirplanes(), simulation.getAirports(), simulation.getFlights());
         displayInfoPanel = new DisplayInfoPanel(width);
         selectionListener = new SelectionListener(displayInfoPanel, simulation.getFlights(), simulation.getAirports());
         displayInfoPanel.setSelectionListener(selectionListener);

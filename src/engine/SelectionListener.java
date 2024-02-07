@@ -13,22 +13,27 @@ import static util.ConversionUtility.*;
 
 public class SelectionListener implements MouseListener {
 
-    private Airplane selectedAirplane = null;
-    private Flight selectedFlight = null;
-    private Airport selectedAirport = null;
+    private Flight selectedFlight;
 
-    private final DisplayInfoPanel displayInfoPanel;
+    private Airport selectedAirport;
+
+    private Airplane selectedAirplane;
+
     private final ArrayList<Flight> flights;
+
     private final ArrayList<Airport> airports;
 
+    private final DisplayInfoPanel displayInfoPanel;
+
     public SelectionListener(DisplayInfoPanel displayInfoPanel, ArrayList<Flight> flights, ArrayList<Airport> airports) {
-        this.displayInfoPanel = displayInfoPanel;
-        this.airports = airports;
         this.flights = flights;
+        this.airports = airports;
+        this.displayInfoPanel = displayInfoPanel;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Do nothing
     }
 
     public void associateSelectedAirplaneToFlight() {

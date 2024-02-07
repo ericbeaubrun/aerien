@@ -2,14 +2,19 @@ package data;
 
 import util.ConversionUtility;
 
+/**
+ * This clas determine the position of elements on the board.
+ * - x, y represent the pixels.
+ * - z represent the altitude.
+ * - column and row are calculated with x and y and represent the position on the grid.
+ */
 public class Position {
-
 
     private int x;
 
     private int y;
 
-    private int z; // Représente l'altitude
+    private int z;
 
     public Position(int x, int y, int z) {
         this.x = x;
@@ -17,6 +22,9 @@ public class Position {
         this.z = z;
     }
 
+    /**
+     *  Instantiate position without specified altitude (consider y equals to 0)
+     */
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
@@ -51,17 +59,6 @@ public class Position {
     }
 
     public void setZ(int z) {
-        this.z = z;
-    }
-
-    public void setXY(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void setXYZ(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
         this.z = z;
     }
 

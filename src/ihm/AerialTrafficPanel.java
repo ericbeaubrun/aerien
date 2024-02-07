@@ -5,6 +5,7 @@ import data.*;
 import engine.Flight;
 import engine.SelectionListener;
 import ihm.infodisplay.AirportInfoButtonListener;
+import util.SortUtility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,15 +85,19 @@ public class AerialTrafficPanel extends JPanel {
     private void paintGridCoords(Graphics g) {
         g.setFont(BASIC_FONT);
 
-        for (Position block : mapField.getBlocks()) {
-            if (showGrid) {
-//                g.setColor(Color.GREEN);
-                g.setColor(new Color(145, 145, 145));
-                g.drawRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
-            }
-            if (showCoords) {
-                g.setColor(Color.WHITE);
-                g.drawString(block.getColumn() + ":" + block.getRow(), block.getX() + BLOCK_SIZE / 6, block.getY() + BLOCK_SIZE / 2);
+        for (int i = 0; i < mapField.getColumns(); i++) {
+            for (int j = 0; j < mapField.getRows(); j++) {
+                Position block = mapField.getPosition(i, j);
+                if (block != null) {
+                    if (showGrid) {
+                        g.setColor(new Color(145, 145, 145));
+                        g.drawRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
+                    }
+                    if (showCoords) {
+                        g.setColor(Color.WHITE);
+                        g.drawString(block.getColumn() + ":" + block.getRow(), block.getX() + BLOCK_SIZE / 6, block.getY() + BLOCK_SIZE / 2);
+                    }
+                }
             }
         }
     }
@@ -125,11 +130,8 @@ public class AerialTrafficPanel extends JPanel {
                     BufferedImage image = getAirplaneImage(airplane);
                     if (image != null) {
                         image = rotateImage(image, airplane.getAngle());
-//                        g.drawImage(image, airplane.getX(), airplane.getY(), null);
                         g.drawImage(image, airplane.getX() + BLOCK_SIZE / 12, airplane.getY() + BLOCK_SIZE / 12,
-                                (int) (38 * SCALING_WIDTH_RATIO),
-                                (int) (40 * SCALING_HEIGHT_RATIO), null);
-
+                                (int) (38 * SCALING_WIDTH_RATIO), (int) (40 * SCALING_HEIGHT_RATIO), null);
                     } else {
                         //traitement
                     }
@@ -166,7 +168,7 @@ public class AerialTrafficPanel extends JPanel {
 
                 g.setColor(maxAirplanes == amountAirplanes ? Color.RED : Color.WHITE);
                 if (maxAirplanes < amountAirplanes) {
-                    g.setColor(Color.MAGENTA);
+                    System.err.println("Erreur : un aeroport a dépasse le nombre max d'avion");
                 }
                 g.drawString(airport.getName() + " (" + airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes() + ")",
                         x - BLOCK_SIZE / 5, y - BLOCK_SIZE / 5);
@@ -184,7 +186,7 @@ public class AerialTrafficPanel extends JPanel {
 
             int x1, x2, y1, y2;
 
-//            SortUtility.sortFlights(flights);
+            SortUtility.sortFlights(flights);
 
             for (Flight flight : flights) {
                 if (flight.isRunning() || showFlights) {
@@ -199,7 +201,7 @@ public class AerialTrafficPanel extends JPanel {
                         if (flight.isRunning() && flight.getAirplane().isWaiting()) {
                             g2d.setColor(Color.YELLOW);
                         } else if (flight.getCountBeforeTakeoff() < 0 && !flight.isRunning()) { // && estAssociAUnAvion
-                            g2d.setColor(Color.MAGENTA);
+                            g2d.setColor(Color.RED);
                         }
                     } else if (flight.isRunning()) {
                         g2d.setColor(Color.WHITE);
@@ -318,9 +320,9 @@ public class AerialTrafficPanel extends JPanel {
 
         paintBackground(g);
         paintGridCoords(g);
-        paintAirports(g);
         paintFlights(g);
         paintAirZones(g);
+        paintAirports(g);
         paintAirplanes(g);
         paintPause(g);
 

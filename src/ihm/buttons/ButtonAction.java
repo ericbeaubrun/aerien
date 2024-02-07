@@ -2,7 +2,7 @@ package ihm.buttons;
 
 import ihm.AerialTrafficPanel;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
 public class ButtonAction {
 

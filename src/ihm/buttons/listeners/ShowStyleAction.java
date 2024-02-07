@@ -7,9 +7,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowStyleButtonAction extends ButtonAction implements ActionListener {
+public class ShowStyleAction extends ButtonAction implements ActionListener {
 
-    public ShowStyleButtonAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
+    public ShowStyleAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
         super(button, aerialTrafficPanel);
     }
 

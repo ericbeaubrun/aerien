@@ -34,7 +34,7 @@ public class FlightManager implements Runnable {
         while (isRunning) {
 
             ThreadUtility.sleep(speed);
-            ThreadUtility.wait(this);
+            ThreadUtility.waitWhilePaused(this);
 
             for (Flight flight : flights) {
                 if (!flight.isRunning() && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()) {
@@ -51,7 +51,7 @@ public class FlightManager implements Runnable {
                         flight.removeAirplane(airplane);
 
                         if (airplane != null) {
-                            flight.startThread(airplane);
+                            flight.start(airplane);
                         }
                     }
                 }
@@ -59,7 +59,6 @@ public class FlightManager implements Runnable {
             }
         }
     }
-
 
     public void addFlight(Flight flight) {
         flights.add(flight);
@@ -73,6 +72,10 @@ public class FlightManager implements Runnable {
         return speed;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
     public void togglePause() {
         synchronized (this) {
             isPaused = !isPaused;
@@ -82,14 +85,12 @@ public class FlightManager implements Runnable {
         }
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
-
     public void setSpeed(int speed) {
-        this.speed = speed;
-        for (Flight flight : flights) {
-            flight.setSpeed(speed);
+        synchronized (this) {
+            this.speed = speed;
+            for (Flight flight : flights) {
+                flight.setSpeed(speed);
+            }
         }
     }
 }

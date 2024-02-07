@@ -67,55 +67,55 @@ public class ButtonsPanel extends JPanel {
                 break;
 
             case "Show grid":
-                button.addActionListener(new ShowGridButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowGridAction(button, aerialTrafficPanel));
                 break;
 
             case "Show coords":
-                button.addActionListener(new ShowCoordsButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowCoordsAction(button, aerialTrafficPanel));
                 break;
 
             case "Show background":
-                button.addActionListener(new ShowBackgroundButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowBackgroundAction(button, aerialTrafficPanel));
                 break;
 
             case "Show style":
-                button.addActionListener(new ShowStyleButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowStyleAction(button, aerialTrafficPanel));
                 button.doClick();
                 break;
 
             case "Show trajects":
-                button.addActionListener(new ShowTrajectsButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowTrajectsAction(button, aerialTrafficPanel));
                 button.doClick();
                 break;
 
             case "Increase speed":
-                button.addActionListener(new IncreaseSpeedButtonAction(button, simulation, simulationPanel));
+                button.addActionListener(new IncreaseSpeedAction(button, simulation, simulationPanel));
                 break;
 
             case "Decrease speed":
-                button.addActionListener(new DecreaseSpeedButtonAction(button, simulation, simulationPanel));
+                button.addActionListener(new DecreaseSpeedAction(button, simulation, simulationPanel));
                 break;
 
             case "Show flights":
-                button.addActionListener(new ShowFlightsButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowFlightsAction(button, aerialTrafficPanel));
                 button.doClick();
                 break;
 
             case "Show AirZones":
-                button.addActionListener(new ShowAirZonesButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowAirZonesAction(button, aerialTrafficPanel));
                 button.doClick();
                 break;
 
             case "Pause":
-                button.addActionListener(new PauseButtonAction(button, simulation, time));
+                button.addActionListener(new PauseAction(button, simulation, time));
                 break;
 
             case "Show Pause":
-                button.addActionListener(new ShowStylePauseButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowStylePauseAction(button, aerialTrafficPanel));
                 break;
 
             case "Show airports":
-                button.addActionListener(new ShowAirportsButtonAction(button, aerialTrafficPanel));
+                button.addActionListener(new ShowAirportsAction(button, aerialTrafficPanel));
                 button.doClick();
                 break;
 

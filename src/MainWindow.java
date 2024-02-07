@@ -4,14 +4,16 @@ import ihm.SimulationPanel;
 
 import javax.swing.*;
 
+/**
+ * This class represents the Main Windows that contains all Panel of the Simulation.
+ */
 public class MainWindow extends JFrame {
 
-    private final SimulationPanel simulationPanel;
+    // This is a Thread for the Visual part of the Simulation
+    private final SimulationPanel simulationIHM;
 
-    public void start() {
-        Thread simulationThread = new Thread(simulationPanel);
-        simulationThread.start();
-    }
+    // This is a Thread for the Engine part of the Simulation
+    private final Simulation simulationEngine;
 
     public MainWindow() {
         super();
@@ -20,13 +22,25 @@ public class MainWindow extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Simulation simulation = new Simulation();
-        simulationPanel = new SimulationPanel(simulation, getWidth(), getHeight());
+        simulationEngine = new Simulation();
+        simulationIHM = new SimulationPanel(simulationEngine, getWidth(), getHeight());
 
-        add(simulationPanel);
+        add(simulationIHM);
 
         setVisible(true);
         setResizable(false);
+
         start();
+    }
+
+    /**
+     * This is the method to start the Simulation.
+     * Starts Engine Thread first.
+     * Then starts the IHM Thread.
+     */
+    public void start() {
+        Thread thread = new Thread(simulationIHM);
+        simulationEngine.start();
+        thread.start();
     }
 }
