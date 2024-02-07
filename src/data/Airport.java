@@ -1,6 +1,8 @@
 package data;
 
 
+import engine.Flight;
+
 import java.util.ArrayList;
 
 public class Airport extends Entity {
@@ -66,10 +68,12 @@ public class Airport extends Entity {
     }
 
     public Airplane getFirstAvailableAirplaneExcept(ArrayList<Airplane> exceptAirplanes) {
-        for (int i = 0; i < airplanes.size(); i++) {
-            Airplane airplane = airplanes.get(i);
-            if (!exceptAirplanes.contains(airplane)) {
-                return airplane;
+        if (exceptAirplanes != null) {
+            for (int i = 0; i < airplanes.size(); i++) {
+                Airplane airplane = airplanes.get(i);
+                if (!exceptAirplanes.contains(airplane)) {
+                    return airplane;
+                }
             }
         }
         return null;

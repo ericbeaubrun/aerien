@@ -42,6 +42,10 @@ public class Flight implements Runnable {
         resetCountBeforeTakeoff();
     }
 
+    public boolean willLeave(Airport airport){
+        return startAirport.equals(airport) && !isRunning;
+    }
+
     public int getCountBeforeTakeoff() {
         return countBeforeTakeoff;
     }

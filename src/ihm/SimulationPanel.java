@@ -44,7 +44,6 @@ public class SimulationPanel extends JPanel implements Runnable {
         add(aerialTrafficPanel, BorderLayout.CENTER);
     }
 
-
     @Override
     public void run() {
         while (isRunning) {

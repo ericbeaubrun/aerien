@@ -23,6 +23,7 @@ public class AirportInfoPanel extends JPanel {
         }
     }
 
+
     public void updateAirportInfo(ArrayList<Flight> flights, Airport airport) {
 
         if (airport != null) {

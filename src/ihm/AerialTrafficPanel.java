@@ -4,6 +4,7 @@ import config.Config;
 import data.*;
 import engine.Flight;
 import engine.SelectionListener;
+import ihm.infodisplay.AirportInfoButtonListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -197,7 +198,7 @@ public class AerialTrafficPanel extends JPanel {
                         g2d.setColor(flight.isRunning() ? Color.GREEN : Color.WHITE);
                         if (flight.isRunning() && flight.getAirplane().isWaiting()) {
                             g2d.setColor(Color.YELLOW);
-                        } else if (flight.getCountBeforeTakeoff() < 0 && !flight.isRunning()) { // A REVOIR
+                        } else if (flight.getCountBeforeTakeoff() < 0 && !flight.isRunning()) { // && estAssociAUnAvion
                             g2d.setColor(Color.MAGENTA);
                         }
                     } else if (flight.isRunning()) {
