@@ -1,6 +1,6 @@
-import config.Config;
+import config.IHMConfig;
 import engine.Simulation;
-import ihm.SimulationPanel;
+import ihm.Dashboard;
 
 import javax.swing.*;
 
@@ -10,7 +10,7 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
 
     // This is a Thread for the Visual part of the Simulation
-    private final SimulationPanel simulationIHM;
+    private final Dashboard simulationIHM;
 
     // This is a Thread for the Engine part of the Simulation
     private final Simulation simulationEngine;
@@ -18,12 +18,12 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super();
 
-        setSize(Config.WINDOW_DIMENSION);
+        setSize(IHMConfig.WINDOW_DIMENSION);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         simulationEngine = new Simulation();
-        simulationIHM = new SimulationPanel(simulationEngine, getWidth(), getHeight());
+        simulationIHM = new Dashboard(simulationEngine, getWidth(), getHeight());
 
         add(simulationIHM);
 

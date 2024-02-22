@@ -1,4 +1,4 @@
-package ihm.infodisplay;
+package ihm.buttons.listeners;
 
 import data.Airplane;
 import engine.SelectionListener;

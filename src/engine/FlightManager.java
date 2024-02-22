@@ -21,7 +21,10 @@ public class FlightManager implements Runnable {
 
     private final MapField map;
 
-    public FlightManager(MapField map) {
+    private final TimeCounter time;
+
+    public FlightManager(MapField map, TimeCounter time) {
+        this.time = time;
         this.map = map;
     }
 
@@ -37,28 +40,59 @@ public class FlightManager implements Runnable {
             ThreadUtility.waitWhilePaused(this);
 
             for (Flight flight : flights) {
-                if (!flight.isRunning() && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()) {
-                    // Dans le cas ou le vol n'est pas lancé, qu'il est prêt à être lancé et que l'aeroport d'arrivé n'est pas plein
+                // For all running Flights
+                boolean hasFoundAirplane = flight.getAirplane() != null;
 
+                if (!flight.isRunning()) {
                     Airport airport = flight.getStartAirport();
-                    AirZone airZone = map.findAirZone(airport.getPosition());
 
-                    if (airZone != null && !airZone.isOccupied()) {
-                        // Décollage dans le cas ou la zone qui contient l'aeroport de départ ne contient pas un avion
-
-                        Airplane airplane = flight.getStartAirport().getFirstAvailableAirplane();
-                        flight.getStartAirport().removeAirplane(airplane);
-                        flight.removeAirplane(airplane);
+                    // For all airplanes in the departure airport
+                    for (Airplane airplane : airport.getAirplanes()) {
 
                         if (airplane != null) {
-                            flight.start(airplane);
+
+                            // Refill fuel only when < 25%
+                            if (airplane.getFuel() < airplane.getMaxFuel() / 4) {
+                                airplane.fillFuel();
+                            }
+
+                            // When the flight is not running and is ready to takeoff (with destination airport not full)
+
+                            AirZone airZone = map.findAirZone(airport.getPosition());
+                            if (flight.getAirplane() == null && airplane.isAvailable()) {
+                                airplane.setAvailable(false);
+                                flight.setAirplane(airplane);
+                                hasFoundAirplane = true;
+                            }
+
+                            airplane = flight.getAirplane();
+
+                            if (airplane != null && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()
+                                    && !airplane.isAvailable() && airZone != null && !airZone.isOccupied()) {
+
+//                                setTimesFlight(flight);
+                                flight.getStartAirport().removeAirplane(airplane);
+                                flight.removeAirplane(airplane);
+                                flight.setDepartureTime(time.toString());
+                                flight.start(airplane);
+                            }
+
+                            if (hasFoundAirplane) {
+                                break;
+                            }
                         }
                     }
                 }
-                flight.decrementCountBeforeTakeoff();
+
+                flight.decrementCountdown();
             }
         }
     }
+
+    //    public void setTimesFlight(Flight flight) {
+    //        flight.setDepartureTime(time.toString()); // à modifier
+    //        flight.setArrivalTime(flight.calculateArrivalTime(time, flight.getSpeed())); // à modifier
+    //    }
 
     public void addFlight(Flight flight) {
         flights.add(flight);

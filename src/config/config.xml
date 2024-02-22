@@ -2,58 +2,52 @@
 <Configuration>
     <Airplanes>
         <!-- 18/18 Airplanes -->
-        <Airplane Reference="Airbus A320-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Airbus A320-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Airbus A320-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Airbus A320-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Tecnam FHCSK-1" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Tecnam FHCSK-1" MaxFuel="70000" MaxSpeed="500" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Tecnam FHCSK-2" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Tecnam FHCSK-2" MaxFuel="70000" MaxSpeed="500" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper J3-1" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Piper J3-1" MaxFuel="70000" MaxSpeed="500" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper J3-2" MaxFuel="700" MaxSpeed="500" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Piper J3-2" MaxFuel="70000" MaxSpeed="500" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Boeing 737-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Boeing 737-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Boeing 737-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Boeing 737-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Antonov AN225-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Antonov AN225-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Antonov AN225-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Antonov AN225-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Aero L39 Albatros-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Aero L39 Albatros-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Aero L39 Albatros-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Aero L39 Albatros-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper PA28-1" MaxFuel="1000" MaxSpeed="600" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Piper PA28-1" MaxFuel="100000" MaxSpeed="600" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Piper PA28-2" MaxFuel="1000" MaxSpeed="600" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Piper PA28-2" MaxFuel="100000" MaxSpeed="600" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="American XB68-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="American XB68-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="American XB68-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="American XB68-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Global 7500-1" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Global 7500-1" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
 
-        <Airplane Reference="Global 7500-2" MaxFuel="1000" MaxSpeed="20000" ComFreq="0" X="0" Y="0"/>
+        <Airplane Reference="Global 7500-2" MaxFuel="100000" MaxSpeed="20000" TotalDistanceTraveled="0" X="0" Y="0"/>
     </Airplanes>
 
     <!-- 8/8 Airports-->
     <Airports>
         <Airport Name="Dublin" AirplaneMax="3" X="3" Y="4"/>
-
-        <!--        <Airport Name="Stockholm" AirplaneMax="3" X="14" Y="1"/>-->
-        <Airport Name="Stklm" AirplaneMax="3" X="14" Y="1"/>
-
-        <Airport Name="Moscow" AirplaneMax="2" X="28" Y="1"/>
-        <Airport Name="Vienna" AirplaneMax="2" X="17" Y="9"/>
-        <Airport Name="Paris" AirplaneMax="2" X="8" Y="9"/>
-
-        <!--        <Airport Name="Istanbul" AirplaneMax="3" X="24" Y="14"/>-->
-        <Airport Name="Istbl" AirplaneMax="3" X="24" Y="14"/>
-
-        <Airport Name="Madrid" AirplaneMax="3" X="3" Y="15"/>
+        <Airport Name="Stockholm" AirplaneMax="3" X="14" Y="1"/>
+        <Airport Name="Moscow" AirplaneMax="3" X="28" Y="1"/>
+        <Airport Name="Vienna" AirplaneMax="4" X="17" Y="9"/>
+        <Airport Name="Paris" AirplaneMax="3" X="8" Y="9"/>
+        <Airport Name="Istanbul" AirplaneMax="3" X="24" Y="14"/>
+        <Airport Name="Madrid" AirplaneMax="4" X="3" Y="15"/>
         <Airport Name="Alger" AirplaneMax="3" X="8" Y="19"/>
     </Airports>
 
@@ -500,4 +494,90 @@
             <pos X="13" Y="2"/>
         </Flight>
     </Flights>
+
+    <Relief>
+        <High>
+            <pos X="8" Y="11"/>
+            <pos X="9" Y="11"/>
+            <pos X="10" Y="11"/>
+            <pos X="11" Y="11"/>
+            <pos X="12" Y="11"/>
+            <pos X="13" Y="11"/>
+            <pos X="16" Y="11"/>
+            <pos X="9" Y="12"/>
+            <pos X="10" Y="10"/>
+            <pos X="11" Y="10"/>
+            <pos X="12" Y="10"/>
+            <pos X="17" Y="12"/>
+            <pos X="20" Y="9"/>
+            <pos X="21" Y="9"/>
+            <pos X="22" Y="9"/>
+            <pos X="21" Y="10"/>
+            <pos X="22" Y="10"/>
+        </High>
+        <Medium>
+            <pos X="2" Y="13"/>
+            <pos X="3" Y="13"/>
+            <pos X="2" Y="14"/>
+            <pos X="3" Y="14"/>
+            <pos X="4" Y="14"/>
+            <pos X="5" Y="14"/>
+            <pos X="6" Y="14"/>
+            <pos X="1" Y="15"/>
+            <pos X="2" Y="15"/>
+            <pos X="3" Y="15"/>
+            <pos X="4" Y="15"/>
+            <pos X="5" Y="15"/>
+            <pos X="2" Y="16"/>
+            <pos X="3" Y="16"/>
+            <pos X="4" Y="16"/>
+            <pos X="5" Y="16"/>
+            <pos X="3" Y="17"/>
+            <pos X="4" Y="17"/>
+            <pos X="7" Y="13"/>
+            <pos X="7" Y="12"/>
+            <pos X="8" Y="12"/>
+            <pos X="10" Y="12"/>
+            <pos X="11" Y="12"/>
+            <pos X="12" Y="12"/>
+            <pos X="11" Y="9"/>
+            <pos X="12" Y="9"/>
+            <pos X="12" Y="8"/>
+            <pos X="13" Y="8"/>
+            <pos X="13" Y="9"/>
+            <pos X="14" Y="9"/>
+            <pos X="13" Y="10"/>
+            <pos X="14" Y="10"/>
+            <pos X="6" Y="13"/>
+            <pos X="15" Y="10"/>
+            <pos X="16" Y="10"/>
+            <pos X="14" Y="11"/>
+            <pos X="15" Y="11"/>
+            <pos X="17" Y="11"/>
+            <pos X="16" Y="12"/>
+            <pos X="18" Y="12"/>
+            <pos X="17" Y="13"/>
+            <pos X="18" Y="13"/>
+            <pos X="22" Y="7"/>
+            <pos X="20" Y="8"/>
+            <pos X="21" Y="8"/>
+            <pos X="22" Y="8"/>
+            <pos X="23" Y="8"/>
+            <pos X="19" Y="9"/>
+            <pos X="23" Y="9"/>
+            <pos X="20" Y="10"/>
+            <pos X="21" Y="11"/>
+            <pos X="22" Y="11"/>
+            <pos X="26" Y="14"/>
+            <pos X="27" Y="13"/>
+            <pos X="27" Y="14"/>
+            <pos X="28" Y="14"/>
+            <pos X="25" Y="15"/>
+            <pos X="26" Y="15"/>
+            <pos X="27" Y="15"/>
+        </Medium>
+        <Low>
+
+        </Low>
+    </Relief>
 </Configuration>

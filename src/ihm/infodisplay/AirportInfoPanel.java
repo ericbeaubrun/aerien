@@ -1,6 +1,6 @@
 package ihm.infodisplay;
 
-import config.Config;
+import config.IHMConfig;
 import data.Airplane;
 import data.Airport;
 import engine.Flight;
@@ -12,77 +12,96 @@ import java.util.ArrayList;
 
 public class AirportInfoPanel extends JPanel {
 
-    private final ArrayList<JButton> buttons = new ArrayList<>();
+    private final ArrayList<AirportButtonPanel> buttonPanels = new ArrayList<>();
 
-    public void initButtons(int amount) {
-        for (int i = 0; i <= amount; i++) {
-            JButton button = new JButton();
-            button.setVisible(false);
-            buttons.add(button);
-            add(button);
-        }
+    private final JPanel headerPanel = new JPanel();
+
+    private final JLabel headerLabel = new JLabel();
+
+    private final JLabel airplanesIncomingLabel = new JLabel();
+
+    private final JLabel airplanesOnRunwaysLabel = new JLabel();
+
+
+    public AirportInfoPanel(int width) {
+        initHeaderPanel();
+        initButtonPanels(5, width);
+        setBackground(IHMConfig.BACKGROUND_COLOR);
+        setLayout(new GridLayout(7, 0));
     }
 
+    public void initHeaderPanel() {
+        headerLabel.setFont(IHMConfig.HEADER_FONT);
+        headerLabel.setForeground(IHMConfig.BASIC_TEXT_COLOR);
+        airplanesIncomingLabel.setForeground(IHMConfig.BASIC_TEXT_COLOR);
+        airplanesOnRunwaysLabel.setForeground(IHMConfig.BASIC_TEXT_COLOR);
+
+        headerPanel.setBackground(IHMConfig.BACKGROUND_COLOR);
+
+        headerPanel.add(headerLabel);
+        headerPanel.add(airplanesIncomingLabel);
+        headerPanel.add(airplanesOnRunwaysLabel);
+        add(headerPanel);
+    }
+
+    public void initButtonPanels(int amount, int width) {
+        for (int i = 0; i <= amount; i++) {
+            AirportButtonPanel buttonPanel = new AirportButtonPanel(width);
+            buttonPanel.setVisible(false);
+
+            buttonPanels.add(buttonPanel);
+            add(buttonPanel);
+        }
+    }
 
     public void updateAirportInfo(ArrayList<Flight> flights, Airport airport) {
 
         if (airport != null) {
-            ArrayList<Airplane> exceptedAirplanes = new ArrayList<>();
-//            removeAll();
+            headerLabel.setText("  " + airport.getName() + " (" + airport.getMaxAirplanes()+" Max)");
+            airplanesIncomingLabel.setText("Airplanes incoming = " + airport.getAmountAirplanesIncoming()+"/" + airport.getMaxAirplanes());
+            airplanesOnRunwaysLabel.setText("Airplanes on runways = " + airport.getAmountAirplanesOnRunway()+"/" + airport.getMaxAirplanes());
 
-            int currentButtonIndex = 0;
+            ArrayList<Airplane> exceptedAirplanes = new ArrayList<>();
+
+            int i = 0;
 
             for (Flight flight : flights) {
-                if (flight.getStartAirport().equals(airport) && !flight.isRunning()) { //&& !flight.isRunning()
-                    Airplane airplane = airport.getFirstAvailableAirplaneExcept(exceptedAirplanes);
+                if (flight.willLeave(airport)) {
+                    Airplane airplane = flight.getAirplane();
+
                     if (airplane != null) {
-                        exceptedAirplanes.add(airplane);
-                        JButton button = buttons.get(currentButtonIndex);
-                        button.setVisible(true);
+                        AirportButtonPanel buttonPanel = buttonPanels.get(i);
+                        buttonPanel.setVisible(true);
 
-//                        Permet de cliquer sur le bouton du panel info aeroport afin de suivre l'avion quand il décolerra
-                        AirportInfoButtonListener listener = (AirportInfoButtonListener) button.getActionListeners()[0];
-                        listener.setAirplane(airplane);
-
-                        button.setText(flight.toString() + " " + airplane.getReference() + " : " + flight.getCountBeforeTakeoff());
-                        currentButtonIndex++;
-                        //                        JButton button = new JButton(airplane.getReference() + " " + flight.getCountBeforeTakeoff());
-                        //                        add(button);
+                        if (!airplane.isAvailable()) {
+                            buttonPanel.setAirplane(airplane);
+                            buttonPanel.updatePanel(flight);
+                            exceptedAirplanes.add(airplane);
+                        }
+                        i++;
                     }
                 }
             }
 
-            ArrayList<Airplane> airplanes = airport.getAirplanes();
-
-            for (Airplane airplane : airplanes) {
+            for (Airplane airplane : airport.getAirplanes()) {
                 if (!exceptedAirplanes.contains(airplane)) {
-                    JButton button = buttons.get(currentButtonIndex);
-                    button.setText(airplane.getReference() + " U/D"); // UNPLANNED DEPARTURE
-                    button.setVisible(true);
-                    AirportInfoButtonListener listener = (AirportInfoButtonListener) button.getActionListeners()[0];
-                    listener.setAirplane(airplane);
-
-                    currentButtonIndex++;
+                    AirportButtonPanel buttonPanel = buttonPanels.get(i);
+                    buttonPanel.updatePanel(airplane);
+                    buttonPanel.setVisible(true);
+                    buttonPanel.setAirplane(airplane);
+                    i++;
                 }
             }
 
-            for (int i = currentButtonIndex; i < buttons.size(); i++) {
-                buttons.get(i).setVisible(false);
+            for (int k = i; k < buttonPanels.size(); k++) {
+                buttonPanels.get(k).setVisible(false);
             }
         }
     }
 
     public void setSelectionListener(SelectionListener selectionListener) {
-        for (JButton button : buttons) {
-            button.addActionListener(new AirportInfoButtonListener(selectionListener));
+        for (AirportButtonPanel buttonPanel : buttonPanels) {
+            buttonPanel.initActionListener(selectionListener);
         }
     }
-
-    public AirportInfoPanel(int width) {
-        initButtons(5);
-        setPreferredSize(new Dimension(width / 6, 0));
-        setBackground(Config.BACKGROUND_COLOR);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
 }

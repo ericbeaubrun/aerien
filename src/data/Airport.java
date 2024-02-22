@@ -13,13 +13,13 @@ public class Airport extends Entity {
 
     private final ArrayList<Airplane> airplanes;
 
-    private String name;
+    private final String name;
 
     public Airport(int x, int y, String name, int maxAirplanes) {
         super(x, y);
         airplanes = new ArrayList<>();
-        this.maxAirplanes = maxAirplanes;
         availableRunwayCount = maxAirplanes;
+        this.maxAirplanes = maxAirplanes;
         this.name = name;
     }
 
@@ -56,13 +56,12 @@ public class Airport extends Entity {
         return airplanes.size() >= maxAirplanes - 1;
     }
 
-    public String coordToString() {
-        return "pixel=(" + getX() + ":" + getY() + ") block=(" + getColumn() + ":" + getRow() + ")";
-    }
-
     public Airplane getFirstAvailableAirplane() {
-        if (!airplanes.isEmpty()) {
-            return airplanes.get(0);
+        for (int i = 0; i < airplanes.size(); i++) {
+            Airplane airplane = airplanes.get(i);
+            if (airplane.isAvailable()) {
+                return airplane;
+            }
         }
         return null;
     }
@@ -91,6 +90,10 @@ public class Airport extends Entity {
         availableRunwayCount--;
     }
 
+    public int getAmountAirplanesIncoming() {
+        return maxAirplanes - availableRunwayCount - airplanes.size();
+    }
+
     public ArrayList<Airplane> getAirplanes() {
         return new ArrayList<>(airplanes);
     }
@@ -101,5 +104,10 @@ public class Airport extends Entity {
 
     public int getAvailableRunwayCount() {
         return availableRunwayCount;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

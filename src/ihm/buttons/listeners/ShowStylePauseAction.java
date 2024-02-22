@@ -1,6 +1,6 @@
 package ihm.buttons.listeners;
 
-import ihm.AerialTrafficPanel;
+import ihm.buttons.DisplayToggle;
 import ihm.buttons.ButtonAction;
 
 import javax.swing.*;
@@ -9,14 +9,15 @@ import java.awt.event.ActionListener;
 
 public class ShowStylePauseAction extends ButtonAction implements ActionListener {
 
-    public ShowStylePauseAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
-        super(button, aerialTrafficPanel);
+    public ShowStylePauseAction(JButton button, DisplayToggle displayToggle) {
+        super(button, displayToggle);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getAerialTrafficPanel().toggleShowStylePause();
-        replaceToggleButtonText(getButton());
+        getDisplayToggle().toggleShowStylePause();
+        toggleActivated();
+        refreshButtonStyle();
     }
 }
 

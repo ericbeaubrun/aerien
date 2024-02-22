@@ -6,7 +6,7 @@ package engine;
  */
 public class TimeCounter {
 
-    private int daysCount;
+    private int day;
 
     private int hours;
 
@@ -22,7 +22,7 @@ public class TimeCounter {
     public TimeCounter(int hours, int minutes, int daysCount) {
         this.hours = hours < 24 && hours >= 0 ? hours : 0;
         this.minutes = minutes < 60 && hours >= 0 ? hours : 0;
-        this.daysCount = daysCount;
+        this.day = daysCount;
     }
 
     /**
@@ -37,38 +37,40 @@ public class TimeCounter {
                 hours++;
                 if (hours >= 24) {
                     hours = 0;
-                    daysCount++;
+                    day++;
                 }
             }
         }
     }
 
-    public int getHours() {
-        return hours;
-    }
+    /**
+     * Increments the counter by a specified number of minutes count.
+     *
+     * @param count the number of minutes to add to the counter
+     */
+    public String calculateTimeAfterCount(int count) {
+        int day = this.day;
+        int hours = this.hours;
+        int minutes = this.minutes;
 
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
+        // Calculate total
+        int totalMinutes = day * 24 * 60 + hours * 60 + minutes;
+        totalMinutes += count;
 
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
+        // Convert to String
+        day = totalMinutes / (24 * 60);
+        totalMinutes %= 24 * 60;
+        hours = totalMinutes / 60;
+        minutes = totalMinutes % 60;
+        return (hours < 10 ? "0" + hours : "" + hours) + " : " + (minutes < 10 ? "0" + minutes : "" + minutes);
     }
 
     public void togglePause() {
         isPaused = !isPaused;
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public int getDaysCount() {
-        return daysCount;
+    public int getDay() {
+        return day;
     }
 
     @Override

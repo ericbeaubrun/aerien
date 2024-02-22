@@ -6,7 +6,7 @@ public class InfoLabel extends JLabel {
 
     private String initialText;
 
-    private String unit = "";
+    private String unit;
 
     public InfoLabel(String initialText) {
         super(initialText);
@@ -22,6 +22,7 @@ public class InfoLabel extends JLabel {
     public InfoLabel() {
         super("");
         initialText = "";
+        unit = "";
     }
 
     public void updateText(String text) {
@@ -35,7 +36,6 @@ public class InfoLabel extends JLabel {
     public void updateText(int text) {
         updateText(Integer.toString(text));
     }
-
 
     public String getInitialText() {
         return initialText;

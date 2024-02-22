@@ -1,6 +1,6 @@
 package ihm.buttons.listeners;
 
-import ihm.AerialTrafficPanel;
+import ihm.buttons.DisplayToggle;
 import ihm.buttons.ButtonAction;
 
 import javax.swing.*;
@@ -9,13 +9,14 @@ import java.awt.event.ActionListener;
 
 public class ShowBackgroundAction extends ButtonAction implements ActionListener {
 
-    public ShowBackgroundAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
-        super(button, aerialTrafficPanel);
+    public ShowBackgroundAction(JButton button, DisplayToggle displayToggle) {
+        super(button, displayToggle);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getAerialTrafficPanel().toggleShowBackground();
-        replaceToggleButtonText(getButton());
+        getDisplayToggle().toggleShowBackground();
+        toggleActivated();
+        refreshButtonStyle();
     }
 }

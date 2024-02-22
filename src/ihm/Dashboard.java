@@ -1,5 +1,6 @@
 package ihm;
 
+import config.Config;
 import data.Airplane;
 import data.Airport;
 import engine.Flight;
@@ -12,9 +13,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SimulationPanel extends JPanel implements Runnable {
+/**
+ * This class allows to display all graphical Simulation component with buttons, aerial traffic panel and entities information.
+ */
+public class Dashboard extends JPanel implements Runnable {
 
-    private int speed = 80;
+    private int speed = Config.DEFAULT_SIMULATION_SPEED / 10;
 
     private boolean isRunning = true;
 
@@ -26,7 +30,7 @@ public class SimulationPanel extends JPanel implements Runnable {
 
     private final SelectionListener selectionListener;
 
-    public SimulationPanel(Simulation simulation, int width, int height) {
+    public Dashboard(Simulation simulation, int width, int height) {
 
         aerialTrafficPanel = new AerialTrafficPanel(simulation.getMap(), simulation.getAirplanes(), simulation.getAirports(), simulation.getFlights());
         displayInfoPanel = new DisplayInfoPanel(width);
@@ -38,7 +42,12 @@ public class SimulationPanel extends JPanel implements Runnable {
 
         setLayout(new BorderLayout());
 
-        add(buttonsPanel, BorderLayout.WEST);
+        JScrollPane scrollPane = new JScrollPane(buttonsPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(22);
+
+        add(scrollPane, BorderLayout.WEST);
         add(displayInfoPanel, BorderLayout.EAST);
         add(aerialTrafficPanel, BorderLayout.CENTER);
     }
@@ -51,22 +60,22 @@ public class SimulationPanel extends JPanel implements Runnable {
                 Thread.sleep(speed);
 
                 buttonsPanel.refreshTime();
+                buttonsPanel.refreshSpeed(speed);
 
                 Flight selectedFlight = selectionListener.getSelectedFlight();
                 Airplane selectedAirplane = selectionListener.getSelectedAirplane();
                 Airport selectedAirport = selectionListener.getSelectedAirport();
 
-                //                if (selectedAirport == null && selectedFlight != null && selectedAirplane != null && selectedFlight.getAirplane() == null) {
                 if (selectedAirport == null && selectedFlight != null && selectedAirplane != null && !selectedFlight.isRunning()) {
-                    // Cas d'atterissage
+                    // When landing
                     selectionListener.setSelectedFlight(null);
-                    selectionListener.setSelectedAirport(selectedFlight.getDestinationAirport());
-                    displayInfoPanel.setDisplayOnlyAirportInfo();
+                    selectionListener.setSelectedAirport(selectedFlight.getStartAirport()); // destinationAirport()
+                    displayInfoPanel.toggleAirportPanelVisible();
                 } else if (selectedAirplane != null && !selectedAirplane.isOnRunway() && selectedFlight == null && selectedAirport != null) {
-                    // Cas de décolage
+                    // When taking off
                     selectionListener.associateSelectedAirplaneToFlight();
                     selectionListener.setSelectedAirport(null);
-                    displayInfoPanel.setDisplayOnlyFlightInfo();
+                    displayInfoPanel.toggleFlightPanelVisible();
                 }
 
                 ArrayList<Flight> flights = selectionListener.getFlights();
@@ -90,15 +99,14 @@ public class SimulationPanel extends JPanel implements Runnable {
     }
 
     public void increaseSpeed() {
-        if (speed > 20) {
-            speed -= 20;
+        if (speed > Config.MIN_SIMULATION_SPEED / 10) {
+            speed -= Config.STEP_SIMULATION_SPEED / 10;
         }
     }
 
     public void decreaseSpeed() {
-        if (speed < 200) {
-            speed += 20;
+        if (speed < Config.MAX_SIMULATION_SPEED / 10) {
+            speed += Config.STEP_SIMULATION_SPEED / 10;
         }
     }
-
 }

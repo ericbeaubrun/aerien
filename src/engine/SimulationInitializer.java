@@ -46,6 +46,10 @@ public class SimulationInitializer {
     }
 
     public AirportManager initAirports() {
+        if (root == null) {
+            return null;
+        }
+
         AirportManager airports = new AirportManager();
         NodeList airportsNodes = root.getElementsByTagName("Airport");
 
@@ -63,8 +67,12 @@ public class SimulationInitializer {
         return airports;
     }
 
-    public FlightManager initFlights(MapField mapField, AirportManager airports) {
-        FlightManager flightManager = new FlightManager(mapField);
+    public FlightManager initFlights(MapField map, TimeCounter time, AirportManager airports) {
+        if (root == null) {
+            return null;
+        }
+
+        FlightManager flightManager = new FlightManager(map, time);
         NodeList flightNodes = root.getElementsByTagName("Flight");
 
         for (int i = 0; i < flightNodes.getLength(); i++) {
@@ -76,20 +84,23 @@ public class SimulationInitializer {
                 String startAirportX = flightElement.getAttribute("StartAirportX");
                 String startAirportY = flightElement.getAttribute("StartAirportY");
                 Position startAirportPos = new Position(blockToPixel(startAirportX), blockToPixel(startAirportY));
+
                 String destinationAirportX = flightElement.getAttribute("DestinationAirportX");
                 String destinationAirportY = flightElement.getAttribute("DestinationAirportY");
                 Position destinationAirportPos = new Position(blockToPixel(destinationAirportX), blockToPixel(destinationAirportY));
 
-                Flight flight = new Flight(mapField, airports, startAirportPos, destinationAirportPos);
+                Flight flight = new Flight(map, airports, startAirportPos, destinationAirportPos);
 
                 // Ajout de chaque Block dans l'objet Flight
                 NodeList posNodes = flightElement.getElementsByTagName("pos");
                 for (int j = 0; j < posNodes.getLength(); j++) {
                     Element posElement = (Element) posNodes.item(j);
-                    int x = blockToPixel(posElement.getAttribute("X"));
-                    int y = blockToPixel(posElement.getAttribute("Y"));
-                    Position block = new Position(x, y);
-                    flight.addNextBlock(block);
+                    int x = Integer.parseInt(posElement.getAttribute("X"));
+                    int y = Integer.parseInt(posElement.getAttribute("Y"));
+                    Position block = map.getPosition(x, y);
+                    if (block != null) {
+                        flight.addPosition(block);
+                    }
                 }
 
                 flightManager.addFlight(flight);
@@ -99,6 +110,10 @@ public class SimulationInitializer {
     }
 
     public ArrayList<Airplane> initAirplanes(AirportManager airports) {
+        if (root == null) {
+            return null;
+        }
+
         ArrayList<Airplane> airplanes = new ArrayList<>();
         int k = 0;
 
@@ -110,10 +125,10 @@ public class SimulationInitializer {
             int y = blockToPixel(airplaneElement.getAttribute("Y"));
             int maxSpeed = Integer.parseInt(airplaneElement.getAttribute("MaxSpeed"));
             int maxFuel = Integer.parseInt(airplaneElement.getAttribute("MaxFuel"));
-            int comFrequency = Integer.parseInt(airplaneElement.getAttribute("ComFreq"));
+            int totalDistanceTraveledCount = Integer.parseInt(airplaneElement.getAttribute("TotalDistanceTraveled"));
 
             String reference = airplaneElement.getAttribute("Reference");
-            Airplane airplane = new Airplane(x, y, reference, maxFuel, maxSpeed, comFrequency);
+            Airplane airplane = new Airplane(x, y, reference, maxFuel, maxSpeed, totalDistanceTraveledCount);
 
             Airport unfilledAirport = airports.getRandomSpawnAirport();
             if (unfilledAirport != null) {
@@ -130,6 +145,53 @@ public class SimulationInitializer {
         }
 
         return airplanes;
+    }
+
+    public void initReliefs(MapField map) {
+        if (map != null && root != null) {
+
+            Element posElements;
+            NodeList posNodes;
+
+            NodeList highReliefNode = root.getElementsByTagName("High");
+            posElements = (Element) highReliefNode.item(0);
+
+            posNodes = posElements.getElementsByTagName("pos");
+
+            for (int j = 0; j < posNodes.getLength(); j++) {
+                Element posElement = (Element) posNodes.item(j);
+                int x = Integer.parseInt(posElement.getAttribute("X"));
+                int y = Integer.parseInt(posElement.getAttribute("Y"));
+                Position block = map.getPosition(x, y);
+
+                block.setZ(2000);
+            }
+
+
+            NodeList mediumReliefNode = root.getElementsByTagName("Medium");
+            posElements = (Element) mediumReliefNode.item(0);
+
+            posNodes = posElements.getElementsByTagName("pos");
+            for (int j = 0; j < posNodes.getLength(); j++) {
+                Element posElement = (Element) posNodes.item(j);
+                int x = Integer.parseInt(posElement.getAttribute("X"));
+                int y = Integer.parseInt(posElement.getAttribute("Y"));
+                Position block = map.getPosition(x, y);
+                block.setZ(1000);
+            }
+
+            NodeList lowReliefNode = root.getElementsByTagName("Low");
+            posElements = (Element) lowReliefNode.item(0);
+
+            posNodes = posElements.getElementsByTagName("pos");
+            for (int j = 0; j < posNodes.getLength(); j++) {
+                Element posElement = (Element) posNodes.item(j);
+                int x = Integer.parseInt(posElement.getAttribute("X"));
+                int y = Integer.parseInt(posElement.getAttribute("Y"));
+                Position block = map.getPosition(x, y);
+                block.setZ(500);
+            }
+        }
     }
 
     public void terminateInitialisation() {

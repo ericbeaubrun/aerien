@@ -1,6 +1,6 @@
 package ihm.infodisplay;
 
-import config.Config;
+import config.IHMConfig;
 import data.Airport;
 import engine.Flight;
 import engine.SelectionListener;
@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * This class allows to display Airports and Airplanes information in real time during the simulation.
+ */
 public class DisplayInfoPanel extends JPanel {
 
     private final AirplaneInfoPanel airplanePanel;
@@ -23,23 +26,22 @@ public class DisplayInfoPanel extends JPanel {
         airportPanel.updateAirportInfo(flights, airport);
     }
 
-    public void setDisplayOnlyAirportInfo() {
+    public void toggleAirportPanelVisible() {
         airplanePanel.setVisible(false);
         airportPanel.setVisible(true);
     }
 
-    public void setDisplayOnlyFlightInfo(){
+    public void toggleFlightPanelVisible() {
         airplanePanel.setVisible(true);
         airportPanel.setVisible(false);
     }
 
-    public void hideDisplay(){
+    /**
+     * Hide all Panels.
+     */
+    public void hideDisplay() {
         airplanePanel.setVisible(false);
         airportPanel.setVisible(false);
-    }
-
-    public void resetLabelsText() {
-        airplanePanel.resetLabelsText();
     }
 
     public DisplayInfoPanel(int width) {
@@ -50,15 +52,14 @@ public class DisplayInfoPanel extends JPanel {
         airportPanel.setVisible(false);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Config.BACKGROUND_COLOR);
-        setPreferredSize(new Dimension(width / 6, 0));
+        setBackground(IHMConfig.BACKGROUND_COLOR);
+        setPreferredSize(new Dimension((width / 8) + (width / 32) , 0));
 
         add(airplanePanel);
         add(airportPanel);
     }
 
-    public void setSelectionListener(SelectionListener selectionListener){
+    public void setSelectionListener(SelectionListener selectionListener) {
         airportPanel.setSelectionListener(selectionListener);
     }
-
 }

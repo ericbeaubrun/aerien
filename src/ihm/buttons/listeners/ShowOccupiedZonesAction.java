@@ -7,15 +7,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowTrajectsAction extends ButtonAction implements ActionListener {
-    public ShowTrajectsAction(JButton button, DisplayToggle displayToggle) {
+public class ShowOccupiedZonesAction extends ButtonAction implements ActionListener {
+
+    public ShowOccupiedZonesAction(JButton button, DisplayToggle displayToggle) {
         super(button, displayToggle);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getDisplayToggle().toggleShowTrajects();
+        getDisplayToggle().toggleShowOccupiedZones();
         toggleActivated();
         refreshButtonStyle();
     }
 }
+

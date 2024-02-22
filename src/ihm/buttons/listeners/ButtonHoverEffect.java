@@ -14,11 +14,11 @@ public class ButtonHoverEffect extends MouseAdapter {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        button.setBackground(new Color(70, 70, 70));
+//        button.setBackground(new Color(70, 70, 70));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        button.setBackground(new Color(50, 50, 50));
+//        button.setBackground(new Color(50, 50, 50));
     }
 }

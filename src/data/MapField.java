@@ -48,7 +48,6 @@ public class MapField {
                 positions[i][j] = block;
             }
         }
-
     }
 
 
@@ -77,8 +76,10 @@ public class MapField {
      */
     public AirZone findAirZone(Position position) {
         for (AirZone airZone : airZones) {
-            if (airZone.getPositions().contains(position)) {
-                return airZone;
+            for (Position position1 : airZone.getPositions()) {
+                if (position1.getX() == position.getX() && position1.getY() == position.getY()) {
+                    return airZone;
+                }
             }
         }
         return null;

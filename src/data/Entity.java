@@ -11,22 +11,15 @@ public class Entity {
         this.position = new Position(x, y);
     }
 
-    public Entity(Position position) {
-        this.position = position;
+    private final Position position;
+
+    public void changePosition(Entity obj) {
+        this.changePosition(obj.getPosition());
     }
 
-    public Entity(int x, int y, int z) {
-        this.position = new Position(x, y, z);
-    }
-
-    private Position position;
-
-    public void setPosition(Entity obj) {
-        this.setPosition(obj.getPosition());
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
+    public void changePosition(Position position) {
+        this.position.setX(position.getX());
+        this.position.setY(position.getY());
     }
 
     public Position getPosition() {
@@ -67,6 +60,10 @@ public class Entity {
 
     public Boolean hasSamePosition(Entity obj) {
         return getX() == obj.getX() && getY() == obj.getY() && getZ() == obj.getZ();
+    }
+
+    public Boolean hasSamePosition(int column, int row) {
+        return getColumn() == column && getRow() == row;
     }
 
     public Boolean hasSamePosition(Position pos) {

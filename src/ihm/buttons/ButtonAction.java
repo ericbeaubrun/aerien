@@ -1,37 +1,45 @@
 package ihm.buttons;
 
-import ihm.AerialTrafficPanel;
+import config.IHMConfig;
 
 import javax.swing.JButton;
 
 public class ButtonAction {
 
-    private final JButton button;
-    private final AerialTrafficPanel aerialTrafficPanel;
+//    private static Color DISABLED_COLOR = new Color(82, 18, 18);
 
-    public ButtonAction(JButton button, AerialTrafficPanel aerialTrafficPanel) {
+    private boolean isActivated;
+    private final JButton button;
+    private final DisplayToggle displayToggle;
+
+    public ButtonAction(JButton button, DisplayToggle displayToggle) {
         this.button = button;
-        this.aerialTrafficPanel = aerialTrafficPanel;
+        this.displayToggle = displayToggle;
     }
 
     public ButtonAction(JButton button) {
         this.button = button;
-        this.aerialTrafficPanel = null;
+        displayToggle = null;
+        isActivated = true;
     }
 
     public JButton getButton() {
         return button;
     }
 
-    public AerialTrafficPanel getAerialTrafficPanel() {
-        return aerialTrafficPanel;
+    public DisplayToggle getDisplayToggle() {
+        return displayToggle;
     }
 
-    public void replaceToggleButtonText(JButton button) {
-        if (button.getText().contains("Show")) {
-            button.setText(button.getText().replace("Show", "Hide"));
-        } else {
-            button.setText(button.getText().replace("Hide", "Show"));
-        }
+    public void toggleActivated() {
+        isActivated = !isActivated;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void refreshButtonStyle() {
+        button.setBackground(isActivated ? IHMConfig.ACTIVATED_COLOR : IHMConfig.DISABLED_COLOR);
     }
 }

@@ -2,8 +2,8 @@ package engine;
 
 import data.Airplane;
 import data.Airport;
+import data.Position;
 import ihm.infodisplay.DisplayInfoPanel;
-import util.ConversionUtility;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -54,6 +54,44 @@ public class SelectionListener implements MouseListener {
         selectedAirplane = null;
     }
 
+    private boolean isAirportSelection(int column, int row) {
+        for (Airport airport : airports) {
+            if (airport.hasSamePosition(column, row)) {
+                selectedAirport = airport;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isFlightSelection(int column, int row) {
+        for (Flight flight : flights) {
+            for (Position position : flight.getPath()) {
+                if (position.getColumn() == column && position.getRow() == row) {
+                    selectedFlight = flight;
+                    Airplane airplane = flight.getAirplane();
+                    if (airplane != null) {
+                        selectedAirplane = airplane;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isAirplaneSelection(int column, int row) {
+        for (Flight flight : flights) {
+            Airplane airplane = flight.getAirplane();
+            if (airplane != null && airplane.hasSamePosition(column, row)) {
+                selectedFlight = flight;
+                selectedAirplane = airplane;
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -62,33 +100,20 @@ public class SelectionListener implements MouseListener {
         int x = e.getX();
         int y = e.getY();
 
-        int column = pixelToBlock(x);
+        int col = pixelToBlock(x);
         int row = pixelToBlock(y);
 
-        for (Airport airport : airports) {
-            if (airport.getColumn() == column && airport.getRow() == row) {
-                selectedAirport = airport;
-                displayInfoPanel.updateAirportInfo(flights, airport);
-                displayInfoPanel.setDisplayOnlyAirportInfo();
-                break;
-            }
+        if (isAirportSelection(col, row)) {
+            displayInfoPanel.updateAirportInfo(flights, selectedAirport);
+            displayInfoPanel.toggleAirportPanelVisible();
+        }
+
+        if (noElementSelected() && isAirplaneSelection(col, row)) {
+            displayInfoPanel.updateFlightInfo(selectedFlight);
+            displayInfoPanel.toggleFlightPanelVisible();
         }
 
         if (noElementSelected()) {
-            for (Flight flight : flights) {
-                Airplane airplane = flight.getAirplane();
-                if (airplane != null && airplane.getColumn() == column && airplane.getRow() == row) {
-                    selectedFlight = flight;
-                    selectedAirplane = airplane;
-                    displayInfoPanel.updateFlightInfo(flight);
-                    displayInfoPanel.setDisplayOnlyFlightInfo();
-                    break;
-                }
-            }
-        }
-
-        if (noElementSelected()) {
-            displayInfoPanel.resetLabelsText();
             displayInfoPanel.hideDisplay();
         }
     }
@@ -117,6 +142,10 @@ public class SelectionListener implements MouseListener {
         return selectedAirplane;
     }
 
+    public ArrayList<Flight> getFlights() {
+        return new ArrayList<>(flights);
+    }
+
     public void setSelectedAirplane(Airplane selectedAirplane) {
         this.selectedAirplane = selectedAirplane;
     }
@@ -127,9 +156,5 @@ public class SelectionListener implements MouseListener {
 
     public void setSelectedAirport(Airport selectedAirport) {
         this.selectedAirport = selectedAirport;
-    }
-
-    public ArrayList<Flight> getFlights() {
-        return new ArrayList<>(flights);
     }
 }

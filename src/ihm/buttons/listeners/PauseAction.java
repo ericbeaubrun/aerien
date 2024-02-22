@@ -1,10 +1,12 @@
 package ihm.buttons.listeners;
 
+import config.IHMConfig;
 import engine.Simulation;
 import engine.TimeCounter;
 import ihm.buttons.ButtonAction;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,5 +25,11 @@ public class PauseAction extends ButtonAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         simulation.togglePause();
         time.togglePause();
+        if (isActivated()) {
+            getButton().setBackground(IHMConfig.PAUSE_BUTTON_COLOR);
+        } else {
+            refreshButtonStyle();
+        }
+        toggleActivated();
     }
 }

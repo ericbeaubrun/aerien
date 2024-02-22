@@ -11,21 +11,25 @@ import java.util.Random;
 
 public class Flight implements Runnable {
 
+    private String departureTime;
+
+    private String arrivalTime;
+
     private int speed = Config.DEFAULT_SIMULATION_SPEED;
 
     private Thread thread;
 
-    private int countBeforeTakeoff;
+    private int countdown;
 
     private volatile boolean isRunning = false;
 
     private volatile boolean isPaused = false;
 
-    private int currentBlockIndex;
+    private int currentPositionIndex;
 
-    private final MapField mapField;
+    private final MapField map;
 
-    private Airplane airplane = null;
+    private volatile Airplane airplane = null;
 
     private AirZone currentAirZone;
 
@@ -33,62 +37,68 @@ public class Flight implements Runnable {
 
     private Airport destinationAirport;
 
+    private final AirplaneDataCalculator dataCalculator;
+
     private final ArrayList<Position> path = new ArrayList<>();
 
-    public Flight(MapField mapField, AirportManager airports, Position posAirportA, Position posAirportB) {
-        this.mapField = mapField;
-        this.startAirport = airports.findAirport(posAirportA.getColumn(), posAirportA.getRow());
-        this.destinationAirport = airports.findAirport(posAirportB.getColumn(), posAirportB.getRow());
+    public Flight(MapField map, AirportManager airports, Position posAirportA, Position posAirportB) {
+        this.map = map;
+        this.startAirport = airports.findAirport(posAirportA);
+        this.destinationAirport = airports.findAirport(posAirportB);
+        dataCalculator = new AirplaneDataCalculator();
 
-        resetCountBeforeTakeoff();
+        resetCountdown();
     }
 
     public boolean willLeave(Airport airport) {
         return startAirport.equals(airport) && !isRunning;
     }
 
-    public int getCountBeforeTakeoff() {
-        return countBeforeTakeoff;
+    public int getCountdown() {
+        return countdown;
     }
 
-    public void addNextBlock(Position block) {
+    public void addPosition(Position block) {
         path.add(block);
     }
 
-    public void decrementCountBeforeTakeoff() {
-        countBeforeTakeoff--;
+    public void decrementCountdown() {
+        countdown--;
     }
 
     public void reverseDirection() {
-        Airport tmp = startAirport;
+        Airport tmpAirport = startAirport;
         startAirport = destinationAirport;
-        destinationAirport = tmp;
+        destinationAirport = tmpAirport;
         Collections.reverse(path);
     }
 
     public void takeoff() {
-        AirZone airZone = mapField.findAirZone(airplane.getPosition());
+        currentPositionIndex = 0;
+        AirZone airZone = map.findAirZone(airplane.getPosition());
         if (airZone != null) {
             currentAirZone = airZone;
             currentAirZone.enterInAirZone(airplane);
         }
         airplane.setAngle(ConversionUtility.calculateAngle(startAirport.getPosition(), path.get(1)));
-        airplane.setPosition(startAirport);
+        airplane.changePosition(startAirport);
         startAirport.removeAirplane(airplane);
         airplane.putOnRunway(false);
     }
 
     public void landing() {
+        currentPositionIndex = 0;
         currentAirZone.leaveAirzone();
-        airplane.setPosition(destinationAirport);
+        airplane.changePosition(destinationAirport);
         destinationAirport.addAirplane(airplane);
         airplane.putOnRunway(true);
+        airplane.setAvailable(true);
         airplane = null;
     }
 
-    public void resetCountBeforeTakeoff() {
+    public void resetCountdown() {
         Random random = new Random();
-        countBeforeTakeoff = 5 + random.nextInt(40);
+        countdown = Config.MIN_COUNT_BEFORE_TAKEOFF + random.nextInt(Config.MAX_COUNT_BEFORE_TAKEOFF);
     }
 
     @Override
@@ -96,63 +106,58 @@ public class Flight implements Runnable {
         if (airplane != null) {
 
             isRunning = true;
-
             isPaused = false;
 
             takeoff();
 
-            currentBlockIndex = 0;
-            while (currentBlockIndex < path.size()) {
-
-                Position currentPosition = path.get(currentBlockIndex);
-                AirZone airZone = mapField.findAirZone(currentPosition);
-
+            while (currentPositionIndex < path.size()) {
                 ThreadUtility.sleep(speed);
                 ThreadUtility.waitWhilePaused(this);
 
-                if (airZone != null) {
-                    if (currentAirZone == null) {
-                        currentAirZone = airZone;
-                        currentAirZone.enterInAirZone(airplane);
-
-                    } else if (!airZone.equals(currentAirZone)) {
-                        currentAirZone.leaveAirzone();
-                        currentAirZone = airZone;
-                        currentAirZone.enterInAirZone(airplane);
-                    }
-                }
-
-                airplane.setPosition(currentPosition);
-
-                // Calculer l'angle de l'avion
-                Position otherPosition = currentBlockIndex < path.size() - 4 ? path.get(currentBlockIndex + 4) : destinationAirport.getPosition();
-
-                double angle = ConversionUtility.calculateAngle(currentPosition, otherPosition);
-                airplane.setAngle(angle);
-
-                currentBlockIndex++;
+                nextPosition();
             }
 
             ThreadUtility.sleep(speed);
             ThreadUtility.waitWhilePaused(this);
 
             landing();
-
-            resetCountBeforeTakeoff();
-
+            resetCountdown();
             reverseDirection();
 
             isRunning = false;
         }
     }
 
-    public synchronized void setAirplane(Airplane airplane) {
-        this.airplane = airplane;
+    private void updateCurrentAirZone() {
+        AirZone airZone = map.findAirZone(getCurrentPosition());
+
+        if (airZone != null) {
+            if (currentAirZone == null) {
+                currentAirZone = airZone;
+                currentAirZone.enterInAirZone(airplane);
+
+            } else if (!airZone.equals(currentAirZone)) {
+                currentAirZone.leaveAirzone();
+                currentAirZone = airZone;
+                currentAirZone.enterInAirZone(airplane);
+            }
+        }
     }
 
-    @Override
-    public String toString() {
-        return startAirport.getName() + " -> " + destinationAirport.getName() + "\n";
+    /**
+     *
+     */
+    private void nextPosition() {
+        if (airplane != null) {
+
+            updateCurrentAirZone();
+
+            dataCalculator.recalculateAirplaneData(this);
+
+            airplane.changePosition(getCurrentPosition());
+
+            currentPositionIndex++;
+        }
     }
 
     public void start(Airplane airplane) {
@@ -170,23 +175,27 @@ public class Flight implements Runnable {
     }
 
     public boolean isReadyToLaunch() {
-        return countBeforeTakeoff <= 0;
+        return countdown <= 0;
     }
 
     public boolean isRunning() {
         return isRunning;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public int getAmountRemainingBlocks() {
+        return path.size() - currentPositionIndex;
+    }
+
     public int getAmountBlockPath() {
         return path.size();
     }
 
-    public int getAmountBlockRemainingPath() {
-        return path.size() - currentBlockIndex;
-    }
-
-    public int getCurrentBlockIndex() {
-        return currentBlockIndex;
+    public int getCurrentPositionIndex() {
+        return currentPositionIndex;
     }
 
     public ArrayList<Position> getPath() {
@@ -197,12 +206,33 @@ public class Flight implements Runnable {
         return destinationAirport;
     }
 
-    public Airplane getAirplane() {
+    public synchronized void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
+    }
+
+    public synchronized Airplane getAirplane() {
         return airplane;
     }
 
     public Airport getStartAirport() {
         return startAirport;
+    }
+
+    public int getRemainingMinutes() {
+        return (path.size() - currentPositionIndex) * 10;
+    }
+
+    public String getArrivalTime(TimeCounter time, int speed) {
+        int i = getRemainingMinutes();
+        return time.calculateTimeAfterCount(i);
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public Position getCurrentPosition() {
+        return path.get(currentPositionIndex);
     }
 
     public void togglePause() {
@@ -214,15 +244,36 @@ public class Flight implements Runnable {
         }
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public int getSpeed() {
-        return speed;
+    public boolean isAssociatedToAirplane() {
+        return airplane != null && !airplane.isAvailable();
     }
 
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    @Override
+    public String toString() {
+        return startAirport.getName() + " -> " + destinationAirport.getName() + "\n";
+    }
+
+//    public String calculateRemainingTime(int speed) {
+//        if (isRunning) {
+//            int i = (path.size() - currentBlockIndex) * speed;
+//            return ConversionUtility.toTime(i);
+
+//        } else {
+
+//            return "Undefined";
+//        }
+
+//    }
 }

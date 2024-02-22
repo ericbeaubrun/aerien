@@ -1,6 +1,12 @@
 package data;
 
+import config.Config;
+
+import java.util.Random;
+
 public class Airplane extends Entity {
+
+    private volatile boolean isAvailable = true;
 
     private int fuel;
 
@@ -12,41 +18,24 @@ public class Airplane extends Entity {
 
     private double angle;
 
-    private int altitude;
-
-    private int inclinaison;
-
-    private String reference;
-
-    private String direction;
+    private final String reference;
 
     private boolean isOnRunway;
 
     private boolean isWaiting = false;
 
-    private float communicationFrequency;
+    private int totalDistanceTraveledCount;
 
-    public Airplane(int x, int y) {
-        super(x, y);
-        this.isOnRunway = false;
-    }
 
-    public Airplane(int x, int y, String reference, int maxFuel, int maxSpeed, int comFrequency) {
+    public Airplane(int x, int y, String reference, int maxFuel, int maxSpeed, int totalDistanceTraveledCount) {
         super(x, y);
-        this.altitude = 0;
         this.angle = 0;
-        this.inclinaison = 0;
-
         this.reference = reference;
-
-        this.communicationFrequency = comFrequency;
-
+        this.totalDistanceTraveledCount = totalDistanceTraveledCount;
         this.fuel = maxFuel;
         this.maxFuel = maxFuel;
-
         this.speed = 0;
         this.maxSpeed = maxSpeed;
-
         this.isOnRunway = false;
     }
 
@@ -74,10 +63,6 @@ public class Airplane extends Entity {
         return reference;
     }
 
-    public String getDirection() {
-        return direction;
-    }
-
     public int getSpeed() {
         return speed;
     }
@@ -92,5 +77,42 @@ public class Airplane extends Entity {
 
     public void setWaiting(boolean waiting) {
         isWaiting = waiting;
+    }
+
+    public synchronized boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public synchronized void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public int getTotalDistanceTraveledCount() {
+        return totalDistanceTraveledCount;
+    }
+
+    public void incrementTotalDistanceTraveled(int count) {
+        totalDistanceTraveledCount += count;
+    }
+
+    public void fillFuel() {
+        fuel = maxFuel;
+    }
+
+    @Override
+    public String toString() {
+        return "ref='" + reference + "'";
+    }
+
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
     }
 }

@@ -30,9 +30,11 @@ public class Simulation {
 
         map = initializer.initMap();
 
+        initializer.initReliefs(map);
+
         airportManager = initializer.initAirports();
 
-        flightManager = initializer.initFlights(map, airportManager);
+        flightManager = initializer.initFlights(map, time, airportManager);
 
         airplanes = initializer.initAirplanes(airportManager);
 
