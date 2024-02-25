@@ -66,7 +66,7 @@ public class AirportInfoPanel extends JPanel {
             int i = 0;
 
             for (Flight flight : flights) {
-                if (flight.willLeave(airport)) {
+                if (flight.willTakeoff(airport)) {
                     Airplane airplane = flight.getAirplane();
 
                     if (airplane != null) {

@@ -50,12 +50,8 @@ public class Flight implements Runnable {
         resetCountdown();
     }
 
-    public boolean willLeave(Airport airport) {
+    public boolean willTakeoff(Airport airport) {
         return startAirport.equals(airport) && !isRunning;
-    }
-
-    public int getCountdown() {
-        return countdown;
     }
 
     public void addPosition(Position block) {
@@ -121,6 +117,7 @@ public class Flight implements Runnable {
             ThreadUtility.waitWhilePaused(this);
 
             landing();
+
             resetCountdown();
             reverseDirection();
 
@@ -128,7 +125,7 @@ public class Flight implements Runnable {
         }
     }
 
-    private void updateCurrentAirZone() {
+    private void updateAirZone() {
         AirZone airZone = map.findAirZone(getCurrentPosition());
 
         if (airZone != null) {
@@ -145,12 +142,12 @@ public class Flight implements Runnable {
     }
 
     /**
-     *
+     * Moves the Airplane to the next Position in the Path and update the AirZone
      */
     private void nextPosition() {
         if (airplane != null) {
 
-            updateCurrentAirZone();
+            updateAirZone();
 
             dataCalculator.recalculateAirplaneData(this);
 
@@ -204,6 +201,10 @@ public class Flight implements Runnable {
 
     public Airport getDestinationAirport() {
         return destinationAirport;
+    }
+
+    public int getCountdown() {
+        return countdown;
     }
 
     public synchronized void setAirplane(Airplane airplane) {

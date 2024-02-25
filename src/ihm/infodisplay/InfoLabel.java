@@ -4,13 +4,14 @@ import javax.swing.*;
 
 public class InfoLabel extends JLabel {
 
-    private String initialText;
+    private final String initialText;
 
-    private String unit;
+    private final String unit;
 
     public InfoLabel(String initialText) {
         super(initialText);
         this.initialText = initialText;
+        unit = "";
     }
 
     public InfoLabel(String initialText, String unit) {

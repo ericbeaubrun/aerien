@@ -17,6 +17,11 @@ public class Entity {
         this.changePosition(obj.getPosition());
     }
 
+    /**
+     * Change x and y of the Entity.
+     *
+     * @param position the new position of the Entity
+     */
     public void changePosition(Position position) {
         this.position.setX(position.getX());
         this.position.setY(position.getY());
@@ -56,10 +61,6 @@ public class Entity {
 
     public int getRow() {
         return ConversionUtility.pixelToBlock(position.getY());
-    }
-
-    public Boolean hasSamePosition(Entity obj) {
-        return getX() == obj.getX() && getY() == obj.getY() && getZ() == obj.getZ();
     }
 
     public Boolean hasSamePosition(int column, int row) {
