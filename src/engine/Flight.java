@@ -17,8 +17,15 @@ public class Flight implements Runnable {
 
     private int speed = Config.DEFAULT_SIMULATION_SPEED;
 
+    /**
+     * The thread that allows to run this Flight.
+     */
     private Thread thread;
 
+    /**
+     * Defines the countdown before Airplane will takeoffs, when the count is negative that means
+     * the Flight is delayed.
+     */
     private int countdown;
 
     private volatile boolean isRunning = false;
@@ -31,6 +38,9 @@ public class Flight implements Runnable {
 
     private volatile Airplane airplane = null;
 
+    /**
+     * The AirZone object where is currently placed the Airplane.
+     */
     private AirZone currentAirZone;
 
     private Airport startAirport;
@@ -125,6 +135,10 @@ public class Flight implements Runnable {
         }
     }
 
+    /**
+     * Sets the AirZone based on the current Airplane position. Pauses the thread
+     * if the zone to enter is not available.
+     */
     private void updateAirZone() {
         AirZone airZone = map.findAirZone(getCurrentPosition());
 
@@ -157,9 +171,9 @@ public class Flight implements Runnable {
         }
     }
 
-    public void start(Airplane airplane) {
+    public void start() {
         if ((!isRunning || thread == null) && airplane != null) {
-            this.airplane = airplane;
+//            this.airplane = airplane;
             startAirport.incrementAvailableRunwayCount();
             destinationAirport.decrementAvailableRunwayCount();
             thread = new Thread(this);
@@ -167,10 +181,9 @@ public class Flight implements Runnable {
         }
     }
 
-    public void removeAirplane(Airplane airplane) {
-        startAirport.removeAirplane(airplane);
-    }
-
+    /**
+     * @return true when the countdown before takeoff is negative.
+     */
     public boolean isReadyToLaunch() {
         return countdown <= 0;
     }
@@ -253,8 +266,8 @@ public class Flight implements Runnable {
         this.speed = speed;
     }
 
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartureTime(TimeCounter time) {
+        departureTime = time.toString();
     }
 
     public void setArrivalTime(String arrivalTime) {
@@ -266,15 +279,4 @@ public class Flight implements Runnable {
         return startAirport.getName() + " -> " + destinationAirport.getName() + "\n";
     }
 
-//    public String calculateRemainingTime(int speed) {
-//        if (isRunning) {
-//            int i = (path.size() - currentBlockIndex) * speed;
-//            return ConversionUtility.toTime(i);
-
-//        } else {
-
-//            return "Undefined";
-//        }
-
-//    }
 }

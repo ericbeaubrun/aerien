@@ -70,11 +70,9 @@ public class FlightManager implements Runnable {
                             if (airplane != null && flight.isReadyToLaunch() && flight.getDestinationAirport().hasAvailableRunway()
                                     && !airplane.isAvailable() && airZone != null && !airZone.isOccupied()) {
 
-//                                setTimesFlight(flight);
                                 flight.getStartAirport().removeAirplane(airplane);
-                                flight.removeAirplane(airplane);
-                                flight.setDepartureTime(time.toString());
-                                flight.start(airplane);
+                                flight.setDepartureTime(time);
+                                flight.start();
                             }
 
                             if (hasFoundAirplane) {

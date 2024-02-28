@@ -130,7 +130,7 @@ public class SimulationInitializer {
             String reference = airplaneElement.getAttribute("Reference");
             Airplane airplane = new Airplane(x, y, reference, maxFuel, maxSpeed, totalDistanceTraveledCount);
 
-            Airport unfilledAirport = airports.getRandomSpawnAirport();
+            Airport unfilledAirport = airports.getRandomAvailableAirport();
             if (unfilledAirport != null) {
                 unfilledAirport.addAirplane(airplane);
                 unfilledAirport.decrementAvailableRunwayCount();

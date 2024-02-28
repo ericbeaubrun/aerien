@@ -10,6 +10,12 @@ public class AirportManager {
 
     private final ArrayList<Airport> airports = new ArrayList<>();
 
+    /**
+     * Find the airport presents in the given Position.
+     *
+     * @param position the position where we want to find the airport.
+     * @return the Airport Object or null if there is no airport.
+     */
     public Airport findAirport(Position position) {
         if (position != null) {
             for (Airport airport : airports) {
@@ -21,12 +27,15 @@ public class AirportManager {
         return null;
     }
 
-    public Airport getRandomSpawnAirport() {
+    /**
+     * @return a random airport with 1 available runway at least.
+     */
+    public Airport getRandomAvailableAirport() {
         ArrayList<Airport> list = getAirports();
         Collections.shuffle(list);
 
         for (Airport airport : list) {
-            if (!airport.isAvailableSpawn()) {
+            if (!airport.isAvailableToSpawn()) {
                 return airport;
             }
         }
@@ -35,10 +44,6 @@ public class AirportManager {
 
     public void add(Airport airport) {
         airports.add(airport);
-    }
-
-    public int getAmountAirport() {
-        return airports.size();
     }
 
     public ArrayList<Airport> getAirports() {

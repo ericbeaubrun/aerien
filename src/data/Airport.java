@@ -1,8 +1,6 @@
 package data;
 
 
-import engine.Flight;
-
 import java.util.ArrayList;
 
 public class Airport extends Entity {
@@ -52,30 +50,11 @@ public class Airport extends Entity {
         return airplanes.size() >= maxAirplanes;
     }
 
-    public boolean isAvailableSpawn() {
+    /**
+     * @return true if there is at least 1 available runway, false else.
+     */
+    public boolean isAvailableToSpawn() {
         return airplanes.size() >= maxAirplanes - 1;
-    }
-
-    public Airplane getFirstAvailableAirplane() {
-        for (int i = 0; i < airplanes.size(); i++) {
-            Airplane airplane = airplanes.get(i);
-            if (airplane.isAvailable()) {
-                return airplane;
-            }
-        }
-        return null;
-    }
-
-    public Airplane getFirstAvailableAirplaneExcept(ArrayList<Airplane> exceptAirplanes) {
-        if (exceptAirplanes != null) {
-            for (int i = 0; i < airplanes.size(); i++) {
-                Airplane airplane = airplanes.get(i);
-                if (!exceptAirplanes.contains(airplane)) {
-                    return airplane;
-                }
-            }
-        }
-        return null;
     }
 
     public boolean hasAvailableRunway() {
