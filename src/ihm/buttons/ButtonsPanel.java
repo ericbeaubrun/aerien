@@ -154,6 +154,7 @@ public class ButtonsPanel extends JPanel {
             case "Background":
                 ShowBackgroundAction showBackgroundAction = new ShowBackgroundAction(button, displayToggle);
                 addButtonAction(button, showBackgroundAction);
+                button.doClick();
                 break;
 
             case "Airplane Style":
@@ -164,6 +165,7 @@ public class ButtonsPanel extends JPanel {
             case "Trajectories":
                 ShowTrajectsAction showTrajectsAction = new ShowTrajectsAction(button, displayToggle);
                 addButtonAction(button, showTrajectsAction);
+                button.doClick();
                 break;
 
             case "+ speed":
@@ -191,14 +193,10 @@ public class ButtonsPanel extends JPanel {
                 addButtonAction(button, pauseAction);
                 break;
 
-            case "Show Pause":
-                ShowStylePauseAction showStylePauseAction = new ShowStylePauseAction(button, displayToggle);
-                addButtonAction(button, showStylePauseAction);
-                break;
-
             case "Airports":
                 ShowAirportsAction showAirportsAction = new ShowAirportsAction(button, displayToggle);
                 addButtonAction(button, showAirportsAction);
+                button.doClick();
                 break;
 
             case "Occupied zones":

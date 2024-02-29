@@ -22,18 +22,20 @@ public class AirplanePainter {
     }
 
     public void paintAirplanes(Graphics g, ArrayList<Airplane> airplanes) {
-        for (Airplane airplane : airplanes) {
-            if (!airplane.isOnRunway()) {
-                g.setColor(airplane.isWaiting() ? PAUSED_FLIGHT_COLOR : RUNNING_FLIGHT_COLOR);
+        if (airplanes != null) {
+            for (Airplane airplane : airplanes) {
+                if (!airplane.isOnRunway()) {
+                    g.setColor(airplane.isWaiting() ? PAUSED_FLIGHT_COLOR : RUNNING_FLIGHT_COLOR);
 
-                if (displayToggle.showStyleEnabled()) {
-                    drawAirplaneImage(g, airplane);
-                } else {
-                    drawAirplaneCircle(g, airplane);
-                }
+                    if (displayToggle.showStyleEnabled()) {
+                        drawAirplaneImage(g, airplane);
+                    } else {
+                        drawAirplaneCircle(g, airplane);
+                    }
 
-                if (displayToggle.showAltitudeEnabled()) {
-                    drawAirplaneAltitude(g, airplane);
+                    if (displayToggle.showAltitudeEnabled()) {
+                        drawAirplaneAltitude(g, airplane);
+                    }
                 }
             }
         }
@@ -48,8 +50,8 @@ public class AirplanePainter {
 
             g.fillOval(x, y, width, height);
 
-            x -= BLOCK_SIZE / 2 - (BLOCK_SIZE / 6);
-            y -= -(BLOCK_SIZE / 6);
+            x -= BLOCK_SIZE / 2 + (BLOCK_SIZE / 4);
+            y -= BLOCK_SIZE / 2 - (BLOCK_SIZE / 4);
 
             g.drawString(airplane.getReference(), x, y);
         }
