@@ -23,8 +23,10 @@ public class Entity {
      * @param position the new position of the Entity
      */
     public void changePosition(Position position) {
-        this.position.setX(position.getX());
-        this.position.setY(position.getY());
+        if (position != null) {
+            this.position.setX(position.getX());
+            this.position.setY(position.getY());
+        }
     }
 
     public Position getPosition() {

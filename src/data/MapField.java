@@ -75,10 +75,12 @@ public class MapField {
      * @return the air zone
      */
     public AirZone findAirZone(Position position) {
-        for (AirZone airZone : airZones) {
-            for (Position position1 : airZone.getPositions()) {
-                if (position1.getX() == position.getX() && position1.getY() == position.getY()) {
-                    return airZone;
+        if (position != null) {
+            for (AirZone airZone : airZones) {
+                for (Position position1 : airZone.getPositions()) {
+                    if (position1.getX() == position.getX() && position1.getY() == position.getY()) {
+                        return airZone;
+                    }
                 }
             }
         }

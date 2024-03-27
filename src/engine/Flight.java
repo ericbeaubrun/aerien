@@ -80,26 +80,30 @@ public class Flight implements Runnable {
     }
 
     public void takeoff() {
-        currentPositionIndex = 0;
-        AirZone airZone = map.findAirZone(airplane.getPosition());
-        if (airZone != null) {
-            currentAirZone = airZone;
-            currentAirZone.enterInAirZone(airplane);
+        if (airplane != null) {
+            currentPositionIndex = 0;
+            AirZone airZone = map.findAirZone(airplane.getPosition());
+            if (airZone != null) {
+                currentAirZone = airZone;
+                currentAirZone.enterInAirZone(airplane);
+            }
+            airplane.setAngle(ConversionUtility.calculateAngle(startAirport.getPosition(), path.get(1)));
+            airplane.changePosition(startAirport);
+            startAirport.removeAirplane(airplane);
+            airplane.putOnRunway(false);
         }
-        airplane.setAngle(ConversionUtility.calculateAngle(startAirport.getPosition(), path.get(1)));
-        airplane.changePosition(startAirport);
-        startAirport.removeAirplane(airplane);
-        airplane.putOnRunway(false);
     }
 
     public void landing() {
-        currentPositionIndex = 0;
-        currentAirZone.leaveAirzone();
-        airplane.changePosition(destinationAirport);
-        destinationAirport.addAirplane(airplane);
-        airplane.putOnRunway(true);
-        airplane.setAvailable(true);
-        airplane = null;
+        if (airplane != null) {
+            currentPositionIndex = 0;
+            currentAirZone.leaveAirzone();
+            airplane.changePosition(destinationAirport);
+            destinationAirport.addAirplane(airplane);
+            airplane.putOnRunway(true);
+            airplane.setAvailable(true);
+            airplane = null;
+        }
     }
 
     public void resetCountdown() {
@@ -164,11 +168,21 @@ public class Flight implements Runnable {
             updateAirZone();
 
             dataCalculator.recalculateAirplaneData(this);
+            Position currentPosition = getCurrentPosition();
 
-            airplane.changePosition(getCurrentPosition());
+            airplane.changePosition(currentPosition);
 
             currentPositionIndex++;
         }
+    }
+
+    public Airplane cancelFlight() {
+        currentAirZone.leaveAirzone();
+        currentPositionIndex = path.size();
+        Airplane tmp = airplane;
+        airplane = null;
+        isRunning = false;
+        return tmp;
     }
 
     public void start() {
@@ -246,7 +260,7 @@ public class Flight implements Runnable {
     }
 
     public Position getCurrentPosition() {
-        return path.get(currentPositionIndex);
+        return currentPositionIndex < path.size() ? path.get(currentPositionIndex) : null;
     }
 
     public void togglePause() {

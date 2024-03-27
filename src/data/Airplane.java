@@ -24,6 +24,8 @@ public class Airplane extends Entity {
 
     private boolean isWaiting = false;
 
+    private boolean isEmergency = false;
+
     private int totalDistanceTraveledCount;
 
 
@@ -114,5 +116,13 @@ public class Airplane extends Entity {
 
     public int getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public boolean isEmergency() {
+        return isEmergency;
+    }
+
+    public void setEmergency(boolean emergency) {
+        isEmergency = emergency;
     }
 }

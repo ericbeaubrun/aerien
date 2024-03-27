@@ -2,6 +2,7 @@ package ihm.paint;
 
 import data.Airplane;
 import ihm.buttons.DisplayToggle;
+import util.ImageUtility;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,8 @@ import static util.ImageUtility.getAirplaneImage;
 import static util.ImageUtility.rotateImage;
 
 public class AirplanePainter {
+
+    private boolean animationBool = true;
 
     private final DisplayToggle displayToggle;
 
@@ -31,6 +34,10 @@ public class AirplanePainter {
                         drawAirplaneImage(g, airplane);
                     } else {
                         drawAirplaneCircle(g, airplane);
+                    }
+
+                    if (airplane.isEmergency()) {
+                        drawAirplaneEmergencyImage(g, airplane);
                     }
 
                     if (displayToggle.showAltitudeEnabled()) {
@@ -74,6 +81,25 @@ public class AirplanePainter {
             int x = airplane.getX() + BLOCK_SIZE - (BLOCK_SIZE / 2);
             int y = airplane.getY() + BLOCK_SIZE + BLOCK_SIZE / 4 - (BLOCK_SIZE / 6);
             g.drawString(airplane.getZ() + "m", x, y);
+        }
+    }
+
+    private void drawAirplaneEmergencyImage(Graphics g, Airplane airplane) {
+        if (airplane != null) {
+
+            int x = airplane.getX() + BLOCK_SIZE / 12;
+            int y = airplane.getY() + BLOCK_SIZE / 12;
+            int width = (int) (35 * SCALING_WIDTH_RATIO);
+            int height = (int) (35 * SCALING_HEIGHT_RATIO);
+
+            if (animationBool) {
+                g.drawImage(ImageUtility.getEmergencyImage1(), x, y, width, height, null);
+            } else {
+                g.drawImage(ImageUtility.getEmergencyImage2(), x, y, width, height, null);
+            }
+
+            animationBool = !animationBool;
+
         }
     }
 }

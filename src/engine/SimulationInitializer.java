@@ -106,6 +106,14 @@ public class SimulationInitializer {
                 flightManager.addFlight(flight);
             }
         }
+
+        for (Airport airport : airports.getAirports()) {
+            if (airport.getName().equals("Vienna")) {
+                flightManager.setEmergencyAirport(airport);
+                break;
+            }
+        }
+
         return flightManager;
     }
 

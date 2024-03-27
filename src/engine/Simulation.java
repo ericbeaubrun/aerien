@@ -17,7 +17,7 @@ public class Simulation {
 
     private final MapField map;
 
-    public FlightManager flightManager;
+    private FlightManager flightManager;
 
     private final AirportManager airportManager;
 

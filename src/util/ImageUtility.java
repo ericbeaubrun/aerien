@@ -12,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static config.Config.RESSOURCES_PATH;
+
 public class ImageUtility {
 
     public static BufferedImage rotateImage(BufferedImage image, double angle) {
@@ -72,7 +74,7 @@ public class ImageUtility {
 
         if (airplane != null) {
             String color = airplane.isWaiting() ? "yellow" : "green";
-            String path = Config.RESSOURCES_PATH + "planes/";
+            String path = RESSOURCES_PATH + "planes/";
             String imageName = getPlaneImageName(airplane);
 
             if (imageName != null) {
@@ -86,7 +88,7 @@ public class ImageUtility {
     public static ImageIcon getAirplaneImageIcon(Airplane airplane, int width, int height) {
 
         ImageIcon resizedIcon = null;
-        String path = Config.RESSOURCES_PATH + "planes/";
+        String path = RESSOURCES_PATH + "planes/";
         String imageName = getPlaneImageName(airplane);
         path += imageName + ".png";
 
@@ -103,5 +105,11 @@ public class ImageUtility {
         return resizedIcon;
     }
 
+    public static BufferedImage getEmergencyImage1() {
+        return readImage(RESSOURCES_PATH + "planes/emergency1.png");
+    }
 
+    public static BufferedImage getEmergencyImage2() {
+        return readImage(RESSOURCES_PATH + "planes/emergency2.png");
+    }
 }

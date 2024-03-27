@@ -45,6 +45,8 @@ public class FlightPainter {
 
                     if (flight.equals(selectedFlight)) {
                         g2d.setStroke(HIGHLIGHT_STROKE);
+                    } else {
+                        g2d.setStroke(FLIGHT_STROKE_2);
                     }
 
                     // Find the flight color
@@ -55,6 +57,7 @@ public class FlightPainter {
                             g2d.setColor(RUNNING_FLIGHT_COLOR);
                         } else if (flight.getCountdown() < 0 && !flight.isRunning() && flight.isAssociatedToAirplane()) {
                             // There is a plane in the area of the departure airport or the arrival airport is full
+
                             g2d.setColor(DELAYED_FLIGHT_COLOR);
                         }
                     }

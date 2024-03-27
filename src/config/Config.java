@@ -6,9 +6,14 @@ import java.awt.*;
 
 public class Config {
 
+    public static int AIR_ZONE_HEIGHT = 2;
+    public static int AIR_ZONE_WIDTH = 3;
+    //    public static final int AIR_ZONE_HEIGHT = 5;
+    //    public static final int AIR_ZONE_WIDTH = 5;
+    public static final boolean ALLOW_ALWAYS_EMERGENCY = false;
 
+    // ******************************************************************************************************************************************************
     public static Dimension SCREEN_DIMENSION = ConversionUtility.convertToSimulationDimension(Toolkit.getDefaultToolkit().getScreenSize());
-//    public static Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
 
     public static final int BLOCK_SIZE = (int) ((SCREEN_DIMENSION.getHeight() * 40) / 1080);
 
@@ -40,16 +45,9 @@ public class Config {
 
     public static final int DEFAULT_SPEED_VARIATION = 20;
 
-
     public static final int COLUMNS = 30;
 
     public static final int ROWS = 20;
-
-    public static final int AIR_ZONE_HEIGHT = 5;
-    public static final int AIR_ZONE_WIDTH = 5;
-
-    //    public static int AIR_ZONE_HEIGHT = 2;
-    //    public static int AIR_ZONE_WIDTH = 3;
 
     public static final int MIN_COUNT_BEFORE_TAKEOFF = 5;
 

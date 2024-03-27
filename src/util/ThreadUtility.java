@@ -1,5 +1,6 @@
 package util;
 
+import engine.EmergencyManager;
 import engine.Flight;
 import engine.FlightManager;
 
@@ -49,6 +50,25 @@ public class ThreadUtility {
                 while (flight.isPaused()) {
                     try {
                         flight.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Wait while emergency flight is paused.
+     *
+     * @param emergencyManager the emergency flight Thread to wait
+     */
+    public static void waitWhilePaused(EmergencyManager emergencyManager) {
+        if (emergencyManager != null) {
+            synchronized (emergencyManager) {
+                while (emergencyManager.isPaused()) {
+                    try {
+                        emergencyManager.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

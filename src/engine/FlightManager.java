@@ -1,13 +1,11 @@
 package engine;
 
 import config.Config;
-import data.AirZone;
-import data.Airplane;
-import data.Airport;
-import data.MapField;
+import data.*;
 import util.ThreadUtility;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FlightManager implements Runnable {
 
@@ -23,9 +21,12 @@ public class FlightManager implements Runnable {
 
     private final TimeCounter time;
 
+    private final EmergencyManager emergencyManager;
+
     public FlightManager(MapField map, TimeCounter time) {
         this.time = time;
         this.map = map;
+        emergencyManager = new EmergencyManager(map);
     }
 
     @Override
@@ -80,8 +81,19 @@ public class FlightManager implements Runnable {
                             }
                         }
                     }
+                } else {
+                    // Manage emergencies
+                    for (Position position : emergencyManager.getEmergencyPaths().keySet()) {
+//                        if (position.equals(flight.getCurrentPosition()) && !emergencyManager.isRunning()) {
+                        boolean runEmergency = position.equals(flight.getCurrentPosition()) && emergencyManager.getEmergencyAirport().hasAvailableRunway();
+                        if (runEmergency && !emergencyManager.isRunning() || runEmergency && Config.ALLOW_ALWAYS_EMERGENCY) {
+                            Airplane airplane = flight.cancelFlight();
+                            flight.getDestinationAirport().incrementAvailableRunwayCount();
+                            emergencyManager.start(airplane, position);
+                            break;
+                        }
+                    }
                 }
-
                 flight.decrementCountdown();
             }
         }
@@ -114,6 +126,7 @@ public class FlightManager implements Runnable {
             if (!isPaused) {
                 this.notifyAll();
             }
+            emergencyManager.togglePause();
         }
     }
 
@@ -123,7 +136,12 @@ public class FlightManager implements Runnable {
             for (Flight flight : flights) {
                 flight.setSpeed(speed);
             }
+            emergencyManager.setSpeed(speed);
         }
+    }
+
+    public void setEmergencyAirport(Airport airport) {
+        emergencyManager.setEmergencyAirport(airport);
     }
 }
 
