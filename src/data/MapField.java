@@ -32,7 +32,7 @@ public class MapField {
 
         airZones = new ArrayList<>();
 
-        initPostions(size);
+        initPositions(size);
 
         initAirZones();
     }
@@ -41,7 +41,7 @@ public class MapField {
     /**
      * @param size the size of each block.
      */
-    private void initPostions(int size) {
+    private void initPositions(int size) {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
                 Position block = new Position(i * size, j * size);

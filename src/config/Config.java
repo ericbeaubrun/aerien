@@ -6,11 +6,11 @@ import java.awt.*;
 
 public class Config {
 
-//    public static int AIR_ZONE_HEIGHT = 2;
+    //    public static int AIR_ZONE_HEIGHT = 2;
 //    public static int AIR_ZONE_WIDTH = 3;
-        public static final int AIR_ZONE_HEIGHT = 5;
-        public static final int AIR_ZONE_WIDTH = 5;
-//    public static final boolean ALLOW_ALWAYS_EMERGENCY = false;
+    public static final int AIR_ZONE_HEIGHT = 5;
+    public static final int AIR_ZONE_WIDTH = 5;
+
     public static final boolean ALLOW_ALWAYS_EMERGENCY = true;
     public static final boolean EMERGENCY_ENABLED = false;
 
@@ -31,7 +31,7 @@ public class Config {
 
     public static final int BLOCK_DISTANCE_IN_KM = 170;
 
-    public static final int AMOUNT_FUEL_CONSUMPTION = 400*2;
+    public static final int AMOUNT_FUEL_CONSUMPTION = 400 * 2;
 
     public static final int FUEL_CONSUMED_VARIATION = 100;
 
