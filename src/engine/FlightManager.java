@@ -84,14 +84,24 @@ public class FlightManager implements Runnable {
                 } else {
                     // Manage emergencies
                     for (Position position : emergencyManager.getEmergencyPaths().keySet()) {
-//                        if (position.equals(flight.getCurrentPosition()) && !emergencyManager.isRunning()) {
-                        boolean runEmergency = position.equals(flight.getCurrentPosition()) && emergencyManager.getEmergencyAirport().hasAvailableRunway();
-                        if (runEmergency && !emergencyManager.isRunning() || runEmergency && Config.ALLOW_ALWAYS_EMERGENCY) {
+
+                        Position currentPosition = flight.getCurrentPosition();
+
+                        if (position.equals(currentPosition) && !emergencyManager.isRunning() &&
+                                ((emergencyManager.getEmergencyAirport().hasAvailableRunway() || Config.ALLOW_ALWAYS_EMERGENCY))
+                                && Config.EMERGENCY_ENABLED) {
+
                             Airplane airplane = flight.cancelFlight();
-                            flight.getDestinationAirport().incrementAvailableRunwayCount();
+
+                            AirZone airZone = map.findAirZone(currentPosition);
+                            if (airZone != null) {
+                                airZone.leaveAirzone();
+                            }
+
                             emergencyManager.start(airplane, position);
                             break;
                         }
+
                     }
                 }
                 flight.decrementCountdown();

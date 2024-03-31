@@ -21,7 +21,6 @@ public class VisualDataPainter {
 
     public void paintGridCoords(Graphics g, MapField map) {
         g.setFont(BASIC_FONT);
-        g.setColor(GRID_COLOR);
 
         for (int i = 0; i < map.getColumns(); i++) {
             for (int j = 0; j < map.getRows(); j++) {
@@ -45,6 +44,7 @@ public class VisualDataPainter {
 
     private void paintGridRectangle(Graphics g, Position block) {
         if (block != null) {
+            g.setColor(GRID_COLOR);
             g.drawRect(block.getX(), block.getY(), BLOCK_SIZE, BLOCK_SIZE);
         }
     }

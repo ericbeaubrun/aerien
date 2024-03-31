@@ -98,7 +98,6 @@ public class AirplaneInfoPanel extends JPanel {
                 fuelLabel.updateText(((double) airplane.getFuel() / airplane.getMaxFuel()) * 100);
                 distanceBeforeArrivingLabel.updateText(blockToMeter(flight.getAmountRemainingBlocks()));
                 flightProgressLabel.updateText(100 * blockToMeter(flight.getCurrentPositionIndex()) / (blockToMeter(flight.getAmountBlockPath()) + 1));
-//                arrivalTime.updateText(flight.calculateArrivalTime(time, flight.getSpeed()));
             } else {
                 resetLabelsText();
             }

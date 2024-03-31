@@ -6,11 +6,15 @@ import java.awt.*;
 
 public class Config {
 
-    public static int AIR_ZONE_HEIGHT = 2;
-    public static int AIR_ZONE_WIDTH = 3;
-    //    public static final int AIR_ZONE_HEIGHT = 5;
-    //    public static final int AIR_ZONE_WIDTH = 5;
-    public static final boolean ALLOW_ALWAYS_EMERGENCY = false;
+//    public static int AIR_ZONE_HEIGHT = 2;
+//    public static int AIR_ZONE_WIDTH = 3;
+        public static final int AIR_ZONE_HEIGHT = 5;
+        public static final int AIR_ZONE_WIDTH = 5;
+//    public static final boolean ALLOW_ALWAYS_EMERGENCY = false;
+    public static final boolean ALLOW_ALWAYS_EMERGENCY = true;
+    public static final boolean EMERGENCY_ENABLED = false;
+
+    public static final boolean ALLOW_BALANCED_REVERSE_FLIGHT_DIRECTION = true;
 
     // ******************************************************************************************************************************************************
     public static Dimension SCREEN_DIMENSION = ConversionUtility.convertToSimulationDimension(Toolkit.getDefaultToolkit().getScreenSize());
@@ -27,7 +31,7 @@ public class Config {
 
     public static final int BLOCK_DISTANCE_IN_KM = 170;
 
-    public static final int AMOUNT_FUEL_CONSUMPTION = 400;
+    public static final int AMOUNT_FUEL_CONSUMPTION = 400*2;
 
     public static final int FUEL_CONSUMED_VARIATION = 100;
 
@@ -39,9 +43,9 @@ public class Config {
 
     public static final int DEFAULT_ALTITUDE_VARIATION = 600;
 
-    public static final int SPEED_DECREASE = 500;
+    public static final int SPEED_DECREASE = 400;
 
-    public static final int SPEED_INCREASE = 500;
+    public static final int SPEED_INCREASE = 400;
 
     public static final int DEFAULT_SPEED_VARIATION = 20;
 

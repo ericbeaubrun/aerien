@@ -110,7 +110,7 @@ public class AirplaneDataCalculator {
 
     public void decreaseSpeed(Airplane airplane) {
         if (airplane != null) {
-            airplane.setSpeed(airplane.getSpeed() + Config.SPEED_DECREASE);
+            airplane.setSpeed(airplane.getSpeed() - Config.SPEED_DECREASE);
             if (airplane.getSpeed() < 0) {
                 airplane.setSpeed(0);
             }
@@ -126,13 +126,19 @@ public class AirplaneDataCalculator {
 
     public void applyTrafficSpeedVariation(Airplane airplane) {
         if (airplane != null) {
-
+            if (airplane.getSpeed() > airplane.getMaxSpeed() / 2) {
+                // Decrease to reach 50% of max speed
+                airplane.setSpeed((int) (airplane.getSpeed() * 0.99));
+            }
         }
     }
 
     public void applyAltitudeSpeedVariation(Airplane airplane, Position block) {
         if (airplane != null && block != null) {
-
+            if (airplane.getSpeed() > (9 * airplane.getMaxSpeed()) / 10) {
+                // Decrease to reach 90% of max speed
+                airplane.setSpeed((int) (airplane.getSpeed() * 0.99));
+            }
         }
     }
 

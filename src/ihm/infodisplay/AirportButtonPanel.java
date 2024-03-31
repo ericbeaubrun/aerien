@@ -84,7 +84,6 @@ public class AirportButtonPanel extends JPanel {
             String path = Config.RESSOURCES_PATH + "planes/" + ImageUtility.getPlaneImageName(airplane) + "_yellow.png";
             imageLabel.setIcon(new ImageIcon(path));
             button.setText(airplane.getReference());
-//            stateLabel.setForeground(new Color(130, 130, 130));
             stateLabel.setForeground(IHMConfig.UNPLANNED_FLIGHT_COLOR);
             stateLabel.setText(airplane.isAvailable() ? "UNPLANNED" : "UNKNOWN");
         }

@@ -51,7 +51,7 @@ public class FlightPainter {
 
                     // Find the flight color
                     if (displayToggle.showFlightsEnabled()) {
-                        if (flight.isRunning() && flight.getAirplane().isWaiting()) {
+                        if (flight.isRunning() && flight.getAirplane() != null && flight.getAirplane().isWaiting()) {
                             g2d.setColor(PAUSED_FLIGHT_COLOR);
                         } else if (flight.isRunning()) {
                             g2d.setColor(RUNNING_FLIGHT_COLOR);

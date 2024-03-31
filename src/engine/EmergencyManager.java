@@ -22,8 +22,6 @@ public class EmergencyManager implements Runnable {
 
     private volatile boolean isPaused = false;
 
-//    private final AirplaneDataCalculator dataCalculator;
-
     int currentPositionIndex;
 
     private Airplane airplane;
@@ -35,45 +33,43 @@ public class EmergencyManager implements Runnable {
     private final HashMap<Position, ArrayList<Position>> emergencyPaths = new HashMap<>();
 
     public EmergencyManager(MapField map) {
-        ArrayList<Position> emergencyPath1 = new ArrayList<>();
-        emergencyPath1.add(map.getPosition(16, 14));
-        emergencyPath1.add(map.getPosition(17, 13));
-        emergencyPath1.add(map.getPosition(17, 12));
-        emergencyPath1.add(map.getPosition(17, 11));
-        emergencyPath1.add(map.getPosition(17, 10));
-        emergencyPath1.add(map.getPosition(17, 9));
-        emergencyPaths.put(map.getPosition(15, 15), emergencyPath1);
+        ArrayList<Position> path1 = new ArrayList<>();
+        emergencyPaths.put(map.getPosition(15, 15), path1);
+        path1.add(map.getPosition(16, 14));
+        path1.add(map.getPosition(17, 13));
+        path1.add(map.getPosition(17, 12));
+        path1.add(map.getPosition(17, 11));
+        path1.add(map.getPosition(17, 10));
+        path1.add(map.getPosition(17, 9));
 
-        ArrayList<Position> emergencyPath2 = new ArrayList<>();
-        emergencyPath2.add(map.getPosition(14, 12));
-        emergencyPath2.add(map.getPosition(15, 11));
-        emergencyPath2.add(map.getPosition(16, 10));
-        emergencyPath2.add(map.getPosition(17, 9));
-        emergencyPaths.put(map.getPosition(13, 13), emergencyPath2);
+        ArrayList<Position> path2 = new ArrayList<>();
+        emergencyPaths.put(map.getPosition(13, 13), path2);
+        path2.add(map.getPosition(14, 12));
+        path2.add(map.getPosition(15, 11));
+        path2.add(map.getPosition(16, 10));
+        path2.add(map.getPosition(17, 9));
 
-        ArrayList<Position> emergencyPath3 = new ArrayList<>();
-        emergencyPath3.add(map.getPosition(16, 4));
-        emergencyPath3.add(map.getPosition(17, 5));
-        emergencyPath3.add(map.getPosition(17, 6));
-        emergencyPath3.add(map.getPosition(17, 7));
-        emergencyPath3.add(map.getPosition(17, 8));
-        emergencyPath3.add(map.getPosition(17, 9));
-        emergencyPaths.put(map.getPosition(15, 13), emergencyPath3);
+        ArrayList<Position> path3 = new ArrayList<>();
+        emergencyPaths.put(map.getPosition(15, 3), path3);
+        path3.add(map.getPosition(16, 4));
+        path3.add(map.getPosition(17, 5));
+        path3.add(map.getPosition(17, 6));
+        path3.add(map.getPosition(17, 7));
+        path3.add(map.getPosition(17, 8));
+        path3.add(map.getPosition(17, 9));
 
-        ArrayList<Position> emergencyPath4 = new ArrayList<>();
-        emergencyPath4.add(map.getPosition(20, 8));
-        emergencyPath4.add(map.getPosition(19, 9));
-        emergencyPath4.add(map.getPosition(18, 9));
-        emergencyPath4.add(map.getPosition(17, 9));
-        emergencyPaths.put(map.getPosition(21, 7), emergencyPath4);
+        ArrayList<Position> path4 = new ArrayList<>();
+        emergencyPaths.put(map.getPosition(21, 7), path4);
+        path4.add(map.getPosition(20, 8));
+        path4.add(map.getPosition(19, 9));
+        path4.add(map.getPosition(18, 9));
+        path4.add(map.getPosition(17, 9));
 
-        ArrayList<Position> emergencyPath5 = new ArrayList<>();
-        emergencyPath5.add(map.getPosition(15, 11));
-        emergencyPath5.add(map.getPosition(16, 10));
-        emergencyPath5.add(map.getPosition(17, 9));
-        emergencyPaths.put(map.getPosition(14, 11), emergencyPath5);
-
-//        dataCalculator = new AirplaneDataCalculator();
+        ArrayList<Position> path5 = new ArrayList<>();
+        emergencyPaths.put(map.getPosition(14, 11), path5);
+        path5.add(map.getPosition(15, 11));
+        path5.add(map.getPosition(16, 10));
+        path5.add(map.getPosition(17, 9));
     }
 
     public void setEmergencyAirport(Airport emergencyAirport) {
@@ -85,7 +81,8 @@ public class EmergencyManager implements Runnable {
     }
 
     public void start(Airplane airplane, Position startPosition) {
-        if ((!isRunning || thread == null) && airplane != null && startPosition != null) {
+        if (!isRunning && airplane != null && startPosition != null) {
+            isRunning = true;
             this.startPosition = startPosition;
             emergencyAirport.decrementAvailableRunwayCount();
             this.airplane = airplane;
@@ -100,7 +97,6 @@ public class EmergencyManager implements Runnable {
             currentPositionIndex = 0;
             airplane.changePosition(emergencyAirport);
             emergencyAirport.addAirplane(airplane);
-            airplane.putOnRunway(true);
             airplane.setAvailable(true);
             airplane.setEmergency(false);
             startPosition = null;
@@ -110,20 +106,25 @@ public class EmergencyManager implements Runnable {
 
     @Override
     public void run() {
-        isRunning = true;
+
+        ThreadUtility.sleep(speed);
+        ThreadUtility.waitWhilePaused(this);
+
+        airplane.changePosition(startPosition);
 
         currentPositionIndex = 0;
         ArrayList<Position> path = emergencyPaths.get(startPosition);
 
         while (currentPositionIndex < path.size()) {
-            ThreadUtility.sleep(speed);
-            ThreadUtility.waitWhilePaused(this);
 
-            Position currentPosition = currentPositionIndex < path.size() ? path.get(currentPositionIndex) : null;
-            if (currentPosition != null) {
+            if (airplane != null) {
+                Position currentPosition = path.get(currentPositionIndex);
                 airplane.changePosition(currentPosition);
             }
             currentPositionIndex++;
+
+            ThreadUtility.sleep(speed);
+            ThreadUtility.waitWhilePaused(this);
         }
 
         landing();
@@ -149,6 +150,10 @@ public class EmergencyManager implements Runnable {
                 this.notifyAll();
             }
         }
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 
     public boolean isRunning() {

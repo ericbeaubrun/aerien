@@ -57,9 +57,13 @@ public class AirportInfoPanel extends JPanel {
     public void updateAirportInfo(ArrayList<Flight> flights, Airport airport) {
 
         if (airport != null) {
-            headerLabel.setText("  " + airport.getName() + " (" + airport.getMaxAirplanes()+" Max)");
-            airplanesIncomingLabel.setText("Airplanes incoming = " + airport.getAmountAirplanesIncoming()+"/" + airport.getMaxAirplanes());
-            airplanesOnRunwaysLabel.setText("Airplanes on runways = " + airport.getAmountAirplanesOnRunway()+"/" + airport.getMaxAirplanes());
+            headerLabel.setText("  " + airport.getName() + " (" + airport.getMaxAirplanes() + " Max)");
+            airplanesIncomingLabel.setText("Airplanes incoming = " + airport.getAmountAirplanesIncoming() + "/" + airport.getMaxAirplanes());
+            airplanesOnRunwaysLabel.setText("Airplanes on runways = " + airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes());
+
+//            if (airport.getName().equals("Vienna")) {
+//                airplanesOnRunwaysLabel.setText("Airplanes on runways = " + airport.getAmountAirplanesOnRunway() + "/" + airport.getMaxAirplanes() + " (+1)");
+//            }
 
             ArrayList<Airplane> exceptedAirplanes = new ArrayList<>();
 

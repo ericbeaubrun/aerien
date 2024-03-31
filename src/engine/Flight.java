@@ -36,16 +36,16 @@ public class Flight implements Runnable {
 
     private final MapField map;
 
-    private volatile Airplane airplane = null;
+    private Airplane airplane = null;
 
     /**
      * The AirZone object where is currently placed the Airplane.
      */
     private AirZone currentAirZone;
 
-    private Airport startAirport;
+    private volatile Airport startAirport;
 
-    private Airport destinationAirport;
+    private volatile Airport destinationAirport;
 
     private final AirplaneDataCalculator dataCalculator;
 
@@ -97,13 +97,14 @@ public class Flight implements Runnable {
     public void landing() {
         if (airplane != null) {
             currentPositionIndex = 0;
-            currentAirZone.leaveAirzone();
             airplane.changePosition(destinationAirport);
             destinationAirport.addAirplane(airplane);
-            airplane.putOnRunway(true);
             airplane.setAvailable(true);
             airplane = null;
+        } else {
+            destinationAirport.incrementAvailableRunwayCount();
         }
+        currentAirZone.leaveAirzone();
     }
 
     public void resetCountdown() {
@@ -131,9 +132,10 @@ public class Flight implements Runnable {
             ThreadUtility.waitWhilePaused(this);
 
             landing();
-
             resetCountdown();
-            reverseDirection();
+            if (Config.ALLOW_BALANCED_REVERSE_FLIGHT_DIRECTION && startAirport.hasAvailableRunway()) {
+                reverseDirection();
+            }
 
             isRunning = false;
         }
@@ -163,31 +165,31 @@ public class Flight implements Runnable {
      * Moves the Airplane to the next Position in the Path and update the AirZone
      */
     private void nextPosition() {
-        if (airplane != null) {
 
-            updateAirZone();
+        if (airplane != null) {
+            if (isRunning) {
+                updateAirZone();
+            }
 
             dataCalculator.recalculateAirplaneData(this);
-            Position currentPosition = getCurrentPosition();
-
-            airplane.changePosition(currentPosition);
+            if (airplane != null) {
+                Position currentPosition = getCurrentPosition();
+                airplane.changePosition(currentPosition);
+            }
 
             currentPositionIndex++;
         }
     }
 
     public Airplane cancelFlight() {
-        currentAirZone.leaveAirzone();
         currentPositionIndex = path.size();
         Airplane tmp = airplane;
         airplane = null;
-        isRunning = false;
         return tmp;
     }
 
     public void start() {
-        if ((!isRunning || thread == null) && airplane != null) {
-//            this.airplane = airplane;
+        if (!isRunning && airplane != null) {
             startAirport.incrementAvailableRunwayCount();
             destinationAirport.decrementAvailableRunwayCount();
             thread = new Thread(this);
