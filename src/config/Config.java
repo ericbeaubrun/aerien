@@ -14,7 +14,7 @@ public class Config {
 
     public static boolean allowAlwaysEmergency = false;
 
-    public static boolean emergencyEnabled = false;
+    public static boolean emergencyEnabled = true;
 
     public static boolean allowBalancedReverseFlightDirection = false;
 
