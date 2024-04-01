@@ -133,7 +133,7 @@ public class Flight implements Runnable {
 
             landing();
             resetCountdown();
-            if (Config.allowBalancedReverseFlightDirection && startAirport.hasAvailableRunway()) {
+            if (!Config.allowBalancedReverseFlightDirection || startAirport.hasAvailableRunway()) {
                 reverseDirection();
             }
 
