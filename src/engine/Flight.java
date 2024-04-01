@@ -13,8 +13,6 @@ public class Flight implements Runnable {
 
     private String departureTime;
 
-    private String arrivalTime;
-
     private int speed = Config.DEFAULT_SIMULATION_SPEED;
 
     /**
@@ -112,6 +110,11 @@ public class Flight implements Runnable {
         countdown = Config.MIN_COUNT_BEFORE_TAKEOFF + random.nextInt(Config.MAX_COUNT_BEFORE_TAKEOFF);
     }
 
+    public void sleep(int speed) {
+        ThreadUtility.sleep(speed);
+        ThreadUtility.waitWhilePaused(this);
+    }
+
     @Override
     public void run() {
         if (airplane != null) {
@@ -122,18 +125,15 @@ public class Flight implements Runnable {
             takeoff();
 
             while (currentPositionIndex < path.size()) {
-                ThreadUtility.sleep(speed);
-                ThreadUtility.waitWhilePaused(this);
-
+                sleep(speed);
                 nextPosition();
             }
 
-            ThreadUtility.sleep(speed);
-            ThreadUtility.waitWhilePaused(this);
+            sleep(speed);
 
             landing();
             resetCountdown();
-            if (Config.ALLOW_BALANCED_REVERSE_FLIGHT_DIRECTION && startAirport.hasAvailableRunway()) {
+            if (Config.allowBalancedReverseFlightDirection && startAirport.hasAvailableRunway()) {
                 reverseDirection();
             }
 
@@ -182,11 +182,14 @@ public class Flight implements Runnable {
     }
 
     public Airplane cancelFlight() {
-        currentPositionIndex = path.size();
-        Airplane tmp = airplane;
-        airplane = null;
-        return tmp;
+        synchronized (this) {
+            currentPositionIndex = path.size();
+            Airplane tmp = airplane;
+            airplane = null;
+            return tmp;
+        }
     }
+
 
     public void start() {
         if (!isRunning && airplane != null) {
@@ -262,7 +265,12 @@ public class Flight implements Runnable {
     }
 
     public Position getCurrentPosition() {
-        return currentPositionIndex < path.size() ? path.get(currentPositionIndex) : null;
+        synchronized (this) {
+            if (currentPositionIndex >= 0 && currentPositionIndex < path.size()) {
+                return path.get(currentPositionIndex);
+            }
+            return null;
+        }
     }
 
     public void togglePause() {
@@ -284,10 +292,6 @@ public class Flight implements Runnable {
 
     public void setDepartureTime(TimeCounter time) {
         departureTime = time.toString();
-    }
-
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
     }
 
     @Override

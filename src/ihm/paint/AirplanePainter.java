@@ -89,8 +89,8 @@ public class AirplanePainter {
 
             int x = airplane.getX() + BLOCK_SIZE / 12;
             int y = airplane.getY() + BLOCK_SIZE / 12;
-            int width = (int) (35 * SCALING_WIDTH_RATIO);
-            int height = (int) (35 * SCALING_HEIGHT_RATIO);
+            int width = (int) (30 * SCALING_WIDTH_RATIO);
+            int height = (int) (30 * SCALING_HEIGHT_RATIO);
 
             if (animationBool) {
                 g.drawImage(ImageUtility.getEmergencyImage1(), x, y, width, height, null);

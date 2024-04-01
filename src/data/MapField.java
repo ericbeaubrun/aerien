@@ -55,11 +55,11 @@ public class MapField {
      * Initialize all air zones in the map.
      */
     private void initAirZones() {
-        for (int row = 0; row < ROWS; row += AIR_ZONE_HEIGHT) {
-            for (int col = 0; col < COLUMNS; col += AIR_ZONE_WIDTH) {
+        for (int row = 0; row < ROWS; row += zoneHeight) {
+            for (int col = 0; col < COLUMNS; col += zoneWidth) {
                 AirZone airZones = new AirZone();
-                for (int i = row; i < row + AIR_ZONE_HEIGHT; i++) {
-                    for (int j = col; j < col + AIR_ZONE_WIDTH; j++) {
+                for (int i = row; i < row + zoneHeight; i++) {
+                    for (int j = col; j < col + zoneWidth; j++) {
                         airZones.addPosition(positions[j][i]);
                     }
                 }

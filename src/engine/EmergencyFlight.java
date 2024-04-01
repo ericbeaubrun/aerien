@@ -5,14 +5,14 @@ import data.Airplane;
 import data.Airport;
 import data.MapField;
 import data.Position;
+import util.ConversionUtility;
 import util.ThreadUtility;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
-public class EmergencyManager implements Runnable {
-
-//    private MapField map;
+public class EmergencyFlight implements Runnable {
 
     private Thread thread;
 
@@ -32,7 +32,8 @@ public class EmergencyManager implements Runnable {
 
     private final HashMap<Position, ArrayList<Position>> emergencyPaths = new HashMap<>();
 
-    public EmergencyManager(MapField map) {
+    public EmergencyFlight(MapField map) {
+
         ArrayList<Position> path1 = new ArrayList<>();
         emergencyPaths.put(map.getPosition(15, 15), path1);
         path1.add(map.getPosition(16, 14));
@@ -104,27 +105,37 @@ public class EmergencyManager implements Runnable {
         }
     }
 
+    public void sleep(int speed) {
+        ThreadUtility.sleep(speed);
+        ThreadUtility.waitWhilePaused(this);
+    }
+
     @Override
     public void run() {
 
-        ThreadUtility.sleep(speed);
-        ThreadUtility.waitWhilePaused(this);
+        sleep(speed);
 
         airplane.changePosition(startPosition);
 
         currentPositionIndex = 0;
         ArrayList<Position> path = emergencyPaths.get(startPosition);
 
-        while (currentPositionIndex < path.size()) {
+        Position nextPosition = path.get(0);
+        Position currentPosition;
 
+        while (currentPositionIndex < path.size()) {
             if (airplane != null) {
-                Position currentPosition = path.get(currentPositionIndex);
+                currentPosition = path.get(currentPositionIndex);
+                if (currentPositionIndex < path.size() - 1) {
+                    nextPosition = path.get(currentPositionIndex + 1);
+                }
+                double angle = ConversionUtility.calculateAngle(currentPosition, nextPosition);
+                airplane.setAngle(angle);
+
                 airplane.changePosition(currentPosition);
             }
             currentPositionIndex++;
-
-            ThreadUtility.sleep(speed);
-            ThreadUtility.waitWhilePaused(this);
+            sleep(speed);
         }
 
         landing();
@@ -150,10 +161,6 @@ public class EmergencyManager implements Runnable {
                 this.notifyAll();
             }
         }
-    }
-
-    public void setRunning(boolean running) {
-        isRunning = running;
     }
 
     public boolean isRunning() {

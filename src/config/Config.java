@@ -6,15 +6,17 @@ import java.awt.*;
 
 public class Config {
 
-    //    public static int AIR_ZONE_HEIGHT = 2;
-//    public static int AIR_ZONE_WIDTH = 3;
-    public static final int AIR_ZONE_HEIGHT = 5;
-    public static final int AIR_ZONE_WIDTH = 5;
+    // ******************************************************************************************************************************************************
 
-    public static final boolean ALLOW_ALWAYS_EMERGENCY = true;
-    public static final boolean EMERGENCY_ENABLED = false;
+    public static int zoneHeight = 2;
 
-    public static final boolean ALLOW_BALANCED_REVERSE_FLIGHT_DIRECTION = true;
+    public static int zoneWidth = 3;
+
+    public static boolean allowAlwaysEmergency = false;
+
+    public static boolean emergencyEnabled = false;
+
+    public static boolean allowBalancedReverseFlightDirection = false;
 
     // ******************************************************************************************************************************************************
     public static Dimension SCREEN_DIMENSION = ConversionUtility.convertToSimulationDimension(Toolkit.getDefaultToolkit().getScreenSize());
@@ -31,7 +33,7 @@ public class Config {
 
     public static final int BLOCK_DISTANCE_IN_KM = 170;
 
-    public static final int AMOUNT_FUEL_CONSUMPTION = 400 * 2;
+    public static final int AMOUNT_FUEL_CONSUMPTION = 400;
 
     public static final int FUEL_CONSUMED_VARIATION = 100;
 
@@ -57,19 +59,20 @@ public class Config {
 
     public static final int MAX_COUNT_BEFORE_TAKEOFF = 40;
 
-    public static final int AIR_ZONE_GAP = COLUMNS / AIR_ZONE_WIDTH;
+    public static final int AIR_ZONE_GAP = COLUMNS / zoneWidth;
 
     public static final double SCALING_WIDTH_RATIO = SCREEN_DIMENSION.getWidth() / 1920;
 
     public static final double SCALING_HEIGHT_RATIO = SCREEN_DIMENSION.getHeight() / 1080;
-
 
     public static final String RESSOURCES_PATH = "src/resources/";
 
     public static final String CONFIG_FILE_PATH = "src/config/config.xml";
 
     public static final int HIGH_ALTITUDE = 2000;
+
     public static final int MEDIUM_ALTITUDE = 1000;
+
     public static final int LOW_ALTITUDE = 500;
 
 

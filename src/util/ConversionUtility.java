@@ -29,9 +29,12 @@ public class ConversionUtility {
     }
 
     public static double calculateAngle(Position posA, Position posB) {
-        int vectorX = posB.getX() - posA.getX();
-        int vectorY = posB.getY() - posA.getY();
-        return Math.atan2(vectorY, vectorX);
+        if (posA != null && posB != null) {
+            int vectorX = posB.getX() - posA.getX();
+            int vectorY = posB.getY() - posA.getY();
+            return Math.atan2(vectorY, vectorX);
+        }
+        return 0;
     }
 
     public static int radiansToDegrees(double angleRad) {

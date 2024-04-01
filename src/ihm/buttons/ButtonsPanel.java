@@ -19,7 +19,7 @@ public class ButtonsPanel extends JPanel {
     private final String[] BUTTONS_NAMES = {
             "Pause", "+ speed", "- speed", "Grid", "Trajectories", "Airplane Style", "Coordinate", "Background",
             "Flights", "Airports", "Air zones", "Occupied zones", "Relief", "Altitude", "...",
-            "Preset 1", "Preset 2", "Preset 3", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "..."
+            "Preset 1", "Preset 2", "Preset 3", "...", "..."
     };
 
     private TimeCounter time;
@@ -54,7 +54,7 @@ public class ButtonsPanel extends JPanel {
             add(Box.createVerticalStrut(VERTICAL_STRUT_SIZE));
         }
 
-        setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight() * 1.5)));
+        setPreferredSize(new Dimension((int) (SCREEN_DIMENSION.getWidth() / 15), (int) (SCREEN_DIMENSION.getHeight() * 1)));
         setBackground(IHMConfig.BACKGROUND_COLOR);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -160,6 +160,7 @@ public class ButtonsPanel extends JPanel {
             case "Airplane Style":
                 ShowStyleAction showStyleAction = new ShowStyleAction(button, displayToggle);
                 addButtonAction(button, showStyleAction);
+                button.doClick();
                 break;
 
             case "Trajectories":
@@ -225,7 +226,7 @@ public class ButtonsPanel extends JPanel {
                 break;
 
             case "Preset 3":
-                String[] names3 = {"Grid", "Airplane Style", "Airplanes Style", "Background", "Relief","Altitude"};
+                String[] names3 = {"Grid", "Airplane Style", "Airplanes Style", "Background", "Relief", "Altitude"};
                 button.addActionListener(new ShowPresetAction(button, buttonActions, names3));
                 break;
         }

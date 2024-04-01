@@ -5,7 +5,6 @@ import data.*;
 import util.ThreadUtility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FlightManager implements Runnable {
 
@@ -21,12 +20,12 @@ public class FlightManager implements Runnable {
 
     private final TimeCounter time;
 
-    private final EmergencyManager emergencyManager;
+    private final EmergencyFlight emergencyFlight;
 
     public FlightManager(MapField map, TimeCounter time) {
         this.time = time;
         this.map = map;
-        emergencyManager = new EmergencyManager(map);
+        emergencyFlight = new EmergencyFlight(map);
     }
 
     @Override
@@ -83,13 +82,13 @@ public class FlightManager implements Runnable {
                     }
                 } else {
                     // Manage emergencies
-                    for (Position position : emergencyManager.getEmergencyPaths().keySet()) {
+                    for (Position position : emergencyFlight.getEmergencyPaths().keySet()) {
 
                         Position currentPosition = flight.getCurrentPosition();
 
-                        if (position.equals(currentPosition) && !emergencyManager.isRunning() &&
-                                ((emergencyManager.getEmergencyAirport().hasAvailableRunway() || Config.ALLOW_ALWAYS_EMERGENCY))
-                                && Config.EMERGENCY_ENABLED) {
+                        if (position.equals(currentPosition) && !emergencyFlight.isRunning() &&
+                                ((emergencyFlight.getEmergencyAirport().hasAvailableRunway() || Config.allowAlwaysEmergency))
+                                && Config.emergencyEnabled) {
 
                             Airplane airplane = flight.cancelFlight();
 
@@ -98,7 +97,7 @@ public class FlightManager implements Runnable {
                                 airZone.leaveAirzone();
                             }
 
-                            emergencyManager.start(airplane, position);
+                            emergencyFlight.start(airplane, position);
                             break;
                         }
 
@@ -136,7 +135,7 @@ public class FlightManager implements Runnable {
             if (!isPaused) {
                 this.notifyAll();
             }
-            emergencyManager.togglePause();
+            emergencyFlight.togglePause();
         }
     }
 
@@ -146,12 +145,12 @@ public class FlightManager implements Runnable {
             for (Flight flight : flights) {
                 flight.setSpeed(speed);
             }
-            emergencyManager.setSpeed(speed);
+            emergencyFlight.setSpeed(speed);
         }
     }
 
     public void setEmergencyAirport(Airport airport) {
-        emergencyManager.setEmergencyAirport(airport);
+        emergencyFlight.setEmergencyAirport(airport);
     }
 }
 
