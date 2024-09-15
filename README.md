@@ -2,7 +2,7 @@
 
 This project is a real-time air traffic simulator designed to automatically model and manage aircraft movement and airport operations. It simulates complex scenarios including multiple flights, real-time flight trajectories, collision risk management, and unforeseen events such as aviation emergencies.
 
-![Application screenshot](https://github.com/ericbeaubrun/portfolio/blob/master/public/resources/projects/aerien1.gif)
+![Application screenshot 1](https://github.com/ericbeaubrun/portfolio/blob/master/public/resources/projects/aerien1.gif)
 
 ---
 
@@ -26,7 +26,7 @@ Rare events such as breakdowns or medical emergencies may occur, resulting in an
 
 # How does it works 
 
-![Application screenshot](https://github.com/ericbeaubrun/portfolio/blob/master/public/resources/projects/aerien2.gif)
+![Application screenshot 2](https://github.com/ericbeaubrun/portfolio/blob/master/public/resources/projects/aerien2.gif)
 
 1. Background: Displays a map showing airports and airplanes in flight.
 2. Trajectory: Shows the flight paths of the planes.
