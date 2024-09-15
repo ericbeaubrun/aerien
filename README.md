@@ -9,7 +9,7 @@
 
 This project is a real-time air traffic simulator designed to automatically model and manage aircraft movement and airport operations. It simulates complex scenarios including multiple flights, real-time flight trajectories, collision risk management, and unforeseen events such as aviation emergencies.
 
-![Application screeenshot.]([https://res.cloudinary.com/demo/image/upload/sample.jpg](http://url/to/img.png](https://github.com/ericbeaubrun/aerien/blob/master/assets/lK0QfCl0g3.png)
+![Application screenshot](https://github.com/ericbeaubrun/aerien/blob/master/assets/lK0QfCl0g3.png)
 
 ---
 
