@@ -1,4 +1,4 @@
-# Purpose
+# Project Overview
 
 This project is a real-time air traffic simulator designed to automatically model and manage aircraft movement and airport operations. It simulates complex scenarios including multiple flights, real-time flight trajectories, collision risk management, and unforeseen events such as aviation emergencies.
 
