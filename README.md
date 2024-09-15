@@ -1,7 +1,3 @@
-
-
----
-
 # Purpose
 
 This project is a real-time air traffic simulator designed to automatically model and manage aircraft movement and airport operations. It simulates complex scenarios including multiple flights, real-time flight trajectories, collision risk management, and unforeseen events such as aviation emergencies.
@@ -28,7 +24,7 @@ Rare events such as breakdowns or medical emergencies may occur, resulting in an
 
 ---
 
-# How the Simulator Works (controls) 
+# How the Simulator Works (Controls) 
 1. Background: Displays a map showing airports and airplanes in flight.
 2. Trajectory: Shows the flight paths of the planes.
 3. Grid: Toggles the map's grid view.
@@ -40,7 +36,8 @@ Rare events such as breakdowns or medical emergencies may occur, resulting in an
 9. Airports: Click on an airport to view its data, including its name, number of runways, and the number of planes ready for takeoff.
 10. Planes: Click on a plane in flight to view its details, such as altitude, speed, remaining fuel percentage, departure/arrival airports, and departure/arrival times.
 
+---
+
 > [!NOTE]
-> About Project Context :
 > This project is part of an academic assignment for undergraduate students pursuing a degree in computer science. It was developed as part of a university course, aimed at designing a real-time air traffic simulator. The goal was to apply theoretical concepts from software engineering, real-time systems, and computer graphics to create a functional and interactive simulation of air traffic management.
 
