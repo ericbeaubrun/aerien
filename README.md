@@ -6,7 +6,7 @@ This project is a real-time air traffic simulator designed to automatically mode
 
 ---
 
-# Features
+# Key Features
 * Simulation visualization
 Real-time display of date and time to follow the progress of the simulation.
 2. Airport Monitoring
@@ -24,7 +24,7 @@ Rare events such as breakdowns or medical emergencies may occur, resulting in an
 
 ---
 
-# How the Simulator Works (Controls) 
+# How the Simulator Works 
 1. Background: Displays a map showing airports and airplanes in flight.
 2. Trajectory: Shows the flight paths of the planes.
 3. Grid: Toggles the map's grid view.
