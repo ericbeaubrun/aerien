@@ -24,7 +24,7 @@ Rare events such as breakdowns or medical emergencies may occur, resulting in an
 
 ---
 
-# How does it works 
+# How It Works 
 
 ![Application screenshot 2](https://github.com/ericbeaubrun/portfolio/blob/master/public/resources/projects/aerien2.gif)
 
