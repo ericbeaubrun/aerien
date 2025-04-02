@@ -7,7 +7,7 @@ This software engineering project is a real-time air traffic simulator designed 
 ---
 
 # Key Features
-* Simulation visualization
+1. Simulation visualization
 Real-time display of date and time to follow the progress of the simulation.
 2. Airport Monitoring
 Visualization of airports, display of their data: name, total number of runways, planes ready to take off.
